@@ -4,7 +4,6 @@
 
 class Engine {
 public:
-    // Ініціалізація графічної бібліотеки та вікна
     Engine(int width, int height, const std::string& title, bool fullscreen = false) {
         if (fullscreen) {
             window.create(sf::VideoMode(width, height), title, sf::Style::Fullscreen);
@@ -13,34 +12,31 @@ public:
             window.create(sf::VideoMode(width, height), title, sf::Style::Close | sf::Style::Titlebar);
         }
 
-        window.setFramerateLimit(60); // Кількість кадрів на секунду
+        window.setFramerateLimit(60); 
 
-        // Ініціалізація об'єкта для переміщення (квадрат)
-        player.setSize(sf::Vector2f(50.0f, 50.0f)); // Розмір квадрата
-        player.setFillColor(sf::Color::Green);      // Колір квадрата
-        player.setPosition(width / 2, height / 2);  // Початкова позиція
+        player.setSize(sf::Vector2f(50.0f, 50.0f)); 
+        player.setFillColor(sf::Color::Green);      
+        player.setPosition(width / 2, height / 2);  
     }
 
-    // Основна петельна функція
     void run() {
         while (window.isOpen()) {
-            processEvents();   // Обробка подій
-            update();          // Логіка гри
-            render();          // Рендеринг
+            processEvents();   
+            update();          
+            render();          
         }
     }
 
 private:
     sf::RenderWindow window;
-    sf::RectangleShape player; // Об'єкт-квадрат для переміщення
-    float playerSpeed = 200.0f; // Швидкість руху
+    sf::RectangleShape player; 
+    float playerSpeed = 200.0f; 
 
-    // Обробка подій клавіатури і миші
     void processEvents() {
         sf::Event event;
         while (window.pollEvent(event)) {
             if (event.type == sf::Event::Closed) {
-                window.close();  // Закриття вікна
+                window.close();  
             }
             if (event.type == sf::Event::KeyPressed) {
                 handleKeyboardInput(event.key.code);
@@ -63,44 +59,39 @@ private:
         }
     }
 
-    // Логіка оновлення (рух об'єкта)
     void update() {
         sf::Vector2f movement(0.0f, 0.0f);
 
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::W)) {
-            movement.y -= playerSpeed * deltaTime; // Рух вгору
+            movement.y -= playerSpeed * deltaTime; 
         }
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::S)) {
-            movement.y += playerSpeed * deltaTime; // Рух вниз
+            movement.y += playerSpeed * deltaTime; 
         }
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::A)) {
-            movement.x -= playerSpeed * deltaTime; // Рух вліво
+            movement.x -= playerSpeed * deltaTime;
         }
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::D)) {
-            movement.x += playerSpeed * deltaTime; // Рух вправо
+            movement.x += playerSpeed * deltaTime; 
         }
 
-        // Оновлення позиції об'єкта
         player.move(movement);
     }
 
-    // Функція рендерингу
     void render() {
-        window.clear(sf::Color::Black); // Очищення екрану
+        window.clear(sf::Color::Black); 
 
-        window.draw(player); // Малювання об'єкта
+        window.draw(player); 
 
-        window.display(); // Виведення на екран
+        window.display(); 
     }
 
-    // Час між кадрами (для коректного руху)
-    float deltaTime = 1.0f / 60.0f; // 60 кадрів на секунду
+
+    float deltaTime = 1.0f / 60.0f;
 };
 
 int main() {
-    // Ініціалізація рушія з параметрами
     Engine engine(800, 600, "2D Engine with Keyboard Movement", false);
-    engine.run(); // Запуск рушія
-
+    engine.run(); 
     return 0;
 }
