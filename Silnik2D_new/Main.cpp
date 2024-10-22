@@ -25,7 +25,6 @@ private:
 
 class PrimitiveRenderer {
 public:
-    // Малювання лінії (стандартний алгоритм SFML)
     void drawLine(sf::RenderWindow& window, const Point2D& p1, const Point2D& p2, sf::Color color = sf::Color::White) {
         sf::Vertex line[] = {
             sf::Vertex(sf::Vector2f(p1.getX(), p1.getY()), color),
@@ -34,7 +33,6 @@ public:
         window.draw(line, 2, sf::Lines);
     }
 
-    // Прирастовий алгоритм для малювання ліній (алгоритм Брезенхема)
     void drawLineIncremental(sf::RenderWindow& window, const Point2D& p1, const Point2D& p2, sf::Color color = sf::Color::Red) {
         int x1 = static_cast<int>(p1.getX());
         int y1 = static_cast<int>(p1.getY());
@@ -67,19 +65,59 @@ public:
         }
     }
 
-    // Метод для малювання відкритої ламаної лінії
     void drawOpenPolyline(sf::RenderWindow& window, const std::vector<Point2D>& points, sf::Color color = sf::Color::White) {
         for (size_t i = 0; i < points.size() - 1; ++i) {
             drawLine(window, points[i], points[i + 1], color);
         }
     }
 
-    // Метод для малювання закритої ламаної лінії
+
     void drawClosedPolyline(sf::RenderWindow& window, const std::vector<Point2D>& points, sf::Color color = sf::Color::White) {
         drawOpenPolyline(window, points, color);
         if (!points.empty()) {
-            drawLine(window, points.back(), points.front(), color);  // З'єднуємо останню і першу точку
+            drawLine(window, points.back(), points.front(), color);  
         }
+    }
+
+    void drawCircle(sf::RenderWindow& window, const Point2D& center, float radius, sf::Color color = sf::Color::White) {
+        sf::CircleShape circle(radius);
+        circle.setPosition(center.getX() - radius, center.getY() - radius);  
+        circle.setFillColor(sf::Color::Transparent);  
+        circle.setOutlineThickness(1);
+        circle.setOutlineColor(color);
+        window.draw(circle);
+    }
+
+    void drawTriangle(sf::RenderWindow& window, const Point2D& p1, const Point2D& p2, const Point2D& p3, sf::Color color = sf::Color::White) {
+        sf::Vertex triangle[] = {
+            sf::Vertex(sf::Vector2f(p1.getX(), p1.getY()), color),
+            sf::Vertex(sf::Vector2f(p2.getX(), p2.getY()), color),
+            sf::Vertex(sf::Vector2f(p3.getX(), p3.getY()), color)
+        };
+        window.draw(triangle, 3, sf::Triangles);
+    }
+
+    void drawRectangle(sf::RenderWindow& window, const Point2D& topLeft, float width, float height, sf::Color color = sf::Color::White) {
+        sf::RectangleShape rectangle(sf::Vector2f(width, height));
+        rectangle.setPosition(topLeft.getX(), topLeft.getY());
+        rectangle.setFillColor(sf::Color::Transparent);  // Прозорий фон
+        rectangle.setOutlineThickness(1);
+        rectangle.setOutlineColor(color);
+        window.draw(rectangle);
+    }
+
+    void drawPolygon(sf::RenderWindow& window, const std::vector<Point2D>& points, sf::Color color = sf::Color::White) {
+        if (points.size() < 3) return; 
+
+        sf::ConvexShape polygon;
+        polygon.setPointCount(points.size());
+        for (size_t i = 0; i < points.size(); ++i) { 
+            polygon.setPoint(i, sf::Vector2f(points[i].getX(), points[i].getY()));
+        }
+        polygon.setFillColor(sf::Color::Transparent); 
+        polygon.setOutlineThickness(1);
+        polygon.setOutlineColor(color);
+        window.draw(polygon);
     }
 };
 
@@ -146,16 +184,18 @@ private:
     }
 
     void update() {
-        // Логіка оновлення (можна додати анімацію тощо)
+        // Логіка оновлення 
     }
 
     void render() {
         window.clear(sf::Color::Black);
         //line.draw(window, renderer, true);
 
-        renderer.drawOpenPolyline(window, openPolylinePoints, sf::Color::Green);  // Малюємо відкриту ламану
-        renderer.drawClosedPolyline(window, closedPolylinePoints, sf::Color::Blue);  // Малюємо закриту ламану
+        renderer.drawOpenPolyline(window, openPolylinePoints, sf::Color::Green);  
+        renderer.drawClosedPolyline(window, closedPolylinePoints, sf::Color::Blue);  
         renderer.drawLine(window, p1, p2, sf::Color::Magenta);
+        renderer.drawCircle(window, p3, 200, sf::Color::Yellow);
+        renderer.drawTriangle(window, { 500, 400 }, p3, { 600, 450 }, sf::Color::Yellow);
 
         window.display();
     }
