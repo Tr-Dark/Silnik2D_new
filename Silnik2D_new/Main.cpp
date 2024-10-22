@@ -1,6 +1,7 @@
 #include <SFML/Graphics.hpp>
 #include <vector>
 #include <iostream>
+#include <fstream>
 
 class Point2D {
 public:
@@ -167,12 +168,12 @@ public:
     }
 
     void logError(const std::string& message) {
-       /* std::ofstream errorLog("error_log.txt", std::ios::app);
+        std::ofstream errorLog("error_log.txt", std::ios::app);
         if (errorLog.is_open()) {
             errorLog << "Error: " << message << std::endl;
             errorLog.close();
-        }*/
-        std::cerr << "Error: " << message << std::endl;  // Додатково виводимо на консоль
+        }
+        std::cerr << "Error: " << message << std::endl;  
     }
 
 
@@ -210,6 +211,11 @@ private:
             if (event.type == sf::Event::MouseMoved) {
                 handleMouseInput(event.mouseMove.x, event.mouseMove.y);
             }
+            if (event.type == sf::Event::MouseButtonPressed) {
+                if (event.mouseButton.button == sf::Mouse::Left) {
+                    displayMouseCoordinates(event.mouseButton.x, event.mouseButton.y);
+                }
+            }
         }
     }
 
@@ -223,6 +229,10 @@ private:
         if (key == sf::Keyboard::Escape) {
             window.close();
         }
+    }
+
+    void displayMouseCoordinates(int x, int y) {
+        std::cout << "Mouse clicked at position: (" << x << ", " << y << ")" << std::endl;
     }
 
     void update() {
