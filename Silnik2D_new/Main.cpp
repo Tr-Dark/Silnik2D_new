@@ -46,7 +46,7 @@ public:
         int sy = (y1 < y2) ? 1 : -1;
         int err = dx - dy;
 
-        while (true) {
+        while (true) { // zmiana na algorytm
             sf::RectangleShape point(sf::Vector2f(1, 1));
             point.setPosition(static_cast<float>(x1), static_cast<float>(y1));
             point.setFillColor(color);
@@ -101,7 +101,7 @@ public:
     void drawRectangle(sf::RenderWindow& window, const Point2D& topLeft, float width, float height, sf::Color color = sf::Color::White) {
         sf::RectangleShape rectangle(sf::Vector2f(width, height));
         rectangle.setPosition(topLeft.getX(), topLeft.getY());
-        rectangle.setFillColor(sf::Color::Transparent);  // Прозорий фон
+        rectangle.setFillColor(sf::Color::Transparent); 
         rectangle.setOutlineThickness(1);
         rectangle.setOutlineColor(color);
         window.draw(rectangle);
@@ -182,7 +182,7 @@ public:
             logError("Window could not be opened. Exiting game loop.");
             return;
         }
-
+        logError("Test");
         while (window.isOpen()) {
             processEvents();
             update();
