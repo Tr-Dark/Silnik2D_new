@@ -147,17 +147,41 @@ private:
 class Engine {
 public:
     Engine(int width, int height, const std::string& title, bool fullscreen = false) {
-        if (fullscreen) {
-            window.create(sf::VideoMode(width, height), title, sf::Style::Fullscreen);
-        }
-        else {
-            window.create(sf::VideoMode(width, height), title, sf::Style::Close | sf::Style::Titlebar);
-        }
+        try {
+            if (fullscreen) {
+                window.create(sf::VideoMode(width, height), title, sf::Style::Fullscreen);
+            }
+            else {
+                window.create(sf::VideoMode(width, height), title, sf::Style::Close | sf::Style::Titlebar);
+            }
 
-        window.setFramerateLimit(60);
+            if (!window.isOpen()) {
+                throw std::runtime_error("Failed to create the window.");
+            }
+
+            window.setFramerateLimit(60);
+        }
+        catch (const std::exception& e) {
+            logError(e.what());
+        }
     }
 
+    void logError(const std::string& message) {
+       /* std::ofstream errorLog("error_log.txt", std::ios::app);
+        if (errorLog.is_open()) {
+            errorLog << "Error: " << message << std::endl;
+            errorLog.close();
+        }*/
+        std::cerr << "Error: " << message << std::endl;  // Додатково виводимо на консоль
+    }
+
+
     void run() {
+        if (!window.isOpen()) {
+            logError("Window could not be opened. Exiting game loop.");
+            return;
+        }
+
         while (window.isOpen()) {
             processEvents();
             update();
@@ -180,11 +204,29 @@ private:
             if (event.type == sf::Event::Closed) {
                 window.close();
             }
+            if (event.type == sf::Event::KeyPressed) {
+                handleKeyboardInput(event.key.code);
+            }
+            if (event.type == sf::Event::MouseMoved) {
+                handleMouseInput(event.mouseMove.x, event.mouseMove.y);
+            }
+        }
+    }
+
+
+    void handleMouseInput(int x, int y) {
+        std::cout << "Mouse moved to position: " << x << ", " << y << std::endl;
+    }
+
+
+    void handleKeyboardInput(sf::Keyboard::Key key) {
+        if (key == sf::Keyboard::Escape) {
+            window.close();
         }
     }
 
     void update() {
-        // Логіка оновлення 
+        // logic
     }
 
     void render() {
@@ -202,7 +244,7 @@ private:
 };
 
 int main() {
-    Engine engine(800, 600, "2D Engine with Polylines", false);
+    Engine engine(800, 600, "2D Engine", false);
     engine.run();
     return 0;
 }
