@@ -1,30 +1,3 @@
-
-/*
-#pragma once
-// Position.h
-#ifndef POSITION_H
-#define POSITION_H
-
-#include <SFML/Graphics.hpp>
-#include <string>
-
-class Position {
-private:
-    std::string cursorInfo;
-    std::string clickInfo;
-    sf::Font font;
-    sf::Text infoText;
-
-public:
-    Position(const std::string& fontPath);
-    void updateCursorPosition(int x, int y);
-    void updateClickPosition(int x, int y);
-    void draw(sf::RenderWindow& window);
-};
-
-#endif // POSITION_H
-*/
-
 #ifndef POSITION_H
 #define POSITION_H
 

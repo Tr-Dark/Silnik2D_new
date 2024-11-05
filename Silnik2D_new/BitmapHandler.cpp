@@ -1,17 +1,4 @@
-﻿/*
-#include "BitmapHandler.h"
-#include <iostream>
-
-BitmapHandler::BitmapHandler() = default;
-
-const sf::Texture& BitmapHandler::getTexture() {
-    if (texture.getSize().x == 0 || texture.getSize().y == 0) {
-        texture.loadFromImage(bitmap); // Ładowanie obrazu do tekstury
-    }
-    return texture;
-}
-*/
-#include "BitmapHandler.h"
+﻿#include "BitmapHandler.h"
 #include <iostream>
 #include "Rectangle.h"
 
@@ -23,32 +10,32 @@ bool BitmapHandler::loadFromFile(const std::string& filename, int bitmapIndex) {
         if (!bitmap1.loadFromFile(filename)) {
             return false;
         }
-        texture1.loadFromImage(bitmap1); // Ładowanie tekstury z obrazu
+        texture1.loadFromImage(bitmap1); 
     }
     else if (bitmapIndex == 2) {
         if (!bitmap2.loadFromFile(filename)) {
             return false;
         }
-        texture2.loadFromImage(bitmap2); // Ładowanie tekstury z obrazu
+        texture2.loadFromImage(bitmap2); 
     }
     else if (bitmapIndex == 3) {
-        if (!bitmap3.loadFromFile(filename)) { // Używaj bitmap3, a nie bitmap2
+        if (!bitmap3.loadFromFile(filename)) {
             return false;
         }
-        texture3.loadFromImage(bitmap3); // Ładowanie tekstury z obrazu
+        texture3.loadFromImage(bitmap3);
     }
     
     else if (bitmapIndex == 4) {
-        if (!bitmap4.loadFromFile(filename)) { // Używaj bitmap3, a nie bitmap2
+        if (!bitmap4.loadFromFile(filename)) { 
             return false;
         }
-        texture4.loadFromImage(bitmap4); // Ładowanie tekstury z obrazu
+        texture4.loadFromImage(bitmap4);
     }
     else if (bitmapIndex == 5) {
-        if (!bitmap5.loadFromFile(filename)) { // Używaj bitmap3, a nie bitmap2
+        if (!bitmap5.loadFromFile(filename)) { 
             return false;
         }
-        texture5.loadFromImage(bitmap5); // Ładowanie tekstury z obrazu
+        texture5.loadFromImage(bitmap5); 
     }
     else if (bitmapIndex == 6) {
         if (!bitmap6.loadFromFile(filename)) { // Używaj bitmap3, a nie bitmap2
@@ -169,5 +156,5 @@ const sf::Texture& BitmapHandler::getTexture(int bitmapIndex) {
         return texture16; // Zwróć teksturę dla bitmapy 3
     }
     // Można rzucić wyjątek lub zwrócić domyślną teksturę
-    throw std::invalid_argument("Invalid bitmap index"); // Rzuca wyjątek, jeśli indeks jest niepoprawny
+    throw std::invalid_argument("Invalid bitmap index"); 
 }

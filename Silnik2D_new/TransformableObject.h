@@ -1,3 +1,4 @@
+/*
 #ifndef TRANSFORMABLEOBJECT_H
 #define TRANSFORMABLEOBJECT_H
 
@@ -14,3 +15,4 @@ public:
 };
 
 #endif // TRANSFORMABLEOBJECT_H
+*/

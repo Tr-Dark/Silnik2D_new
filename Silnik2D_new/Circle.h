@@ -1,4 +1,3 @@
-
 #ifndef CIRCLE_H
 #define CIRCLE_H
 
@@ -12,7 +11,7 @@ private:
     float radius;
 
 public:
-    Circle(Point2D center, float radius); // Konstruktor
+    Circle(Point2D center, float radius); 
 
     void draw(sf::RenderWindow& window) override; // Implementacja metody draw
     void translate(float dx, float dy) override;   // Implementacja metody translate

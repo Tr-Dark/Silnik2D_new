@@ -1,4 +1,3 @@
-
 #include "Circle.h"
 
 // Konstruktor

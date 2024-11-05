@@ -1,4 +1,3 @@
-
 #ifndef SHAPE_OBJECT_H
 #define SHAPE_OBJECT_H
 
