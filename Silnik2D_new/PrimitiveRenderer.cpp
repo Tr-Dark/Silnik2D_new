@@ -18,5 +18,5 @@ void PrimitiveRenderer::drawCircle(sf::RenderWindow& window, const Point2D& cent
 }
 
 void PrimitiveRenderer::drawLineIncremental(sf::RenderWindow& window, const Point2D& p1, const Point2D& p2, sf::Color color) {
-    // Implementacja rysowania przyrostowego, np. algorytmem Bresenhama lub prostym przyrostowym.
+    // Implementacja rysowania przyrostowego
 }

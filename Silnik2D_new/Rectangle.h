@@ -9,16 +9,16 @@ class Rectangle : public ShapeObject {
 private:
     Point2D topLeft;
     float width, height;
-    sf::RectangleShape rectShape;  // Obiekt SFML dla prostok¹ta
+    sf::RectangleShape rectShape; 
 
 public:
     Rectangle(Point2D topLeft, float width, float height);
-    void setTexture(const sf::Texture& texture); // Ustawienie tekstury
+    void setTexture(const sf::Texture& texture); 
     virtual void draw(sf::RenderWindow& window) override;
     void translate(float dx, float dy) override;
     void rotate(float angle) override;
     void scale(float factor) override;
-    void updateSize(float newWidth, float newHeight); // Zmiana rozmiaru prostok¹ta
+    void updateSize(float newWidth, float newHeight); 
 };
 
 #endif // RECTANGLE_H

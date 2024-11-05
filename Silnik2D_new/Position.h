@@ -8,7 +8,7 @@ class Position {
 private:
     std::string cursorInfo;
     std::string clickInfo;
-    std::string drawingLineInfo;  // Dodana informacja o rysowaniu linii
+    std::string drawingLineInfo;  
     sf::Font font;
     sf::Text infoText;
 
@@ -16,7 +16,7 @@ public:
     Position(const std::string& fontPath);
     void updateCursorPosition(int x, int y);
     void updateClickPosition(int x, int y);
-    void setDrawingLineInfo(const std::string& info);  // Nowa metoda do ustawiania informacji o rysowaniu linii
+    void setDrawingLineInfo(const std::string& info); 
     void draw(sf::RenderWindow& window);
 };
 
