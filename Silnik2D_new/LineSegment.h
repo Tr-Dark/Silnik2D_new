@@ -1,3 +1,4 @@
+
 #ifndef LINESEGMENT_H
 #define LINESEGMENT_H
 
