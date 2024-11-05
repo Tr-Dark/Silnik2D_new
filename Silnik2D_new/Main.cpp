@@ -294,23 +294,23 @@ int main() {
 
     BitmapHandler bmp;
     // £adowanie dwóch bitmap
-    if (!bmp.loadFromFile("D:\\Silnik_nowy\\asd.png", 1) 
-        || !bmp.loadFromFile("D:\\Silnik_nowy\\asd2.png", 2) 
-        || !bmp.loadFromFile("D:\\Silnik_nowy\\asd3.png", 3) 
-        || !bmp.loadFromFile("D:\\Silnik_nowy\\asd4.png", 4) 
-        || !bmp.loadFromFile("D:\\Silnik_nowy\\asd11.png", 5)
-        || !bmp.loadFromFile("D:\\Silnik_nowy\\asd12.png", 6)
-        || !bmp.loadFromFile("D:\\Silnik_nowy\\asd13.png", 7)
-        || !bmp.loadFromFile("D:\\Silnik_nowy\\lewy2.png", 8)
-        || !bmp.loadFromFile("D:\\Silnik_nowy\\lewy3.png", 9)
-        || !bmp.loadFromFile("D:\\Silnik_nowy\\lewy4.png", 10)
-        || !bmp.loadFromFile("D:\\Silnik_nowy\\gora2.png", 11)
-        || !bmp.loadFromFile("D:\\Silnik_nowy\\gora3.png", 12)
-        || !bmp.loadFromFile("D:\\Silnik_nowy\\gora4.png", 13)
-        || !bmp.loadFromFile("D:\\Silnik_nowy\\dol2.png", 14)
-        || !bmp.loadFromFile("D:\\Silnik_nowy\\dol3.png", 15)
-        || !bmp.loadFromFile("D:\\Silnik_nowy\\dol4.png", 16)) {
-       
+    if (!bmp.loadFromFile("../images/asd.png", 1)
+        || !bmp.loadFromFile("../images/asd2.png", 2)
+        || !bmp.loadFromFile("../images/asd3.png", 3)
+        || !bmp.loadFromFile("../images/asd4.png", 4)
+        || !bmp.loadFromFile("../images/asd11.png", 5)
+        || !bmp.loadFromFile("../images/asd12.png", 6)
+        || !bmp.loadFromFile("../images/asd13.png", 7)
+        || !bmp.loadFromFile("../images/lewy2.png", 8)
+        || !bmp.loadFromFile("../images/lewy3.png", 9)
+        || !bmp.loadFromFile("../images/lewy4.png", 10)
+        || !bmp.loadFromFile("../images/gora2.png", 11)
+        || !bmp.loadFromFile("../images/gora3.png", 12)
+        || !bmp.loadFromFile("../images/gora4.png", 13)
+        || !bmp.loadFromFile("../images/dol2.png", 14)
+        || !bmp.loadFromFile("../images/dol3.png", 15)
+        || !bmp.loadFromFile("../images/dol4.png", 16)) {
+
         return -1;
     }
 
