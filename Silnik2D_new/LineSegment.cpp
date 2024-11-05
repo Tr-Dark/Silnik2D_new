@@ -1,4 +1,3 @@
-
 #include "LineSegment.h"
 
 LineSegment::LineSegment(const Point2D& p1, const Point2D& p2) : p1(p1), p2(p2) {}

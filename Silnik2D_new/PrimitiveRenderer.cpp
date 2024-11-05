@@ -1,5 +1,4 @@
-﻿
-#include "PrimitiveRenderer.h"
+﻿#include "PrimitiveRenderer.h"
 
 void PrimitiveRenderer::drawLine(sf::RenderWindow& window, const Point2D& p1, const Point2D& p2, sf::Color color) {
     sf::Vertex line[] = {
