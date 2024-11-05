@@ -1,3 +1,4 @@
+/*
 #pragma once
 #ifndef TRANSFORMABLE_H
 #define TRANSFORMABLE_H
@@ -14,3 +15,4 @@ public:
 };
 
 #endif // TRANSFORMABLE_H
+*/

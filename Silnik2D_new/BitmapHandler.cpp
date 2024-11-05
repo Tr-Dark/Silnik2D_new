@@ -38,123 +38,123 @@ bool BitmapHandler::loadFromFile(const std::string& filename, int bitmapIndex) {
         texture5.loadFromImage(bitmap5); 
     }
     else if (bitmapIndex == 6) {
-        if (!bitmap6.loadFromFile(filename)) { // Używaj bitmap3, a nie bitmap2
+        if (!bitmap6.loadFromFile(filename)) { 
             return false;
         }
-        texture6.loadFromImage(bitmap6); // Ładowanie tekstury z obrazu
+        texture6.loadFromImage(bitmap6); 
     }
     else if (bitmapIndex == 7) {
-        if (!bitmap7.loadFromFile(filename)) { // Używaj bitmap3, a nie bitmap2
+        if (!bitmap7.loadFromFile(filename)) { 
             return false;
         }
-        texture7.loadFromImage(bitmap7); // Ładowanie tekstury z obrazu
+        texture7.loadFromImage(bitmap7); 
     }
     else if (bitmapIndex == 8) {
-        if (!bitmap8.loadFromFile(filename)) { // Używaj bitmap3, a nie bitmap2
+        if (!bitmap8.loadFromFile(filename)) { 
             return false;
         }
-        texture8.loadFromImage(bitmap8); // Ładowanie tekstury z obrazu
+        texture8.loadFromImage(bitmap8); 
     }
     else if (bitmapIndex == 9) {
-        if (!bitmap9.loadFromFile(filename)) { // Używaj bitmap3, a nie bitmap2
+        if (!bitmap9.loadFromFile(filename)) { 
             return false;
         }
-        texture9.loadFromImage(bitmap9); // Ładowanie tekstury z obrazu
+        texture9.loadFromImage(bitmap9); 
     }
     else if (bitmapIndex == 10) {
-        if (!bitmap10.loadFromFile(filename)) { // Używaj bitmap3, a nie bitmap2
+        if (!bitmap10.loadFromFile(filename)) { 
             return false;
         }
-        texture10.loadFromImage(bitmap10); // Ładowanie tekstury z obrazu
+        texture10.loadFromImage(bitmap10); 
     }
     else if (bitmapIndex == 11) {
-        if (!bitmap11.loadFromFile(filename)) { // Używaj bitmap3, a nie bitmap2
+        if (!bitmap11.loadFromFile(filename)) { 
             return false;
         }
-        texture11.loadFromImage(bitmap11); // Ładowanie tekstury z obrazu
+        texture11.loadFromImage(bitmap11); 
     }
     else if (bitmapIndex == 12) {
-        if (!bitmap12.loadFromFile(filename)) { // Używaj bitmap3, a nie bitmap2
+        if (!bitmap12.loadFromFile(filename)) { 
             return false;
         }
-        texture12.loadFromImage(bitmap12); // Ładowanie tekstury z obrazu
+        texture12.loadFromImage(bitmap12); 
     }
     else if (bitmapIndex == 13) {
-        if (!bitmap13.loadFromFile(filename)) { // Używaj bitmap3, a nie bitmap2
+        if (!bitmap13.loadFromFile(filename)) { 
             return false;
         }
-        texture13.loadFromImage(bitmap13); // Ładowanie tekstury z obrazu
+        texture13.loadFromImage(bitmap13); 
     }
     else if (bitmapIndex == 14) {
-        if (!bitmap14.loadFromFile(filename)) { // Używaj bitmap3, a nie bitmap2
+        if (!bitmap14.loadFromFile(filename)) { 
             return false;
         }
-        texture14.loadFromImage(bitmap14); // Ładowanie tekstury z obrazu
+        texture14.loadFromImage(bitmap14); 
     }
     else if (bitmapIndex == 15) {
-        if (!bitmap15.loadFromFile(filename)) { // Używaj bitmap3, a nie bitmap2
+        if (!bitmap15.loadFromFile(filename)) { 
             return false;
         }
-        texture15.loadFromImage(bitmap15); // Ładowanie tekstury z obrazu
+        texture15.loadFromImage(bitmap15); 
     }
     else if (bitmapIndex == 16) {
-        if (!bitmap16.loadFromFile(filename)) { // Używaj bitmap3, a nie bitmap2
+        if (!bitmap16.loadFromFile(filename)) { 
             return false;
         }
-        texture16.loadFromImage(bitmap16); // Ładowanie tekstury z obrazu
+        texture16.loadFromImage(bitmap16);
     }
     return true;
 }
 
 const sf::Texture& BitmapHandler::getTexture(int bitmapIndex) {
     if (bitmapIndex == 1) {
-        return texture1; // Zwróć teksturę dla bitmapy 1
+        return texture1;
     }
     else if (bitmapIndex == 2) {
-        return texture2; // Zwróć teksturę dla bitmapy 2
+        return texture2; 
     }
     else if (bitmapIndex == 3) {
-        return texture3; // Zwróć teksturę dla bitmapy 3
+        return texture3; 
     }
     else if (bitmapIndex == 4) {
-        return texture4; // Zwróć teksturę dla bitmapy 3
+        return texture4; 
     }
     else if (bitmapIndex == 5) {
-        return texture5; // Zwróć teksturę dla bitmapy 3
+        return texture5; 
     }
     else if (bitmapIndex == 6) {
-        return texture6; // Zwróć teksturę dla bitmapy 3
+        return texture6; 
     }
     else if (bitmapIndex == 7) {
-        return texture7; // Zwróć teksturę dla bitmapy 3
+        return texture7; 
     }
     else if (bitmapIndex == 8) {
-        return texture8; // Zwróć teksturę dla bitmapy 3
+        return texture8; 
     }
     else if (bitmapIndex == 9) {
-        return texture9; // Zwróć teksturę dla bitmapy 3
+        return texture9; 
     }
     else if (bitmapIndex == 10) {
-        return texture10; // Zwróć teksturę dla bitmapy 3
+        return texture10; 
     }
     else if (bitmapIndex == 11) {
-        return texture11; // Zwróć teksturę dla bitmapy 3
+        return texture11;
     }
     else if (bitmapIndex == 12) {
-        return texture12; // Zwróć teksturę dla bitmapy 3
+        return texture12; 
     }
     else if (bitmapIndex == 13) {
-        return texture13; // Zwróć teksturę dla bitmapy 3
+        return texture13; 
     }
     else if (bitmapIndex == 14) {
-        return texture14; // Zwróć teksturę dla bitmapy 3
+        return texture14; 
     }
     else if (bitmapIndex == 15) {
-        return texture15; // Zwróć teksturę dla bitmapy 3
+        return texture15; 
     }
     else if (bitmapIndex == 16) {
-        return texture16; // Zwróć teksturę dla bitmapy 3
+        return texture16; 
     }
-    // Można rzucić wyjątek lub zwrócić domyślną teksturę
+
     throw std::invalid_argument("Invalid bitmap index"); 
 }

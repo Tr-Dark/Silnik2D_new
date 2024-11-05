@@ -14,7 +14,7 @@ void Rectangle::setTexture(const sf::Texture& texture) {
 }
 
 void Rectangle::draw(sf::RenderWindow& window) {
-    //window.draw(rectShape);
+    window.draw(rectShape);
 }
 
 void Rectangle::translate(float dx, float dy) {

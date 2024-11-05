@@ -12,14 +12,14 @@
 int main() {
     sf::RenderWindow window(sf::VideoMode(800, 600), "Silnik2D");
 
-    // Punkt startowy dla prostok¹ta
+
     Point2D rectangleTopLeft(200, 200);
     Point2D circleCenter(400, 200);
     Rectangle rectangle(rectangleTopLeft, 150, 100);
     Circle circle(circleCenter, 50); 
 
     BitmapHandler bmp;
-    // £adowanie dwóch bitmap
+
     if (!bmp.loadFromFile("../images/asd.png", 1)
         || !bmp.loadFromFile("../images/asd2.png", 2)
         || !bmp.loadFromFile("../images/asd3.png", 3)
@@ -41,9 +41,9 @@ int main() {
     }
 
     sf::Sprite sprite;
-    int currentBitmap = 1; // Rozpocznij od pierwszej bitmapy
-    sprite.setTexture(bmp.getTexture(currentBitmap)); // Ustaw pocz¹tkow¹ teksturê
-    sprite.setPosition(100, 100); // Pocz¹tkowa pozycja sprite'a
+    int currentBitmap = 1; 
+    sprite.setTexture(bmp.getTexture(currentBitmap)); 
+    sprite.setPosition(100, 100); 
 
     Position position("C:\\Windows\\Fonts\\Arial.ttf");
     Player player;
@@ -59,18 +59,18 @@ int main() {
             if (event.type == sf::Event::Closed)
                 window.close();
 
-            // Obs³uga klikniêcia myszy
+ 
             if (event.type == sf::Event::MouseButtonPressed && event.mouseButton.button == sf::Mouse::Left) {
                 int x = event.mouseButton.x;
                 int y = event.mouseButton.y;
 
                 if (!isDrawingLine) {
-                    // Zapisz pocz¹tek nowej linii
+     
                     lineStart = Point2D(x, y);
                     isDrawingLine = true;
                 }
                 else {
-                    // Zapisz koniec linii i dodaj j¹ do wektora
+
                     lineEnd = Point2D(x, y);
                     lines.emplace_back(lineStart, lineEnd);
                     isDrawingLine = false;
@@ -90,10 +90,9 @@ int main() {
 
         rectangle.draw(window);
         circle.draw(window);
-        window.draw(sprite); // Rysowanie sprite'a z bitmap¹
+        window.draw(sprite); 
         position.draw(window);
 
-        // Rysowanie wszystkich zapisanych linii
         for (const auto& line : lines) {
             line.draw(window, renderer);
         }

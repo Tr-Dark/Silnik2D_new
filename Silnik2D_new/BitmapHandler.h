@@ -10,8 +10,8 @@ private:
     sf::Texture texture1, texture2, texture3, texture4, texture5, texture6, texture7, texture8, texture9, texture10, texture11, texture12, texture13, texture14, texture15, texture16; // Dwie tekstury
 public:
     BitmapHandler();
-    bool loadFromFile(const std::string& filename, int bitmapIndex); // £adowanie bitmap na podstawie indeksu
-    const sf::Texture& getTexture(int bitmapIndex); // Zwróæ teksturê na podstawie indeksu
+    bool loadFromFile(const std::string& filename, int bitmapIndex);
+    const sf::Texture& getTexture(int bitmapIndex); 
 };
 
 #endif // BITMAPHANDLER_H
