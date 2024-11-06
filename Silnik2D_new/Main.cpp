@@ -11,7 +11,7 @@
 #include "LineSegment.h"
 
 int main() {
-    sf::RenderWindow window(sf::VideoMode(800, 600), "Silnik2D");
+    sf::RenderWindow window(sf::VideoMode(800, 600), "Silnik2D Demo");
 
 
     Point2D rectangleTopLeft(200, 200);
