@@ -2,7 +2,6 @@
 #include <iostream>
 #include "Rectangle.h"
 
-
 BitmapHandler::BitmapHandler() = default;
 
 bool BitmapHandler::loadFromFile(const std::string& filename, int bitmapIndex) {
@@ -107,54 +106,24 @@ bool BitmapHandler::loadFromFile(const std::string& filename, int bitmapIndex) {
 }
 
 const sf::Texture& BitmapHandler::getTexture(int bitmapIndex) {
-    if (bitmapIndex == 1) {
-        return texture1;
+    switch (bitmapIndex) {
+    case 1: return texture1;
+    case 2: return texture2;
+    case 3: return texture3;
+    case 4: return texture4;
+    case 5: return texture5;
+    case 6: return texture6;
+    case 7: return texture7;
+    case 8: return texture8;
+    case 9: return texture9;
+    case 10: return texture10;
+    case 11: return texture11;
+    case 12: return texture12;
+    case 13: return texture13;
+    case 14: return texture14;
+    case 15: return texture15;
+    case 16: return texture16;
+    default:
+        throw std::invalid_argument("Invalid bitmap index");
     }
-    else if (bitmapIndex == 2) {
-        return texture2; 
-    }
-    else if (bitmapIndex == 3) {
-        return texture3; 
-    }
-    else if (bitmapIndex == 4) {
-        return texture4; 
-    }
-    else if (bitmapIndex == 5) {
-        return texture5; 
-    }
-    else if (bitmapIndex == 6) {
-        return texture6; 
-    }
-    else if (bitmapIndex == 7) {
-        return texture7; 
-    }
-    else if (bitmapIndex == 8) {
-        return texture8; 
-    }
-    else if (bitmapIndex == 9) {
-        return texture9; 
-    }
-    else if (bitmapIndex == 10) {
-        return texture10; 
-    }
-    else if (bitmapIndex == 11) {
-        return texture11;
-    }
-    else if (bitmapIndex == 12) {
-        return texture12; 
-    }
-    else if (bitmapIndex == 13) {
-        return texture13; 
-    }
-    else if (bitmapIndex == 14) {
-        return texture14; 
-    }
-    else if (bitmapIndex == 15) {
-        return texture15; 
-    }
-    else if (bitmapIndex == 16) {
-        return texture16; 
-    }
-
-    throw std::invalid_argument("Invalid bitmap index"); 
 }

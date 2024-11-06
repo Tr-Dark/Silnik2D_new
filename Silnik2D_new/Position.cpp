@@ -7,7 +7,7 @@ Position::Position(const std::string& fontPath) {
     }
     infoText.setFont(font);
     infoText.setCharacterSize(20);
-    infoText.setFillColor(sf::Color::White);
+    infoText.setFillColor(sf::Color::Black);
 }
 
 void Position::updateCursorPosition(int x, int y) {

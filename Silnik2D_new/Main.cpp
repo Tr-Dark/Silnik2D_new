@@ -1,3 +1,4 @@
+
 #include <SFML/Graphics.hpp>
 #include "Circle.h"
 #include "Rectangle.h"
@@ -39,6 +40,11 @@ int main() {
 
         return -1;
     }
+    sf::Texture backgroundTexture;
+    if (!backgroundTexture.loadFromFile("../images/tlo.jpg")) {
+        return -1; // Jeœli nie uda³o siê za³adowaæ obrazu, koñczymy program
+    }
+    sf::Sprite backgroundSprite(backgroundTexture);
 
     sf::Sprite sprite;
     int currentBitmap = 1; 
@@ -86,7 +92,13 @@ int main() {
         sf::Vector2i mousePosition = sf::Mouse::getPosition(window);
         position.updateCursorPosition(mousePosition.x, mousePosition.y);
 
-        window.clear(sf::Color::Black);
+        //window.clear(sf::Color::Black);
+
+        window.clear();
+
+        // Rysujemy t³o na pocz¹tku
+        window.draw(backgroundSprite);
+
 
         rectangle.draw(window);
         circle.draw(window);
@@ -102,3 +114,6 @@ int main() {
 
     return 0;
 }
+
+
+
