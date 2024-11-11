@@ -1,78 +1,73 @@
-﻿/*
-#include "PrimitiveRenderer.h"
-
-void PrimitiveRenderer::drawLine(sf::RenderWindow& window, const Point2D& p1, const Point2D& p2, sf::Color color) {
-    sf::Vertex line[] = {
-        sf::Vertex(sf::Vector2f(p1.getX(), p1.getY()), color),
-        sf::Vertex(sf::Vector2f(p2.getX(), p2.getY()), color)
-    };
-    window.draw(line, 2, sf::Lines);
-}
-
-void PrimitiveRenderer::drawCircle(sf::RenderWindow& window, const Point2D& center, float radius, sf::Color color) {
-    sf::CircleShape circle(radius);
-    circle.setPosition(center.getX() - radius, center.getY() - radius);
-    circle.setFillColor(sf::Color::Transparent);
-    circle.setOutlineThickness(1);
-    circle.setOutlineColor(color);
-    window.draw(circle);
-}
+﻿#include "PrimitiveRenderer.h"
+#include <cmath> 
 
 void PrimitiveRenderer::drawLineIncremental(sf::RenderWindow& window, const Point2D& p1, const Point2D& p2, sf::Color color) {
-    // Implementacja rysowania przyrostowego
-}
-*/
-#include "PrimitiveRenderer.h"
+    int x0 = static_cast<int>(p1.getX());
+    int y0 = static_cast<int>(p1.getY());
+    int x1 = static_cast<int>(p2.getX());
+    int y1 = static_cast<int>(p2.getY());
 
-void PrimitiveRenderer::drawLineBresenham(sf::RenderWindow& window, const Point2D& p1, const Point2D& p2, sf::Color color) const {
-    int x = p1.getX();
-    int y = p1.getY();
-    int dx = abs(p2.getX() - p1.getX());
-    int dy = abs(p2.getY() - p1.getY());
-    int sx = (p1.getX() < p2.getX()) ? 1 : -1;
-    int sy = (p1.getY() < p2.getY()) ? 1 : -1;
-    int err = dx - dy;
+    int dx = x1 - x0;
+    int dy = y1 - y0;
 
-    while (true) {
-        sf::RectangleShape pixel(sf::Vector2f(1, 1));
-        pixel.setPosition(x, y);
-        pixel.setFillColor(color);
-        window.draw(pixel);
+    // Sprawdzenie nachylenia odcinka
+    bool steep = std::abs(dy) > std::abs(dx);
 
-        if (x == p2.getX() && y == p2.getY()) break;
-        int e2 = 2 * err;
-        if (e2 > -dy) { err -= dy; x += sx; }
-        if (e2 < dx) { err += dx; y += sy; }
+    if (steep) {
+        // Jeśli nachylenie jest strome, zamieniamy x i y miejscami
+        std::swap(x0, y0);
+        std::swap(x1, y1);
+        std::swap(dx, dy);
+    }
+
+    // Zapewnienie rysowania od lewej do prawej strony
+    if (x0 > x1) {
+        std::swap(x0, x1);
+        std::swap(y0, y1);
+        dx = x1 - x0;
+        dy = y1 - y0;
+    }
+
+    // Obliczenie nachylenia
+    float m = static_cast<float>(dy) / dx;
+    float y = y0;
+
+    // Główna pętla rysowania odcinka
+    for (int x = x0; x <= x1; ++x) {
+        if (steep) {
+            // Jeśli nachylenie jest strome, rysujemy punkt z zamienionymi współrzędnymi
+            sf::Vertex point(sf::Vector2f(y, x), color);
+            window.draw(&point, 1, sf::Points);
+        }
+        else {
+            // Jeśli nachylenie nie jest strome, rysujemy normalnie
+            sf::Vertex point(sf::Vector2f(x, y), color);
+            window.draw(&point, 1, sf::Points);
+        }
+        y += m;  // Przyrost y na podstawie nachylenia
     }
 }
 
-// Metoda przyrostowa
-void PrimitiveRenderer::drawLineIncremental(sf::RenderWindow& window, const Point2D& p1, const Point2D& p2, sf::Color color) const {
-    float x = p1.getX();
-    float y = p1.getY();
-    float dx = p2.getX() - p1.getX();
-    float dy = p2.getY() - p1.getY();
-    int steps = std::max(abs(dx), abs(dy));
-    dx /= steps;
-    dy /= steps;
+void PrimitiveRenderer::drawPolyline(sf::RenderWindow& window, const std::vector<Point2D>& points, sf::Color color, bool closed) {
+    if (points.size() < 2) return;
 
-    for (int i = 0; i <= steps; ++i) {
-        sf::RectangleShape pixel(sf::Vector2f(1, 1));
-        pixel.setPosition(x, y);
-        pixel.setFillColor(color);
-        window.draw(pixel);
+    for (size_t i = 0; i < points.size() - 1; ++i) {
+        drawLineIncremental(window, points[i], points[i + 1], color);
+    }
 
-        x += dx;
-        y += dy;
+    if (closed) {
+        drawLineIncremental(window, points.back(), points.front(), color);
     }
 }
 
-// Metoda rysowania okręgu (bez zmian)
-void PrimitiveRenderer::drawCircle(sf::RenderWindow& window, const Point2D& center, float radius, sf::Color color) const {
-    sf::CircleShape circle(radius);
-    circle.setPosition(center.getX() - radius, center.getY() - radius);
-    circle.setFillColor(sf::Color::Transparent);
-    circle.setOutlineThickness(1);
-    circle.setOutlineColor(color);
-    window.draw(circle);
+void PrimitiveRenderer::drawLineBasic(sf::RenderWindow& window, const Point2D& p1, const Point2D& p2, sf::Color color) {
+    sf::VertexArray line(sf::Lines, 2);
+
+    line[0].position = sf::Vector2f(p1.getX(), p1.getY());
+    line[0].color = color;
+
+    line[1].position = sf::Vector2f(p2.getX(), p2.getY());
+    line[1].color = color;
+
+    window.draw(line);
 }

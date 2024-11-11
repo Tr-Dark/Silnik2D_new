@@ -9,6 +9,7 @@ Rectangle::Rectangle(Point2D topLeft, float width, float height)
     rectShape.setFillColor(sf::Color(255, 255, 255, 0));
 }
 
+
 void Rectangle::setTexture(const sf::Texture& texture) {
     rectShape.setTexture(&texture);
 }

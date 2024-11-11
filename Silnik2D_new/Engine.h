@@ -2,26 +2,23 @@
 #define ENGINE_H
 
 #include <SFML/Graphics.hpp>
-#include "PrimitiveRenderer.h"
-#include "Point2D.h"
-#include <vector>
-#include <iostream>
-#include <fstream>
 #include <string>
 
 class Engine {
 public:
-    Engine(int width, int height, const std::string& title, bool fullscreen = false);
+    Engine(int width, int height, const std::string& title, bool fullscreen = false, int fps = 60, sf::Color backgroundColor = sf::Color::Black);
+
     void run();
-    void logError(const std::string& message);
 
 private:
-    sf::RenderWindow window;
-    PrimitiveRenderer renderer;
     void processEvents();
     void update();
     void render();
+    void logError(const std::string& message);
+
+    sf::RenderWindow window;
+    sf::Color backgroundColor;
+    int fps;
 };
 
 #endif
-

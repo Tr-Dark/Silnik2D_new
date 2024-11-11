@@ -4,16 +4,21 @@
 #include <SFML/Graphics.hpp>
 
 class Point2D {
-public:
-	Point2D(float x = 0, float y = 0);
-	float getX() const;
-	float getY() const;
-	void setX(float newX);
-	void setY(float newY);
-	void draw(sf::RenderWindow& window, sf::Color color = sf::Color::White) const;
-
 private:
-	float x, y;
+    float x;
+    float y;
+
+public:
+    Point2D(float x = 0, float y = 0);
+
+    float getX() const;
+    float getY() const;
+
+    void setX(float x);
+    void setY(float y);
+
+    void draw(sf::RenderWindow& window, sf::Color color = sf::Color::White) const;
 };
 
-#endif
+#endif 
+

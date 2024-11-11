@@ -219,7 +219,7 @@ int main() {
 
         //window.clear();
         for (const auto& line : lines) {
-            line.draw(window, renderer, /*useIncremental=*/!useBresenham, /*useBresenham=*/useBresenham);
+            line.draw(window, renderer, sf::Color::Blue);
         }
 
         window.display();

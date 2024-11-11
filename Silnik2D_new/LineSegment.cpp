@@ -1,63 +1,28 @@
-/*
 #include "LineSegment.h"
 
-LineSegment::LineSegment(const Point2D& p1, const Point2D& p2) : p1(p1), p2(p2) {}
+LineSegment::LineSegment(const Point2D& start, const Point2D& end) : start(start), end(end) {}
 
-Point2D LineSegment::getP1() const {
-    return p1;
+Point2D LineSegment::getStart() const {
+    return start;
 }
 
-Point2D LineSegment::getP2() const {
-    return p2;
+Point2D LineSegment::getEnd() const {
+    return end;
 }
 
-void LineSegment::setP1(const Point2D& newP1) {
-    p1 = newP1;
+void LineSegment::setStart(const Point2D& point) {
+    start = point;
 }
 
-void LineSegment::setP2(const Point2D& newP2) {
-    p2 = newP2;
+void LineSegment::setEnd(const Point2D& point) {
+    end = point;
 }
 
-void LineSegment::draw(sf::RenderWindow& window, PrimitiveRenderer& renderer, bool useIncremental) const {
-    if (useIncremental) {
-        renderer.drawLineIncremental(window, p1, p2);
+void LineSegment::draw(sf::RenderWindow& window, PrimitiveRenderer& renderer, sf::Color color, bool incremental) const {
+    if (incremental) {
+        renderer.drawLineIncremental(window, start, end, color);
     }
     else {
-        renderer.drawLine(window, p1, p2);
+        renderer.drawLineBasic(window, start, end, color);
     }
 }
-*/
-
-#include "LineSegment.h"
-
-sf::Color color;
-
-LineSegment::LineSegment(const Point2D& p1, const Point2D& p2) : p1(p1), p2(p2) {}
-
-Point2D LineSegment::getP1() const {
-    return p1;
-}
-
-Point2D LineSegment::getP2() const {
-    return p2;
-}
-
-void LineSegment::setP1(const Point2D& newP1) {
-    p1 = newP1;
-}
-
-void LineSegment::setP2(const Point2D& newP2) {
-    p2 = newP2;
-}
-
-void LineSegment::draw(sf::RenderWindow& window, PrimitiveRenderer& renderer, bool useIncremental, bool useBresenham) const {
-    if (useBresenham) {
-        renderer.drawLineBresenham(window, p1, p2);
-    }
-    else if (useIncremental) {
-        renderer.drawLineIncremental(window, p1, p2, color);
-    }
-}
-
-// LineSegment.h
