@@ -1,25 +1,29 @@
-
-#ifndef PLAYER_H
+﻿#ifndef PLAYER_H
 #define PLAYER_H
 
-#include <SFML/Graphics.hpp>
+#include "SpriteObject.h"
 #include "Rectangle.h"
 #include "BitmapHandler.h"
 
-class Player {
+class Player : public SpriteObject {
 public:
     Player();
-    void handleInput(const sf::Event& event, Rectangle& rectangle, sf::Sprite& sprite, int& currentBitmap, BitmapHandler& bmp);
+
+    // Метод для обробки вводу
+    void handleInput(const sf::Event& event, BitmapHandler& bmp);
+
+    // Метод для оновлення гравця
+    void update() override;
+
+    // Трансформаційні методи
+    void translate(float dx, float dy) override;
+    void rotate(float angle) override;
+    void scale(float factorX, float factorY) override;
 
 private:
-    bool rectangleMoved;
-    bool controlRectangle;
-    bool toggleBitmapRight;
-    int currentBitmapIndex; 
-    const int bitmapIndices[4] = { 1,5, 6, 7 }; 
-    const int bitmapIndices_lewy[4] = { 2,8, 9, 10 };
-    const int bitmapIndices_gora[4] = { 3,11, 12, 13 };
-    const int bitmapIndices_dol[4] = { 4,14, 15, 16 };
+    bool isMoving;                    // Вказує, чи гравець рухається
+    int currentBitmapIndex;           // Індекс поточної текстури
+    Rectangle playerRectangle;        // Прямокутник, що представляє гравця
 };
 
 #endif // PLAYER_H

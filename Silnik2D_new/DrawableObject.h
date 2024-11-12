@@ -1,13 +1,12 @@
-/*
-#ifndef DRAWABLEOBJECT_H
-#define DRAWABLEOBJECT_H
+#ifndef DRAWABLE_OBJECT_H
+#define DRAWABLE_OBJECT_H
 
+#include "GameObject.h"
 #include <SFML/Graphics.hpp>
 
-class DrawableObject {
+class DrawableObject : public virtual GameObject {
 public:
-    virtual void draw(sf::RenderWindow& window) = 0;
+    virtual void draw(sf::RenderWindow& window, PrimitiveRenderer& renderer) = 0;
 };
 
-#endif // DRAWABLEOBJECT_H
-*/
+#endif // DRAWABLE_OBJECT_H

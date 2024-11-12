@@ -1,23 +1,15 @@
-/*
-#ifndef GAMEOBJECT_H
-#define GAMEOBJECT_H
+#ifndef GAME_OBJECT_H
+#define GAME_OBJECT_H
 
-#include <iostream>
-#include <string>
+#include <SFML/Graphics.hpp>
+#include "PrimitiveRenderer.h"
+
 
 class GameObject {
 public:
-    virtual ~GameObject() {}
-
-    // Metody czysto wirtualne
-    virtual void update() = 0;
-    virtual void draw() = 0;
-
-    // Metoda do logowania b³êdów
-    virtual void logError(const std::string& message) {
-        std::cerr << "Error: " << message << std::endl;
-    }
+    virtual void update() = 0;             
+    virtual void draw(sf::RenderWindow& window, PrimitiveRenderer& renderer) = 0;
+    virtual ~GameObject() {}               
 };
 
-#endif // GAMEOBJECT_H
-*/
+#endif // GAME_OBJECT_H

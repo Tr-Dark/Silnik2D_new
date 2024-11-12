@@ -239,11 +239,6 @@ void PrimitiveRenderer::drawFilledCircle(sf::RenderWindow& window, const Point2D
     }
 }
 
-#include <stack>
-#include <set>
-#include <SFML/Graphics.hpp>
-#include "PrimitiveRenderer.h"
-
 void PrimitiveRenderer::borderFill(sf::RenderWindow& window, int x, int y, sf::Color fillColor, sf::Color borderColor) {
     std::stack<sf::Vector2i> points;
     std::set<std::pair<int, int>> visited;

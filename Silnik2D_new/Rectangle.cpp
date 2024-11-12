@@ -1,39 +1,74 @@
-
+﻿#define _USE_MATH_DEFINES // Додаємо для доступу до M_PI, якщо компілятор це підтримує
 #include "Rectangle.h"
-#include <SFML/Graphics.hpp>
-#include "BitmapHandler.h"
+#include <cmath>
+#include <fstream>
 
-Rectangle::Rectangle(Point2D topLeft, float width, float height)
-    : topLeft(topLeft), width(width), height(height), rectShape(sf::Vector2f(width, height)) {
-    rectShape.setPosition(topLeft.getX(), topLeft.getY());
-    rectShape.setFillColor(sf::Color(255, 255, 255, 0));
+
+Rectangle::Rectangle() : position(0, 0), width(1), height(1), color(sf::Color::White) {
+    updateVertices();
 }
 
-
-void Rectangle::setTexture(const sf::Texture& texture) {
-    rectShape.setTexture(&texture);
+Rectangle::Rectangle(const Point2D& position, float width, float height, sf::Color color)
+    : position(position), width(width), height(height), color(color) {
+    updateVertices();
 }
 
-void Rectangle::draw(sf::RenderWindow& window) {
-    window.draw(rectShape);
+void Rectangle::updateVertices() {
+    vertices.clear();
+    vertices.push_back(position); // Верхній лівий кут
+    vertices.push_back(Point2D(position.getX() + width, position.getY())); // Верхній правий кут
+    vertices.push_back(Point2D(position.getX() + width, position.getY() + height)); // Нижній правий кут
+    vertices.push_back(Point2D(position.getX(), position.getY() + height)); // Нижній лівий кут
+}
+
+void Rectangle::draw(sf::RenderWindow& window, PrimitiveRenderer& renderer) {
+    for (size_t i = 0; i < vertices.size(); ++i) {
+        Point2D start = vertices[i];
+        Point2D end = vertices[(i + 1) % vertices.size()]; // З'єднує останню вершину з першою
+        renderer.drawLineIncremental(window, start, end, color);
+    }
 }
 
 void Rectangle::translate(float dx, float dy) {
-    topLeft.setX(topLeft.getX() + dx);
-    topLeft.setY(topLeft.getY() + dy);
-    rectShape.setPosition(topLeft.getX(), topLeft.getY());
+    position.setX(position.getX() + dx);
+    position.setY(position.getY() + dy);
+    updateVertices();
+}
+
+void Rectangle::update() {
+    // Логіка для автоматичного оновлення (якщо потрібна)
 }
 
 void Rectangle::rotate(float angle) {
-    rectShape.rotate(angle);
+    float centerX = position.getX() + width / 2;
+    float centerY = position.getY() + height / 2;
+    float radians = angle * M_PI / 180.0f;
+
+    for (auto& vertex : vertices) {
+        float x = vertex.getX() - centerX;
+        float y = vertex.getY() - centerY;
+        float rotatedX = x * cos(radians) - y * sin(radians);
+        float rotatedY = x * sin(radians) + y * cos(radians);
+        vertex.setX(rotatedX + centerX);
+        vertex.setY(rotatedY + centerY);
+    }
 }
 
-void Rectangle::scale(float factor) {
-    rectShape.setScale(factor, factor);
+void Rectangle::scale(float factorX, float factorY) {
+    float centerX = position.getX() + width / 2;
+    float centerY = position.getY() + height / 2;
+
+    for (auto& vertex : vertices) {
+        float scaledX = centerX + (vertex.getX() - centerX) * factorX;
+        float scaledY = centerY + (vertex.getY() - centerY) * factorY;
+        vertex.setX(scaledX);
+        vertex.setY(scaledY);
+    }
+    width *= factorX;
+    height *= factorY;
 }
 
-void Rectangle::updateSize(float newWidth, float newHeight) {
-    width = newWidth;
-    height = newHeight;
-    rectShape.setSize(sf::Vector2f(width, height));
+void Rectangle::setPosition(const Point2D& newPosition) {
+    position = newPosition;
+    updateVertices();
 }
