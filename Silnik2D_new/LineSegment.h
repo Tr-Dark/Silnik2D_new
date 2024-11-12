@@ -5,6 +5,9 @@
 #include <SFML/Graphics.hpp>
 #include "PrimitiveRenderer.h"
 
+
+class PrimitiveRenderer;
+
 class LineSegment {
 private:
     Point2D start; // Pocz¹tkowy punkt odcinka
@@ -24,6 +27,7 @@ public:
 
     // Metoda do rysowania odcinka
     void draw(sf::RenderWindow& window, PrimitiveRenderer& renderer, sf::Color color = sf::Color::White, bool incremental = true) const;
+
 };
 
 #endif // LINE_SEGMENT_H

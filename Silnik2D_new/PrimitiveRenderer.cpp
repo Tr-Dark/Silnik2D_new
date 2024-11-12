@@ -71,3 +71,178 @@ void PrimitiveRenderer::drawLineBasic(sf::RenderWindow& window, const Point2D& p
 
     window.draw(line);
 }
+
+void PrimitiveRenderer::drawCircle(sf::RenderWindow& window, const Point2D& center, int radius, sf::Color color) {
+    int x0 = static_cast<int>(center.getX());
+    int y0 = static_cast<int>(center.getY());
+
+    int x = 0;
+    int y = radius;
+    int d = 1 - radius;
+
+
+    while (x <= y) {
+        sf::Vertex point1(sf::Vector2f(x0 + x, y0 + y), color);
+        sf::Vertex point2(sf::Vector2f(x0 - x, y0 + y), color);
+        sf::Vertex point3(sf::Vector2f(x0 + x, y0 - y), color);
+        sf::Vertex point4(sf::Vector2f(x0 - x, y0 - y), color);
+        sf::Vertex point5(sf::Vector2f(x0 + y, y0 + x), color);
+        sf::Vertex point6(sf::Vector2f(x0 - y, y0 + x), color);
+        sf::Vertex point7(sf::Vector2f(x0 + y, y0 - x), color);
+        sf::Vertex point8(sf::Vector2f(x0 - y, y0 - x), color);
+
+        window.draw(&point1, 1, sf::Points);
+        window.draw(&point2, 1, sf::Points);
+        window.draw(&point3, 1, sf::Points);
+        window.draw(&point4, 1, sf::Points);
+        window.draw(&point5, 1, sf::Points);
+        window.draw(&point6, 1, sf::Points);
+        window.draw(&point7, 1, sf::Points);
+        window.draw(&point8, 1, sf::Points);
+
+        if (d < 0) {
+            d += 2 * x + 3;
+        }
+        else {
+            d += 2 * (x - y) + 5;
+            y--;
+        }
+        x++;
+    }
+}
+
+void PrimitiveRenderer::drawEllipse(sf::RenderWindow& window, const Point2D& center, int radiusX, int radiusY, sf::Color color) {
+    int x0 = static_cast<int>(center.getX());
+    int y0 = static_cast<int>(center.getY());
+
+    int x = 0;
+    int y = radiusY;
+    int radiusX2 = radiusX * radiusX;
+    int radiusY2 = radiusY * radiusY;
+    int twoRadiusX2 = 2 * radiusX2;
+    int twoRadiusY2 = 2 * radiusY2;
+    int p;
+    int px = 0;
+    int py = twoRadiusX2 * y;
+
+
+
+    p = static_cast<int>(radiusY2 - (radiusX2 * radiusY) + (0.25 * radiusX2));
+    while (px < py) {
+        sf::Vertex point1(sf::Vector2f(x0 + x, y0 + y), color);
+        sf::Vertex point2(sf::Vector2f(x0 - x, y0 + y), color);
+        sf::Vertex point3(sf::Vector2f(x0 + x, y0 - y), color);
+        sf::Vertex point4(sf::Vector2f(x0 - x, y0 - y), color);
+
+        window.draw(&point1, 1, sf::Points);
+        window.draw(&point2, 1, sf::Points);
+        window.draw(&point3, 1, sf::Points);
+        window.draw(&point4, 1, sf::Points);
+
+        x++;
+        px += twoRadiusY2;
+        if (p < 0) {
+            p += radiusY2 + px;
+        }
+        else {
+            y--;
+            py -= twoRadiusX2;
+            p += radiusY2 + px - py;
+        }
+    }
+
+
+
+    p = static_cast<int>(radiusY2 * (x + 0.5) * (x + 0.5) + radiusX2 * (y - 1) * (y - 1) - radiusX2 * radiusY2);
+    while (y >= 0) {
+        sf::Vertex point5(sf::Vector2f(x0 + y, y0 + x), color);
+        sf::Vertex point6(sf::Vector2f(x0 - y, y0 + x), color);
+        sf::Vertex point7(sf::Vector2f(x0 + y, y0 - x), color);
+        sf::Vertex point8(sf::Vector2f(x0 - y, y0 - x), color);
+
+        window.draw(&point5, 1, sf::Points);
+        window.draw(&point6, 1, sf::Points);
+        window.draw(&point7, 1, sf::Points);
+        window.draw(&point8, 1, sf::Points);
+
+        y--;
+        py -= twoRadiusX2;
+        if (p > 0) {
+            p += radiusX2 - py;
+        }
+        else {
+            x++;
+            px += twoRadiusY2;
+            p += radiusX2 - py + px;
+        }
+    }
+}
+
+bool PrimitiveRenderer::drawPolygon(sf::RenderWindow& window, const std::vector<Point2D>& points, sf::Color color, bool closed) {
+    if (points.size() < 2) return false;
+
+    std::vector<LineSegment> segments;
+    for (size_t i = 0; i < points.size() - 1; ++i) {
+        segments.emplace_back(points[i], points[i + 1]);
+    }
+    if (closed) {
+        segments.emplace_back(points.back(), points[0]);
+    }
+
+    if (checkForIntersections(segments)) {
+        return false;
+    }
+
+    for (const auto& segment : segments) {
+        segment.draw(window, *this, color, true);
+        return true;
+    }
+}
+
+bool PrimitiveRenderer::checkForIntersections(const std::vector<LineSegment>& segments) {
+    for (size_t i = 0; i < segments.size(); ++i) {
+        for (size_t j = i + 1; j < segments.size(); ++j) {
+            if (doIntersect(segments[i].getStart(), segments[i].getEnd(), segments[j].getStart(), segments[j].getEnd())) {
+                return true; 
+            }
+        }
+    }
+    return false; 
+}
+
+bool PrimitiveRenderer::doIntersect(const Point2D& p1, const Point2D& q1, const Point2D& p2, const Point2D& q2)
+{
+    auto crossProduct = [](const Point2D& a, const Point2D& b, const Point2D& c) {
+        return (b.getX() - a.getX()) * (c.getY() - a.getY()) - (b.getY() - a.getY()) * (c.getX() - a.getX());
+        };
+
+    float d1 = crossProduct(p1, q1, p2);
+    float d2 = crossProduct(p1, q1, q2);
+    float d3 = crossProduct(p2, q2, p1);
+    float d4 = crossProduct(p2, q2, q1);
+
+    if (d1 * d2 < 0 && d3 * d4 < 0) return true;
+
+    return false;
+}
+
+
+void PrimitiveRenderer::drawFilledCircle(sf::RenderWindow& window, const Point2D& center, int radius, sf::Color color) {
+    for (int y = -radius; y <= radius; y++) {
+        for (int x = -radius; x <= radius; x++) {
+            if (x * x + y * y <= radius * radius) {
+                sf::Vertex point(sf::Vector2f(center.getX() + x, center.getY() + y), color);
+                window.draw(&point, 1, sf::Points);
+            }
+        }
+    }
+}
+
+
+void PrimitiveRenderer::borderFill(sf::RenderWindow& window, int x, int y, sf::Color fillColor, sf::Color borderColor) {
+    // Реалізація алгоритму border fill
+}
+
+void PrimitiveRenderer::floodFill(sf::RenderWindow& window, int x, int y, sf::Color fillColor, sf::Color oldColor) {
+    // Реалізація алгоритму flood fill
+}

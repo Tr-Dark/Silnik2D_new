@@ -209,10 +209,11 @@ int main() {
 
         // Rysujemy t³o na pocz¹tku
         window.draw(backgroundSprite);
-
+        
+        renderer.drawCircle(window, Point2D(10, 10), 50, sf::Color::Cyan);
 
         rectangle.draw(window);
-        circle.draw(window);
+        //circle.draw(window);
         window.draw(sprite);
         position.draw(window);
 
