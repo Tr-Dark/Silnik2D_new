@@ -1,5 +1,7 @@
 ﻿#include "PrimitiveRenderer.h"
 #include <cmath> 
+#include <stack>
+#include <set>
 
 void PrimitiveRenderer::drawLineIncremental(sf::RenderWindow& window, const Point2D& p1, const Point2D& p2, sf::Color color) {
     int x0 = static_cast<int>(p1.getX());
@@ -226,7 +228,6 @@ bool PrimitiveRenderer::doIntersect(const Point2D& p1, const Point2D& q1, const 
     return false;
 }
 
-
 void PrimitiveRenderer::drawFilledCircle(sf::RenderWindow& window, const Point2D& center, int radius, sf::Color color) {
     for (int y = -radius; y <= radius; y++) {
         for (int x = -radius; x <= radius; x++) {
@@ -238,11 +239,139 @@ void PrimitiveRenderer::drawFilledCircle(sf::RenderWindow& window, const Point2D
     }
 }
 
+#include <stack>
+#include <set>
+#include <SFML/Graphics.hpp>
+#include "PrimitiveRenderer.h"
 
 void PrimitiveRenderer::borderFill(sf::RenderWindow& window, int x, int y, sf::Color fillColor, sf::Color borderColor) {
-    // Реалізація алгоритму border fill
+    std::stack<sf::Vector2i> points;
+    std::set<std::pair<int, int>> visited;
+    points.push(sf::Vector2i(x, y));
+
+    // Створюємо RenderTexture для захоплення вмісту RenderWindow
+    sf::RenderTexture renderTexture;
+    renderTexture.create(window.getSize().x, window.getSize().y);
+    renderTexture.clear(sf::Color::Transparent);  // Очистка текстури
+
+    // Копіюємо вміст вікна у RenderTexture
+    renderTexture.display(); // Фіксуємо зміни в renderTexture
+    sf::Texture texture = renderTexture.getTexture();
+    sf::Image screenshot = texture.copyToImage(); // Копіюємо в sf::Image
+
+    // Основний алгоритм border fill
+    while (!points.empty()) {
+        sf::Vector2i p = points.top();
+        points.pop();
+
+        if (p.x < 0 || p.x >= window.getSize().x || p.y < 0 || p.y >= window.getSize().y) continue;
+        if (visited.find({ p.x, p.y }) != visited.end()) continue;
+        visited.insert({ p.x, p.y });
+
+        sf::Color currentColor = screenshot.getPixel(p.x, p.y);
+
+        if (currentColor != borderColor && currentColor != fillColor) {
+            sf::Vertex point(sf::Vector2f(p.x, p.y), fillColor);
+            window.draw(&point, 1, sf::Points);
+
+            points.push(sf::Vector2i(p.x + 1, p.y)); // Праворуч
+            points.push(sf::Vector2i(p.x - 1, p.y)); // Ліворуч
+            points.push(sf::Vector2i(p.x, p.y + 1)); // Вниз
+            points.push(sf::Vector2i(p.x, p.y - 1)); // Вгору
+        }
+    }
+
+    window.display();  // Оновлення вікна після заповнення
 }
 
+
 void PrimitiveRenderer::floodFill(sf::RenderWindow& window, int x, int y, sf::Color fillColor, sf::Color oldColor) {
-    // Реалізація алгоритму flood fill
+    std::stack<sf::Vector2i> points;
+    std::set<std::pair<int, int>> visited;
+    points.push(sf::Vector2i(x, y));
+
+    // Використання sf::RenderTexture для захоплення зображення вікна
+    sf::RenderTexture renderTexture;
+    renderTexture.create(window.getSize().x, window.getSize().y);
+    renderTexture.display();  // Оновлюємо вміст
+    sf::Texture texture = renderTexture.getTexture();
+    sf::Image screenshot = texture.copyToImage();
+
+    // Основний цикл алгоритму flood fill
+    while (!points.empty()) {
+        sf::Vector2i p = points.top();
+        points.pop();
+
+        // Перевірка меж області
+        if (p.x < 0 || p.x >= window.getSize().x || p.y < 0 || p.y >= window.getSize().y)
+            continue;
+
+        // Перевірка на повторне відвідування
+        if (visited.find({ p.x, p.y }) != visited.end())
+            continue;
+        visited.insert({ p.x, p.y });
+
+        sf::Color currentColor = screenshot.getPixel(p.x, p.y);
+
+        if (currentColor == oldColor) {
+            sf::Vertex point(sf::Vector2f(p.x, p.y), fillColor);
+            window.draw(&point, 1, sf::Points);
+
+            // Додавання сусідніх точок до стеку
+            points.push(sf::Vector2i(p.x + 1, p.y)); // Праворуч
+            points.push(sf::Vector2i(p.x - 1, p.y)); // Ліворуч
+            points.push(sf::Vector2i(p.x, p.y + 1)); // Вниз
+            points.push(sf::Vector2i(p.x, p.y - 1)); // Вгору
+        }
+    }
+    // Оновлення вікна після завершення заповнення
+    window.display();
+}
+
+void PrimitiveRenderer::drawFilledPolygon(sf::RenderWindow& window, const std::vector<Point2D>& points, sf::Color fillColor) {
+    if (points.size() < 3) return; // Багатокутник повинен мати як мінімум 3 вершини
+
+    // Знаходимо мінімальний і максимальний Y, щоб обмежити діапазон сканування
+    int minY = static_cast<int>(points[0].getY());
+    int maxY = static_cast<int>(points[0].getY());
+    for (const auto& point : points) {
+        minY = std::min(minY, static_cast<int>(point.getY()));
+        maxY = std::max(maxY, static_cast<int>(point.getY()));
+    }
+
+    // Проходимося по кожній скануючій лінії від minY до maxY
+    for (int y = minY; y <= maxY; ++y) {
+        std::vector<int> intersections;
+
+        // Знаходимо перетини скануючої лінії з кожним відрізком багатокутника
+        for (size_t i = 0; i < points.size(); ++i) {
+            Point2D p1 = points[i];
+            Point2D p2 = points[(i + 1) % points.size()];
+
+            // Перевірка, чи перетинає відрізок лінію сканування на рівні y
+            if ((p1.getY() <= y && p2.getY() > y) || (p2.getY() <= y && p1.getY() > y)) {
+                // Вираховуємо X-координату точки перетину
+                float dx = p2.getX() - p1.getX();
+                float dy = p2.getY() - p1.getY();
+                int x = static_cast<int>(p1.getX() + dx * (y - p1.getY()) / dy);
+                intersections.push_back(x);
+            }
+        }
+
+        // Сортуємо всі точки перетину
+        std::sort(intersections.begin(), intersections.end());
+
+        // Заповнюємо проміжки між парами точок
+        for (size_t i = 0; i < intersections.size(); i += 2) {
+            if (i + 1 < intersections.size()) {
+                int xStart = intersections[i];
+                int xEnd = intersections[i + 1];
+
+                for (int x = xStart; x <= xEnd; ++x) {
+                    sf::Vertex point(sf::Vector2f(x, y), fillColor);
+                    window.draw(&point, 1, sf::Points);
+                }
+            }
+        }
+    }
 }

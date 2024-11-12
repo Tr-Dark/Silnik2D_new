@@ -20,6 +20,7 @@ public:
     void drawFilledCircle(sf::RenderWindow& window, const Point2D& center, int radius, sf::Color color);
     void borderFill(sf::RenderWindow& window, int x, int y, sf::Color fillColor, sf::Color borderColor);
     void floodFill(sf::RenderWindow& window, int x, int y, sf::Color fillColor, sf::Color oldColor);
+    void drawFilledPolygon(sf::RenderWindow& window, const std::vector<Point2D>& points, sf::Color fillColor);
 
 private:
     bool checkForIntersections(const std::vector<LineSegment>& segments);
