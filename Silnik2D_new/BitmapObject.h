@@ -1,30 +1,15 @@
-﻿#ifndef BITMAP_OBJECT_H
-#define BITMAP_OBJECT_H
+﻿#ifndef BITMAPOBJECT_H
+#define BITMAPOBJECT_H
 
 #include <SFML/Graphics.hpp>
-#include "DrawableObject.h"
-#include "TransformableObject.h"
-#include <vector>
 
-class BitmapObject : public DrawableObject, public TransformableObject {
-public:
-    BitmapObject();
-
-    // Метод для завантаження текстур із файлів
-    bool addTexture(const sf::Texture& texture);
-
-    // Метод для вибору активної текстури
-    void setTexture(int index);
-
-    // Реалізація методу draw з DrawableObject
-    void draw(sf::RenderWindow& window, PrimitiveRenderer& renderer) override;
-
+class BitmapObject {
 protected:
-    sf::Sprite sprite;                       // Спрайт для відображення текстури
-    std::vector<sf::Texture> textures;       // Колекція текстур
+    sf::Sprite sprite;
 
-private:
-    int currentTextureIndex;                 // Поточний індекс активної текстури
+public:
+    virtual void setTexture(const sf::Texture& texture); // Оновлено для прийому текстури
+    virtual void setTextureRect(const sf::IntRect& rect);
 };
 
-#endif // BITMAP_OBJECT_H
+#endif // BITMAPOBJECT_H

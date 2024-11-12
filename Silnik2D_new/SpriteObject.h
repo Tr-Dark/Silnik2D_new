@@ -1,19 +1,19 @@
-#ifndef SPRITE_OBJECT_H
-#define SPRITE_OBJECT_H
+﻿#ifndef SPRITEOBJECT_H
+#define SPRITEOBJECT_H
 
-#include <SFML/Graphics.hpp>
 #include "BitmapObject.h"
-#include "AnimatedObject.h"
+#include <vector>
+#include "PrimitiveRenderer.h"
 
-class SpriteObject : public BitmapObject, public AnimatedObject {
+class SpriteObject : public BitmapObject {
+protected:
+    std::vector<sf::Texture> frames;
+    int currentFrame;
+
 public:
     SpriteObject();
-    void animate() override;
-    void draw(sf::RenderWindow& window, PrimitiveRenderer& renderer) override;
-
-protected:
-    int currentFrame;
-    std::vector<sf::Texture> frames;
+    virtual void animate();
+    virtual void draw(sf::RenderWindow& window, PrimitiveRenderer& renderer);
 };
 
-#endif // SPRITE_OBJECT_H
+#endif // SPRITEOBJECT_H

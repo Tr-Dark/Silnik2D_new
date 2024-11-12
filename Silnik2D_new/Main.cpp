@@ -243,8 +243,8 @@ int main() {
 int main() {
     sf::RenderWindow window(sf::VideoMode(800, 600), "Game with Animated Player");
     BitmapHandler bmp;
-    bmp.loadFromFile("sprite1.png", 1);
-    bmp.loadFromFile("sprite2.png", 2);
+    bmp.loadFromFile("../images/asd.png", 1);
+    bmp.loadFromFile("../images/asd2.png", 2);
 
     Player player;
     player.setTexture(bmp.getTexture(1));
