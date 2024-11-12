@@ -1,4 +1,6 @@
 ﻿#include "PrimitiveRenderer.h"
+#include "Point2D.h"//dodalem to w primitive.
+#include "LineSegment.h"
 #include <cmath> 
 #include <stack>
 #include <set>

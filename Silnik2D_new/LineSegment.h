@@ -6,17 +6,17 @@
 #include "PrimitiveRenderer.h"
 
 
-//class PrimitiveRenderer;
+
 
 class LineSegment {
 private:
-    Point2D start; // Pocz¹tkowy punkt odcinka
-    Point2D end;   // Koñcowy punkt odcinka
+   Point2D start; // Pocz¹tkowy punkt odcinka
+   Point2D end;   // Koñcowy punkt odcinka
 
 public:
     // Konstruktor inicjalizuj¹cy pocz¹tek i koniec odcinka
     LineSegment(const Point2D& start, const Point2D& end);
-
+   
     // Metody dostêpu do punktów pocz¹tkowego i koñcowego
     Point2D getStart() const;
     Point2D getEnd() const;

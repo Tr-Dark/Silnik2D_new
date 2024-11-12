@@ -2,12 +2,12 @@
 #define PRIMITIVE_RENDERER_H
 
 #include <SFML/Graphics.hpp>
-#include "Point2D.h"
-#include "LineSegment.h"
+//#include "Point2D.h"
+//#include "LineSegment.h"
 #include <vector>
 
 class LineSegment;
-
+class Point2D;
 
 class PrimitiveRenderer {
 public:

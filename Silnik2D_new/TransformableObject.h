@@ -3,6 +3,7 @@
 
 #include "GameObject.h"
 
+
 class TransformableObject : public virtual GameObject {
 public:
     virtual void translate(float dx, float dy) = 0;
@@ -12,6 +13,8 @@ public:
     virtual void scale(float factorX, float factorY) = 0;
 
     virtual ~TransformableObject() {}
+
+
 };
 
 #endif // TRANSFORMABLE_OBJECT_H
