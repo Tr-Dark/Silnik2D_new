@@ -21,7 +21,7 @@ void Rectangle::updateVertices() {
     vertices.push_back(Point2D(position.getX(), position.getY() + height)); // Нижній лівий кут
 }
 
-void Rectangle::draw(sf::RenderWindow& window, PrimitiveRenderer& renderer) {
+void Rectangle::draw(sf::RenderWindow& window, PrimitiveRenderer& renderer, sf::Color color) {
     for (size_t i = 0; i < vertices.size(); ++i) {
         Point2D start = vertices[i];
         Point2D end = vertices[(i + 1) % vertices.size()]; // З'єднує останню вершину з першою

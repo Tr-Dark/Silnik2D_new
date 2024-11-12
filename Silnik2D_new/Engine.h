@@ -55,10 +55,13 @@
 //#endif // ENGINE_H
 
 // Engine.h
+#ifndef ENGINE_H
+#define ENGINE_H
 #include <SFML/Graphics.hpp>
 #include "BitmapHandler.h"
 #include "PrimitiveRenderer.h"
 #include "Point2D.h"
+#include <vector>
 
 class Engine {
 public:
@@ -83,3 +86,4 @@ private:
     float triangleRotation = 0.0f; // Кут обертання трикутника
 };
 
+#endif // ENGINE_H

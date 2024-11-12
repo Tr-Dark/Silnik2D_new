@@ -144,6 +144,7 @@
 #include "Player.h"
 #include "Rectangle.h"
 #include <vector>
+#include "Point2D.h"
 
 Engine::Engine(int width, int height, const std::string& title)
     : window(sf::VideoMode(width, height), title),

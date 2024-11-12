@@ -14,7 +14,7 @@ public:
     Rectangle(const Point2D& position, float width, float height, sf::Color color = sf::Color::White);
 
     // Перевизначення методів
-    void draw(sf::RenderWindow& window, PrimitiveRenderer& renderer) override;
+    void draw(sf::RenderWindow& window, PrimitiveRenderer& renderer, sf::Color color = sf::Color::White) override;
     void translate(float dx, float dy) override;
     void rotate(float angle) override;
     void scale(float factorX, float factorY) override;

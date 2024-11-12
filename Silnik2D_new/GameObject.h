@@ -9,7 +9,7 @@
 class GameObject {
 public:
     virtual void update() = 0;             
-    virtual void draw(sf::RenderWindow& window, PrimitiveRenderer& renderer) = 0;
+    virtual void draw(sf::RenderWindow& window, PrimitiveRenderer& renderer, sf::Color color = sf::Color::White) = 0;
     virtual ~GameObject() {}               
 };
 

@@ -6,7 +6,7 @@
 #include "PrimitiveRenderer.h"
 
 
-class PrimitiveRenderer;
+//class PrimitiveRenderer;
 
 class LineSegment {
 private:
