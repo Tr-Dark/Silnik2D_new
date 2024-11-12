@@ -1,24 +1,85 @@
-#ifndef ENGINE_H
-#define ENGINE_H
+﻿//#ifndef ENGINE_H
+//#define ENGINE_H
+//
+//#include <SFML/Graphics.hpp>
+//#include <string>
+//
+//class Engine {
+//public:
+//    Engine(int width, int height, const std::string& title, bool fullscreen = false, int fps = 60, sf::Color backgroundColor = sf::Color::Black);
+//
+//    void run();
+//
+//private:
+//    void processEvents();
+//    void update();
+//    void render();
+//    void logError(const std::string& message);
+//
+//    sf::RenderWindow window;
+//    sf::Color backgroundColor;
+//    int fps;
+//};
+//
+//#endif
 
+
+// Engine.h
+//#ifndef ENGINE_H
+//#define ENGINE_H
+//
+//#include <SFML/Graphics.hpp>
+//#include "Player.h"
+//#include "PrimitiveRenderer.h"
+//#include "BitmapHandler.h"
+//#include <vector>
+//#include "GameObject.h"
+//
+//class Engine {
+//public:
+//    Engine(int width, int height, const std::string& title);
+//    void run();
+//    //sf::Texture backgroundSprite;
+//
+//private:
+//    void processEvents();
+//    void update();
+//    void render();
+//
+//    sf::RenderWindow window;
+//    PrimitiveRenderer renderer;
+//    BitmapHandler bitmapHandler;
+//    std::vector<std::unique_ptr<GameObject>> gameObjects;
+//};
+//
+//#endif // ENGINE_H
+
+// Engine.h
 #include <SFML/Graphics.hpp>
-#include <string>
+#include "BitmapHandler.h"
+#include "PrimitiveRenderer.h"
+#include "Point2D.h"
 
 class Engine {
 public:
-    Engine(int width, int height, const std::string& title, bool fullscreen = false, int fps = 60, sf::Color backgroundColor = sf::Color::Black);
-
+    Engine(int width, int height, const std::string& title);
     void run();
+    void setBackground(const sf::Texture& texture);
 
 private:
     void processEvents();
     void update();
     void render();
-    void logError(const std::string& message);
 
     sf::RenderWindow window;
-    sf::Color backgroundColor;
-    int fps;
+    sf::Sprite backgroundSprite;
+    PrimitiveRenderer renderer;
+    BitmapHandler bmp;
+    bool backgroundLoaded = false;
+
+    // Трикутник
+    std::vector<Point2D> triangleVertices;
+    Point2D triangleCenter;
+    float triangleRotation = 0.0f; // Кут обертання трикутника
 };
 
-#endif

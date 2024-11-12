@@ -236,32 +236,79 @@ int main() {
 //}
 
 
+//#include <SFML/Graphics.hpp>
+//#include "Player.h"
+//#include "BitmapHandler.h"
+//
+//int main() {
+//    sf::RenderWindow window(sf::VideoMode(800, 600), "Game with Animated Player");
+//    BitmapHandler bmp;
+//    if (!bmp.loadFromFile("../images/asd.png", 1)
+//                || !bmp.loadFromFile("../images/asd2.png", 2)
+//                || !bmp.loadFromFile("../images/asd3.png", 3)
+//                || !bmp.loadFromFile("../images/asd4.png", 4)
+//                || !bmp.loadFromFile("../images/asd11.png", 5)
+//                || !bmp.loadFromFile("../images/asd12.png", 6)
+//                || !bmp.loadFromFile("../images/asd13.png", 7)
+//                || !bmp.loadFromFile("../images/lewy2.png", 8)
+//                || !bmp.loadFromFile("../images/lewy3.png", 9)
+//                || !bmp.loadFromFile("../images/lewy4.png", 10)
+//                || !bmp.loadFromFile("../images/gora2.png", 11)
+//                || !bmp.loadFromFile("../images/gora3.png", 12)
+//                || !bmp.loadFromFile("../images/gora4.png", 13)
+//                || !bmp.loadFromFile("../images/dol2.png", 14)
+//                || !bmp.loadFromFile("../images/dol3.png", 15)
+//                || !bmp.loadFromFile("../images/dol4.png", 16)) {
+//        
+//                return -1;
+//            }
+//
+//    Player player;
+//    player.setTexture(bmp.getTexture(1));
+//    PrimitiveRenderer renderer;
+//
+//    while (window.isOpen()) {
+//        sf::Event event;
+//        while (window.pollEvent(event)) {
+//            if (event.type == sf::Event::Closed)
+//                window.close();
+//            player.handleInput(event, bmp);
+//        }
+//
+//        window.clear();
+//        player.draw(window, renderer);
+//        window.display();
+//    }
+//
+//    return 0;
+//}
+
+
+//#include "Engine.h"
+//
+//int main() {
+//    Engine engine(800, 600, "Game Engine Demo");
+//    engine.run();
+//    return 0;
+//}
+
+
 #include <SFML/Graphics.hpp>
-#include "Player.h"
+#include "Engine.h"
 #include "BitmapHandler.h"
+#include <iostream>
 
 int main() {
-    sf::RenderWindow window(sf::VideoMode(800, 600), "Game with Animated Player");
-    BitmapHandler bmp;
-    bmp.loadFromFile("../images/asd.png", 1);
-    bmp.loadFromFile("../images/asd2.png", 2);
+    Engine engine(800, 600, "Demo with Background and Primitives");
 
-    Player player;
-    player.setTexture(bmp.getTexture(1));
-    PrimitiveRenderer renderer;
-
-    while (window.isOpen()) {
-        sf::Event event;
-        while (window.pollEvent(event)) {
-            if (event.type == sf::Event::Closed)
-                window.close();
-            player.handleInput(event, bmp);
-        }
-
-        window.clear();
-        player.draw(window, renderer);
-        window.display();
+    // Завантаження фону
+    sf::Texture backgroundTexture;
+    if (!backgroundTexture.loadFromFile("../images/tlo.jpg")) {
+        std::cerr << "Failed to load background image\n";
+        return -1;
     }
+    engine.setBackground(backgroundTexture);
 
+    engine.run();
     return 0;
 }

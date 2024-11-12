@@ -3,6 +3,7 @@
 
 #include <SFML/Graphics.hpp>
 #include "PrimitiveRenderer.h"
+#include "LineSegment.h"
 
 
 class GameObject {
