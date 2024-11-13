@@ -10,25 +10,31 @@ void Player::handleInput(const sf::Event& event, BitmapHandler& bmp, int& curren
         isMoving = true;
         switch (event.key.code) {
         case sf::Keyboard::Left:
-            animate();
+            //animate();
             currentBitmapIndex = (currentBitmapIndex + 1) % 4;
             currentBitmap = bitmapIndices_lewy[currentBitmapIndex];
             setTexture(bmp.getTexture(currentBitmap));  // Анімація ліворуч
             sprite.move(-10, 0);
             break;
         case sf::Keyboard::Right:
-            animate();
-            setTexture(bmp.getTexture(3));  // Анімація праворуч
+            //animate();
+            currentBitmapIndex = (currentBitmapIndex + 1) % 4;
+            currentBitmap = bitmapIndices[currentBitmapIndex];
+            setTexture(bmp.getTexture(currentBitmap));
             sprite.move(10, 0);
             break;
         case sf::Keyboard::Up:
-            animate();
-            setTexture(bmp.getTexture(4));  // Анімація вгору
+            //animate();
+            currentBitmapIndex = (currentBitmapIndex + 1) % 4;
+            currentBitmap = bitmapIndices_gora[currentBitmapIndex];
+            setTexture(bmp.getTexture(currentBitmap)); // Анімація вгору
             sprite.move(0, -10);
             break;
         case sf::Keyboard::Down:
-            animate();
-            setTexture(bmp.getTexture(5));  // Анімація вниз
+            //animate();
+            currentBitmapIndex = (currentBitmapIndex + 1) % 4;
+            currentBitmap = bitmapIndices_dol[currentBitmapIndex];
+            setTexture(bmp.getTexture(currentBitmap)); // Анімація вниз
             sprite.move(0, 10);
             break;
         default:
@@ -53,7 +59,7 @@ void Player::scale(float factorX, float factorY) {
     sprite.scale(factorX, factorY); // Масштабування спрайта
 }
 
-void Player::draw(sf::RenderWindow& window, PrimitiveRenderer& renderer)
+void Player::draw(sf::RenderWindow& window, PrimitiveRenderer& renderer, sf::Color color)
 {
     // Використовуємо спрайт для малювання гравця на екрані
     window.draw(sprite);  // sprite - об'єкт класу sf::Sprite, що містить текстуру гравця
@@ -64,10 +70,7 @@ void Player::draw(sf::RenderWindow& window, PrimitiveRenderer& renderer)
 
 void Player::animate()
 {
-}
 
-void Player::draw(sf::RenderWindow& window, PrimitiveRenderer& renderer, sf::Color color)
-{
 }
 
 // Оновлення гравця
@@ -75,4 +78,8 @@ void Player::update() {
     if (isMoving) {
         animate(); // Виклик анімації під час руху
     }
+}
+
+sf::Sprite& Player::getSprite() {
+    return sprite;  // Zwrócenie referencji do sprite
 }

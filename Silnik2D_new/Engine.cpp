@@ -146,12 +146,14 @@
 #include <vector>
 #include "Point2D.h"
 
+
 Engine::Engine(int width, int height, const std::string& title)
     : window(sf::VideoMode(width, height), title),
     triangleVertices{ Point2D(400, 300), Point2D(450, 350), Point2D(350, 350) },
     triangleCenter(400, 325) // Центр трикутника для обертання
 {
     window.setFramerateLimit(60);
+    //player = Player();
 }
 
 void Engine::setBackground(const sf::Texture& texture) {
@@ -165,15 +167,19 @@ void Engine::run() {
         processEvents();
         update();
         render();
+
     }
 }
 
 void Engine::processEvents() {
     sf::Event event;
+    int currentBitmap = 0;
     while (window.pollEvent(event)) {
         if (event.type == sf::Event::Closed)
             window.close();
-        else if (event.type == sf::Event::KeyPressed) {
+        player.handleInput(event, bmp, currentBitmap);
+
+        if (event.type == sf::Event::KeyPressed) {
             // Управління рухом
             switch (event.key.code) {
             case sf::Keyboard::W: // Вверх
@@ -231,7 +237,7 @@ void Engine::render() {
     if (backgroundLoaded) {
         window.draw(backgroundSprite);
     }
-
+    player.draw(window, renderer, sf::Color::White);
     // Малювання трикутника
     renderer.drawPolygon(window, triangleVertices, sf::Color::Yellow, true); // Замкнений трикутник
 

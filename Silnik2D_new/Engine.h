@@ -62,12 +62,15 @@
 #include "PrimitiveRenderer.h"
 #include "Point2D.h"
 #include <vector>
+#include "Player.h"
+#include <fstream>
 
 class Engine {
 public:
     Engine(int width, int height, const std::string& title);
     void run();
     void setBackground(const sf::Texture& texture);
+
     //void animate(sf::)
 
 private:
@@ -80,7 +83,7 @@ private:
     sf::Sprite backgroundSprite;
     PrimitiveRenderer renderer;
     BitmapHandler bmp;
-    //Player player;
+    Player player;
     bool backgroundLoaded = false;
 
     // Трикутник

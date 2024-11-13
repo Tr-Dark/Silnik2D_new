@@ -300,15 +300,13 @@ int main() {
 #include "AnimatedObject.h"
 #include "Player.h"
 
+
 int main() {
     Engine engine(800, 600, "Demo with Background and Primitives");
     
     BitmapHandler bmp;
     Player player;
-    sf::Sprite sprite;
-    int currentBitmap = 1;
-    sprite.setTexture(bmp.getTexture(currentBitmap));
-    sprite.setPosition(100, 100);
+   // sf::Sprite sprite;
 
         if (!bmp.loadFromFile("../images/asd.png", 1)
                     || !bmp.loadFromFile("../images/asd2.png", 2)
@@ -329,14 +327,22 @@ int main() {
             
                     return -1;
         }
-       
+        
+
     // Завантаження фону
     sf::Texture backgroundTexture;
     if (!backgroundTexture.loadFromFile("../images/tlo.jpg")) {
         std::cerr << "Failed to load background image\n";
         return -1;
     }
+   
+
     engine.setBackground(backgroundTexture);
+
+    int currentBitmap = 1;
+    player.getSprite().setTexture(bmp.getTexture(currentBitmap));  // Teraz możesz uzyskać dostęp do sprite poprzez gettera
+    player.getSprite().setPosition(100, 100);
+
     //engine.animate();;
     engine.run();
     return 0;
