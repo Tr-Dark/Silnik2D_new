@@ -5,13 +5,15 @@ Player::Player() : currentBitmapIndex(0), isMoving(false) {
     setTextureRect(sf::IntRect(0, 0, 50, 50)); // Прямокутник текстури спрайта, якщо використовується текстура
 }
 
-void Player::handleInput(const sf::Event& event, BitmapHandler& bmp) {
+void Player::handleInput(const sf::Event& event, BitmapHandler& bmp, int& currentBitmap) {
     if (event.type == sf::Event::KeyPressed) {
         isMoving = true;
         switch (event.key.code) {
         case sf::Keyboard::Left:
             animate();
-            setTexture(bmp.getTexture(2));  // Анімація ліворуч
+            currentBitmapIndex = (currentBitmapIndex + 1) % 4;
+            currentBitmap = bitmapIndices_lewy[currentBitmapIndex];
+            setTexture(bmp.getTexture(currentBitmap));  // Анімація ліворуч
             sprite.move(-10, 0);
             break;
         case sf::Keyboard::Right:
@@ -58,6 +60,14 @@ void Player::draw(sf::RenderWindow& window, PrimitiveRenderer& renderer)
 
     // Якщо потрібно малювати додаткові елементи, наприклад, прямокутник через PrimitiveRenderer:
     //renderer.drawRectangle(window, playerRectangle.getPosition(), playerRectangle.getWidth(), playerRectangle.getHeight(), sf::Color::Blue);
+}
+
+void Player::animate()
+{
+}
+
+void Player::draw(sf::RenderWindow& window, PrimitiveRenderer& renderer, sf::Color color)
+{
 }
 
 // Оновлення гравця

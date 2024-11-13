@@ -5,9 +5,6 @@
 #include <SFML/Graphics.hpp>
 #include "PrimitiveRenderer.h"
 
-
-
-
 class LineSegment {
 private:
    Point2D start; // Pocz¹tkowy punkt odcinka

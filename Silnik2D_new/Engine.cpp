@@ -157,6 +157,7 @@ Engine::Engine(int width, int height, const std::string& title)
 void Engine::setBackground(const sf::Texture& texture) {
     backgroundSprite.setTexture(texture);
     backgroundLoaded = true;
+
 }
 
 void Engine::run() {
@@ -225,6 +226,7 @@ void Engine::update() {
 
 void Engine::render() {
     window.clear(sf::Color::White);
+    //player.animate();
 
     if (backgroundLoaded) {
         window.draw(backgroundSprite);
