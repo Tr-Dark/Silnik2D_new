@@ -70,15 +70,13 @@ public:
     Engine(int width, int height, const std::string& title);
     void run();
     void setBackground(const sf::Texture& texture);
-
-    //void animate(sf::)
-
-private:
+    void loadTextures();
     void processEvents();
     void update();
     void render();
-    
-
+    Player& getPlayer();
+private:
+  
     sf::RenderWindow window;
     sf::Sprite backgroundSprite;
     PrimitiveRenderer renderer;

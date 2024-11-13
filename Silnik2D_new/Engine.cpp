@@ -145,15 +145,53 @@
 #include "Rectangle.h"
 #include <vector>
 #include "Point2D.h"
+#include <iostream>
 
-
+/*
 Engine::Engine(int width, int height, const std::string& title)
     : window(sf::VideoMode(width, height), title),
     triangleVertices{ Point2D(400, 300), Point2D(450, 350), Point2D(350, 350) },
     triangleCenter(400, 325) // Центр трикутника для обертання
 {
     window.setFramerateLimit(60);
-    //player = Player();
+    BitmapHandler bmp;  // Tworzymy obiekt BitmapHandler
+    Player player(bmp); // Przekazujemy bmp do Playera
+
+}
+*/
+Engine::Engine(int width, int height, const std::string& title)
+    : window(sf::VideoMode(width, height), title),
+    triangleVertices{ Point2D(400, 300), Point2D(450, 350), Point2D(350, 350) },
+    triangleCenter(400, 325),  // Centrum trójkąta
+    bmp(), // Tworzenie obiektu BitmapHandler
+    player(bmp) // Tworzenie obiektu Player, przekazując bmp
+{
+    window.setFramerateLimit(60);
+}
+void Engine::loadTextures() {
+    if (!bmp.loadFromFile("../images/asd.png", 1)
+        || !bmp.loadFromFile("../images/asd2.png", 2)
+        || !bmp.loadFromFile("../images/asd3.png", 3)
+        || !bmp.loadFromFile("../images/asd4.png", 4)
+        || !bmp.loadFromFile("../images/asd11.png", 5)
+        || !bmp.loadFromFile("../images/asd12.png", 6)
+        || !bmp.loadFromFile("../images/asd13.png", 7)
+        || !bmp.loadFromFile("../images/lewy2.png", 8)
+        || !bmp.loadFromFile("../images/lewy3.png", 9)
+        || !bmp.loadFromFile("../images/lewy4.png", 10)
+        || !bmp.loadFromFile("../images/gora2.png", 11)
+        || !bmp.loadFromFile("../images/gora3.png", 12)
+        || !bmp.loadFromFile("../images/gora4.png", 13)
+        || !bmp.loadFromFile("../images/dol2.png", 14)
+        || !bmp.loadFromFile("../images/dol3.png", 15)
+        || !bmp.loadFromFile("../images/dol4.png", 16)) {
+        std::cerr << "Failed to load some images\n";
+        return;
+    }
+}
+Player& Engine::getPlayer()
+{
+    return player;
 }
 
 void Engine::setBackground(const sf::Texture& texture) {
@@ -163,16 +201,21 @@ void Engine::setBackground(const sf::Texture& texture) {
 }
 
 void Engine::run() {
+   // BitmapHandler bmp;  // Tworzymy obiekt BitmapHandler
+   // Player player(bmp); // Przekazujemy bmp do Playera
+
     while (window.isOpen()) {
         processEvents();
         update();
         render();
+        player.update();
 
     }
 }
 
 void Engine::processEvents() {
     sf::Event event;
+
     int currentBitmap = 0;
     while (window.pollEvent(event)) {
         if (event.type == sf::Event::Closed)
@@ -231,15 +274,16 @@ void Engine::update() {
 }
 
 void Engine::render() {
-    window.clear(sf::Color::White);
+    //window.clear(sf::Color::White);
     //player.animate();
-
+    player.draw(window, renderer, sf::Color::Black);
     if (backgroundLoaded) {
         window.draw(backgroundSprite);
     }
-    player.draw(window, renderer, sf::Color::White);
+   // player.draw(window, renderer, sf::Color::White);
     // Малювання трикутника
     renderer.drawPolygon(window, triangleVertices, sf::Color::Yellow, true); // Замкнений трикутник
 
     window.display();
 }
+

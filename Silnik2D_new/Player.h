@@ -8,7 +8,7 @@
 
 class Player : public SpriteObject, public ShapeObject {
 public:
-    Player();
+    Player(BitmapHandler& bmp);
     void handleInput(const sf::Event& event, BitmapHandler& bmp, int& currentBitmap);
     void update() override;
     void translate(float dx, float dy) override;
@@ -18,6 +18,7 @@ public:
     void animate() override;
     void draw(sf::RenderWindow& window, PrimitiveRenderer& renderer, sf::Color color = sf::Color::White) override;
     sf::Sprite& getSprite();
+    void setTexture(const sf::Texture& texture);
 
 private:
     bool isMoving;

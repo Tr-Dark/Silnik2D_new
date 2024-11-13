@@ -1,9 +1,21 @@
 ﻿#include "Player.h"
 #include "BitmapHandler.h"
+#include <SFML/Graphics.hpp>
+#include <iostream>
 
-Player::Player() : currentBitmapIndex(0), isMoving(false) {
-    setTextureRect(sf::IntRect(0, 0, 50, 50)); // Прямокутник текстури спрайта, якщо використовується текстура
+Player::Player(BitmapHandler& bmp) : currentBitmapIndex(0), isMoving(false) {
+    
+setTextureRect(sf::IntRect(0, 0, 50, 50)); // Прямокутник текстури спрайта, якщо використовується текстура
+
+setTexture(bmp.getTexture(bitmapIndices[0]));  // Przypisanie tekstury do sprite
+sprite.setPosition(100, 100);
+  
 }
+
+void Player::setTexture(const sf::Texture& texture) {
+    sprite.setTexture(texture);  // Ustawienie tekstury na sprite
+}
+
 
 void Player::handleInput(const sf::Event& event, BitmapHandler& bmp, int& currentBitmap) {
     if (event.type == sf::Event::KeyPressed) {
@@ -20,7 +32,7 @@ void Player::handleInput(const sf::Event& event, BitmapHandler& bmp, int& curren
             //animate();
             currentBitmapIndex = (currentBitmapIndex + 1) % 4;
             currentBitmap = bitmapIndices[currentBitmapIndex];
-            setTexture(bmp.getTexture(currentBitmap));
+            setTexture(bmp.getTexture(currentBitmap)); 
             sprite.move(10, 0);
             break;
         case sf::Keyboard::Up:
@@ -61,6 +73,9 @@ void Player::scale(float factorX, float factorY) {
 
 void Player::draw(sf::RenderWindow& window, PrimitiveRenderer& renderer, sf::Color color)
 {
+    if (sprite.getTexture() == nullptr) {
+        std::cerr << "Sprite texture is null!" << std::endl;
+    }
     // Використовуємо спрайт для малювання гравця на екрані
     window.draw(sprite);  // sprite - об'єкт класу sf::Sprite, що містить текстуру гравця
 

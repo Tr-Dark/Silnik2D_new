@@ -303,11 +303,11 @@ int main() {
 
 int main() {
     Engine engine(800, 600, "Demo with Background and Primitives");
-    
+    engine.loadTextures();
     BitmapHandler bmp;
-    Player player;
+    Player player(bmp);
    // sf::Sprite sprite;
-
+    /*
         if (!bmp.loadFromFile("../images/asd.png", 1)
                     || !bmp.loadFromFile("../images/asd2.png", 2)
                     || !bmp.loadFromFile("../images/asd3.png", 3)
@@ -328,7 +328,7 @@ int main() {
                     return -1;
         }
         
-
+        */
     // Завантаження фону
     sf::Texture backgroundTexture;
     if (!backgroundTexture.loadFromFile("../images/tlo.jpg")) {
@@ -337,13 +337,9 @@ int main() {
     }
    
 
-    engine.setBackground(backgroundTexture);
+   engine.setBackground(backgroundTexture);
+   engine.getPlayer().getSprite().setPosition(100, 100);
 
-    int currentBitmap = 1;
-    player.getSprite().setTexture(bmp.getTexture(currentBitmap));  // Teraz możesz uzyskać dostęp do sprite poprzez gettera
-    player.getSprite().setPosition(100, 100);
-
-    //engine.animate();;
     engine.run();
     return 0;
 }
