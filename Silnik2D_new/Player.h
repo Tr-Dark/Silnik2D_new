@@ -25,7 +25,7 @@ private:
     const int bitmapIndices_lewy[4] = { 2,8, 9, 10 };
     const int bitmapIndices_gora[4] = { 3,11, 12, 13 };
     const int bitmapIndices_dol[4] = { 4,14, 15, 16 };
-    sf::Sprite sprite;
+    //sf::Sprite sprite;
 };
 
 #endif // PLAYER_H

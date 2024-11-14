@@ -338,9 +338,8 @@ int main() {
         return -1;
     }
    
-
-   engine.setBackground(backgroundTexture);
-   engine.getPlayer().getSprite().setPosition(100, 100);
+    engine.setBackground(backgroundTexture);
+    engine.getPlayer().getSprite().setPosition(100, 100);
 
     engine.run();
     return 0;

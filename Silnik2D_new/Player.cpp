@@ -5,7 +5,7 @@
 
 Player::Player(BitmapHandler& bmp) : currentBitmapIndex(0), isMoving(false) {
     
-setTextureRect(sf::IntRect(0, 0, 50, 50)); // Прямокутник текстури спрайта, якщо використовується текстура
+setTextureRect(sf::IntRect(0, 0, 200, 200)); // Прямокутник текстури спрайта, якщо використовується текстура
 
 setTexture(bmp.getTexture(bitmapIndices_prawy[0]));  // Przypisanie tekstury do sprite
 sprite.setPosition(100, 100);
@@ -13,7 +13,7 @@ sprite.setPosition(100, 100);
 }
 
 void Player::setTexture(const sf::Texture& texture) {
-    sprite.setTexture(texture);  // Ustawienie tekstury na sprite
+    sprite.setTexture(texture);// Ustawienie tekstury na sprite
 }
 
 
@@ -24,30 +24,34 @@ void Player::handleInput(const sf::Event& event, BitmapHandler& bmp, int& curren
         
         switch (event.key.code) {
         case sf::Keyboard::Left:
-            //animate();
+            std::cout << "Left\n";
             currentBitmapIndex = (currentBitmapIndex + 1) % 4;
             currentBitmap = bitmapIndices_lewy[currentBitmapIndex];
+            std::cout << currentBitmap << '\n';
             setTexture(bmp.getTexture(currentBitmap));  // Анімація ліворуч
             sprite.move(-10, 0);
             break;
         case sf::Keyboard::Right:
-            //animate();
+            std::cout << "Right\n";
             currentBitmapIndex = (currentBitmapIndex + 1) % 4;
             currentBitmap = bitmapIndices_prawy[currentBitmapIndex];
+            std::cout << currentBitmap << '\n';
             setTexture(bmp.getTexture(currentBitmap)); 
             sprite.move(10, 0);
             break;
         case sf::Keyboard::Up:
-            //animate();
+            std::cout << "Up\n";
             currentBitmapIndex = (currentBitmapIndex + 1) % 4;
             currentBitmap = bitmapIndices_gora[currentBitmapIndex];
+            std::cout << currentBitmap << '\n';
             setTexture(bmp.getTexture(currentBitmap)); // Анімація вгору
             sprite.move(0, -10);
             break;
         case sf::Keyboard::Down:
-            //animate();
+            std::cout << "Down\n";
             currentBitmapIndex = (currentBitmapIndex + 1) % 4;
             currentBitmap = bitmapIndices_dol[currentBitmapIndex];
+            std::cout << currentBitmap << '\n';
             setTexture(bmp.getTexture(currentBitmap)); // Анімація вниз
             sprite.move(0, 10);
             break;
@@ -88,7 +92,7 @@ void Player::animate()
 // Оновлення гравця
 void Player::update() {
     if (isMoving) {
-        animate(); // Виклик анімації під час руху
+        //animate(); // Виклик анімації під час руху
     }
 }
 

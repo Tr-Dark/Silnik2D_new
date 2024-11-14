@@ -189,6 +189,7 @@ void Engine::loadTextures() {
         std::cerr << "Failed to load some images\n";
         return;
     }
+    else std::cout << "texture loaded\n";
 }
 Player& Engine::getPlayer()
 {
@@ -202,8 +203,8 @@ void Engine::setBackground(const sf::Texture& texture) {
 }
 
 void Engine::run() {
-   // BitmapHandler bmp;  // Tworzymy obiekt BitmapHandler
-   // Player player(bmp); // Przekazujemy bmp do Playera
+    BitmapHandler bmp;  // Tworzymy obiekt BitmapHandler
+    Player player(bmp); // Przekazujemy bmp do Playera
     
     while (window.isOpen()) {        
         processEvents();
@@ -215,12 +216,11 @@ void Engine::run() {
 
 void Engine::processEvents() {
     sf::Event event;
-
     int currentBitmap = 0;
     while (window.pollEvent(event)) {
-        if (event.type == sf::Event::Closed)
-            window.close();
-        player.handleInput(event, bmp, currentBitmap);
+        if (event.type == sf::Event::Closed) {window.close();}
+            
+            player.handleInput(event, bmp, currentBitmap);
 
         if (event.type == sf::Event::KeyPressed) {
             // Управління рухом
@@ -228,6 +228,7 @@ void Engine::processEvents() {
             case sf::Keyboard::W: // Вверх
                 for (auto& point : triangleVertices) point.translate(0, -10);
                 triangleCenter.translate(0, -10);
+
                 break;
             case sf::Keyboard::S: // Вниз
                 for (auto& point : triangleVertices) point.translate(0, 10);
@@ -274,21 +275,13 @@ void Engine::update() {
 }
 
 void Engine::render() {
-    //window.clear(sf::Color::White);
     //player.animate();
-    player.draw(window, renderer);
     if (backgroundLoaded) {
         window.draw(backgroundSprite);
     }
-    //player.draw(window, renderer, sf::Color::White);
+    player.draw(window, renderer);
     // Малювання трикутника
-    std::vector<Point2D> vec;
-    vec.push_back({100, 100});
-    vec.push_back({ 256, 234 });
-    vec.push_back({ 348, 123 });
-    vec.push_back({ 132, 432 });
-    renderer.drawEllipse(window, {300, 300}, 80, 40, sf::Color::Black);
-    renderer.drawPolygon(window, triangleVertices, sf::Color::Yellow, true); // Замкнений трикутник
+    renderer.drawPolygon(window, triangleVertices, sf::Color::Yellow, 0); // Замкнений трикутник
 
     window.display();
 }

@@ -76,7 +76,7 @@ public:
     void render();
     Player& getPlayer();
 private:
-  
+    //sf::Event event;
     sf::RenderWindow window;
     sf::Sprite backgroundSprite;
     PrimitiveRenderer renderer;
