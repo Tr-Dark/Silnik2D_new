@@ -118,7 +118,6 @@ void PrimitiveRenderer::drawCircle(sf::RenderWindow& window, const Point2D& cent
 void PrimitiveRenderer::drawEllipse(sf::RenderWindow& window, const Point2D& center, int radiusX, int radiusY, sf::Color color) {
     int x0 = static_cast<int>(center.getX());
     int y0 = static_cast<int>(center.getY());
-
     int x = 0;
     int y = radiusY;
     int radiusX2 = radiusX * radiusX;
@@ -128,8 +127,6 @@ void PrimitiveRenderer::drawEllipse(sf::RenderWindow& window, const Point2D& cen
     int p;
     int px = 0;
     int py = twoRadiusX2 * y;
-
-
 
     p = static_cast<int>(radiusY2 - (radiusX2 * radiusY) + (0.25 * radiusX2));
     while (px < py) {
@@ -155,14 +152,12 @@ void PrimitiveRenderer::drawEllipse(sf::RenderWindow& window, const Point2D& cen
         }
     }
 
-
-
     p = static_cast<int>(radiusY2 * (x + 0.5) * (x + 0.5) + radiusX2 * (y - 1) * (y - 1) - radiusX2 * radiusY2);
     while (y >= 0) {
-        sf::Vertex point5(sf::Vector2f(x0 + y, y0 + x), color);
-        sf::Vertex point6(sf::Vector2f(x0 - y, y0 + x), color);
-        sf::Vertex point7(sf::Vector2f(x0 + y, y0 - x), color);
-        sf::Vertex point8(sf::Vector2f(x0 - y, y0 - x), color);
+        sf::Vertex point5(sf::Vector2f(x0 + x, y0 + y), color);
+        sf::Vertex point6(sf::Vector2f(x0 - x, y0 + y), color);
+        sf::Vertex point7(sf::Vector2f(x0 + x, y0 - y), color);
+        sf::Vertex point8(sf::Vector2f(x0 - x, y0 - y), color);
 
         window.draw(&point5, 1, sf::Points);
         window.draw(&point6, 1, sf::Points);
