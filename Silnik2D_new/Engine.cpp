@@ -167,6 +167,7 @@ Engine::Engine(int width, int height, const std::string& title)
     player(bmp) // Tworzenie obiektu Player, przekazując bmp
 {
     window.setFramerateLimit(60);
+    
 }
 void Engine::loadTextures() {
     if (!bmp.loadFromFile("../images/asd.png", 1)
@@ -203,13 +204,12 @@ void Engine::setBackground(const sf::Texture& texture) {
 void Engine::run() {
    // BitmapHandler bmp;  // Tworzymy obiekt BitmapHandler
    // Player player(bmp); // Przekazujemy bmp do Playera
-
-    while (window.isOpen()) {
+    
+    while (window.isOpen()) {        
         processEvents();
         update();
         render();
         player.update();
-
     }
 }
 
@@ -276,12 +276,18 @@ void Engine::update() {
 void Engine::render() {
     //window.clear(sf::Color::White);
     //player.animate();
-    player.draw(window, renderer, sf::Color::Black);
+    player.draw(window, renderer);
     if (backgroundLoaded) {
         window.draw(backgroundSprite);
     }
-   // player.draw(window, renderer, sf::Color::White);
+    //player.draw(window, renderer, sf::Color::White);
     // Малювання трикутника
+    std::vector<Point2D> vec;
+    vec.push_back({100, 100});
+    vec.push_back({ 256, 234 });
+    vec.push_back({ 348, 123 });
+    vec.push_back({ 132, 432 });
+    renderer.drawEllipse(window, {300, 300}, 80, 40, sf::Color::Black);
     renderer.drawPolygon(window, triangleVertices, sf::Color::Yellow, true); // Замкнений трикутник
 
     window.display();

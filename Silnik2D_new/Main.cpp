@@ -306,8 +306,10 @@ int main() {
     engine.loadTextures();
     BitmapHandler bmp;
     Player player(bmp);
+    PrimitiveRenderer renderer;
+    
    // sf::Sprite sprite;
-    /*
+    
         if (!bmp.loadFromFile("../images/asd.png", 1)
                     || !bmp.loadFromFile("../images/asd2.png", 2)
                     || !bmp.loadFromFile("../images/asd3.png", 3)
@@ -328,7 +330,7 @@ int main() {
                     return -1;
         }
         
-        */
+        
     // Завантаження фону
     sf::Texture backgroundTexture;
     if (!backgroundTexture.loadFromFile("../images/tlo.jpg")) {

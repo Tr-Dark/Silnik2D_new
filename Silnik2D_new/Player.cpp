@@ -7,7 +7,7 @@ Player::Player(BitmapHandler& bmp) : currentBitmapIndex(0), isMoving(false) {
     
 setTextureRect(sf::IntRect(0, 0, 50, 50)); // Прямокутник текстури спрайта, якщо використовується текстура
 
-setTexture(bmp.getTexture(bitmapIndices[0]));  // Przypisanie tekstury do sprite
+setTexture(bmp.getTexture(bitmapIndices_prawy[0]));  // Przypisanie tekstury do sprite
 sprite.setPosition(100, 100);
   
 }
@@ -18,8 +18,10 @@ void Player::setTexture(const sf::Texture& texture) {
 
 
 void Player::handleInput(const sf::Event& event, BitmapHandler& bmp, int& currentBitmap) {
+    
     if (event.type == sf::Event::KeyPressed) {
         isMoving = true;
+        
         switch (event.key.code) {
         case sf::Keyboard::Left:
             //animate();
@@ -31,7 +33,7 @@ void Player::handleInput(const sf::Event& event, BitmapHandler& bmp, int& curren
         case sf::Keyboard::Right:
             //animate();
             currentBitmapIndex = (currentBitmapIndex + 1) % 4;
-            currentBitmap = bitmapIndices[currentBitmapIndex];
+            currentBitmap = bitmapIndices_prawy[currentBitmapIndex];
             setTexture(bmp.getTexture(currentBitmap)); 
             sprite.move(10, 0);
             break;
@@ -61,17 +63,12 @@ void Player::translate(float dx, float dy) {
     sprite.move(dx, dy); // Переміщення спрайта
 }
 
-// Обертання гравця
-void Player::rotate(float angle) {
-    sprite.rotate(angle); // Обертання спрайта
-}
-
 // Масштабування гравця
 void Player::scale(float factorX, float factorY) {
     sprite.scale(factorX, factorY); // Масштабування спрайта
 }
 
-void Player::draw(sf::RenderWindow& window, PrimitiveRenderer& renderer, sf::Color color)
+void Player::draw(sf::RenderWindow& window, PrimitiveRenderer& renderer)
 {
     if (sprite.getTexture() == nullptr) {
         std::cerr << "Sprite texture is null!" << std::endl;
