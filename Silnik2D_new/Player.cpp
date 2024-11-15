@@ -79,20 +79,41 @@ void Player::draw(sf::RenderWindow& window, PrimitiveRenderer& renderer)
     }
     // Використовуємо спрайт для малювання гравця на екрані
     window.draw(sprite);  // sprite - об'єкт класу sf::Sprite, що містить текстуру гравця
-
-    // Якщо потрібно малювати додаткові елементи, наприклад, прямокутник через PrimitiveRenderer:
-    //renderer.drawRectangle(window, playerRectangle.getPosition(), playerRectangle.getWidth(), playerRectangle.getHeight(), sf::Color::Blue);
 }
 
 void Player::animate()
 {
+    //if (isMoving) {
+    //    currentBitmapIndex = (currentBitmapIndex + 1) % 4; // Перехід до наступного кадру анімації
 
+    //    // Вибір текстури залежно від напрямку
+    //    if (sprite.getTexture() == nullptr) {
+    //        std::cerr << "Sprite texture is null during animation!" << std::endl;
+    //        return;
+    //    }
+
+    //    // Напрямок руху визначається поточним положенням спрайта
+    //    const sf::Texture* currentTexture = sprite.getTexture();
+
+    //    if (std::find(std::begin(bitmapIndices_prawy), std::end(bitmapIndices_prawy), currentBitmapIndex) != std::end(bitmapIndices_prawy)) {
+    //        setTexture(bmp.getTexture()); // Текстура для руху вправо
+    //    }
+    //    else if (std::find(std::begin(bitmapIndices_lewy), std::end(bitmapIndices_lewy), currentBitmapIndex) != std::end(bitmapIndices_lewy)) {
+    //        setTexture(currentTexture); // Текстура для руху вліво
+    //    }
+    //    else if (std::find(std::begin(bitmapIndices_gora), std::end(bitmapIndices_gora), currentBitmapIndex) != std::end(bitmapIndices_gora)) {
+    //        setTexture(currentTexture); // Текстура для руху вгору
+    //    }
+    //    else if (std::find(std::begin(bitmapIndices_dol), std::end(bitmapIndices_dol), currentBitmapIndex) != std::end(bitmapIndices_dol)) {
+    //        setTexture(currentTexture); // Текстура для руху вниз
+    //    }
+    //}
 }
 
 // Оновлення гравця
 void Player::update() {
     if (isMoving) {
-        //animate(); // Виклик анімації під час руху
+        animate(); // Виклик анімації під час руху
     }
 }
 

@@ -141,7 +141,6 @@ void Engine::setBackground(const sf::Texture& texture) {
 }
 
 void Engine::run() {  // Tworzymy obiekt BitmapHandler
-    Player player(bmp); // Przekazujemy bmp do Playera
     
     while (window.isOpen()) {        
         processEvents();

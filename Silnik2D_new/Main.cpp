@@ -294,13 +294,7 @@ int main() {
 
 int main() {
     Engine engine(800, 600, "Demo with Background and Primitives");
-    engine.loadTextures();
-    BitmapHandler bmp;
-    Player player(bmp);
-    PrimitiveRenderer renderer;
-        
-       
-        
+    engine.loadTextures();   
         
     // Завантаження фону
     sf::Texture backgroundTexture;
