@@ -296,19 +296,19 @@ int main() {
 
 int main() {
     std::array<std::string, 16> imagePaths = {
-    "../images/asd.png",
-    "../images/asd11.png",
-    "../images/asd12.png",
-    "../images/asd13.png",
-    "../images/asd2.png",
+    "../images/prawy1.png",
+    "../images/prawy2.png",
+    "../images/prawy3.png",
+    "../images/prawy4.png",
+    "../images/lewy1.png",
     "../images/lewy2.png",
     "../images/lewy3.png",
     "../images/lewy4.png",
-    "../images/asd3.png",
+    "../images/gora1.png",
     "../images/gora2.png",
     "../images/gora3.png",
     "../images/gora4.png",
-    "../images/asd4.png",
+    "../images/dol1.png",
     "../images/dol2.png",
     "../images/dol3.png",
     "../images/dol4.png"
