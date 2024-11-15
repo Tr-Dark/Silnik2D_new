@@ -22,7 +22,7 @@ public:
     void borderFill(sf::RenderWindow& window, int x, int y, sf::Color fillColor, sf::Color borderColor);
     void floodFill(sf::RenderWindow& window, int x, int y, sf::Color fillColor, sf::Color oldColor);
     void drawFilledPolygon(sf::RenderWindow& window, const std::vector<Point2D>& points, sf::Color fillColor);
-
+    static void scalePolygon(std::vector<Point2D>& polygon, float scaleX, float scaleY);
 private:
     bool checkForIntersections(const std::vector<LineSegment>& segments);
     bool doIntersect(const Point2D& p1, const Point2D& q1, const Point2D& p2, const Point2D& q2);

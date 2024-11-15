@@ -371,3 +371,26 @@ void PrimitiveRenderer::drawFilledPolygon(sf::RenderWindow& window, const std::v
         }
     }
 }
+
+void PrimitiveRenderer::scalePolygon(std::vector<Point2D>& polygon, float scaleX, float scaleY) {
+    // Знаходимо центр багатокутника
+    float centerX = 0.0f;
+    float centerY = 0.0f;
+
+    for (const auto& point : polygon) {
+        centerX += point.getX();
+        centerY += point.getY();
+    }
+    centerX /= polygon.size();
+    centerY /= polygon.size();
+
+    // Масштабування точок багатокутника
+    for (auto& point : polygon) {
+        float dx = point.getX() - centerX;
+        float dy = point.getY() - centerY;
+
+        point.setX(centerX + dx * scaleX);
+        point.setY(centerY + dy * scaleY);
+        std::cerr << "Error: " << centerX + dx * scaleX << std::endl;
+    }
+}

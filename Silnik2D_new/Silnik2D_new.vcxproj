@@ -143,11 +143,11 @@
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="Point2D.cpp" />
-    <ClCompile Include="Position.cpp" />
     <ClCompile Include="PrimitiveRenderer.cpp" />
     <ClCompile Include="Rectangle.cpp" />
     <ClCompile Include="Rectangle.h" />
     <ClCompile Include="SpriteObject.cpp" />
+    <ClCompile Include="Tools.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AnimatedObject.h" />
@@ -159,10 +159,10 @@
     <ClInclude Include="LineSegment.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="Point2D.h" />
-    <ClInclude Include="Position.h" />
     <ClInclude Include="PrimitiveRenderer.h" />
     <ClInclude Include="ShapeObject.h" />
     <ClInclude Include="SpriteObject.h" />
+    <ClInclude Include="Tools.h" />
     <ClInclude Include="TransformableObject.h" />
     <ClInclude Include="UpdatableObject.h" />
   </ItemGroup>

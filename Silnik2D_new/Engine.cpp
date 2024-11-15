@@ -1,107 +1,12 @@
-﻿//#include "Engine.h"
-//#include <string>
-//#include <iostream>
-//#include <fstream>
-//
-//
-//Engine::Engine(int width, int height, const std::string& title, bool fullscreen, int fps, sf::Color backgroundColor)
-//    : fps(fps), backgroundColor(backgroundColor) {
-//    try {
-//        if (fullscreen) {
-//            window.create(sf::VideoMode(width, height), title, sf::Style::Fullscreen);
-//        }
-//        else {
-//            window.create(sf::VideoMode(width, height), title, sf::Style::Close | sf::Style::Titlebar);
-//        }
-//
-//        window.setFramerateLimit(fps);
-//
-//        if (!window.isOpen()) {
-//            throw std::runtime_error("Failed to create the window.");
-//        }
-//    }
-//    catch (const std::exception& e) {
-//        logError(e.what());
-//    }
-//} 
-//
-//
-//
-//
-
-
-//void Engine::run() {
-//    while (window.isOpen()) {
-//        processEvents();
-//        update();
-//        render();
-//    }
-//}
-//
-//void Engine::processEvents() {
-//    sf::Event event;
-//    while (window.pollEvent(event)) {
-//        if (event.type == sf::Event::Closed) {
-//            window.close();
-//        }
-//    }
-//}
-//
-
-//Engine::Engine(int width, int height, const std::string& title)
-//    : window(sf::VideoMode(width, height), title) {
-//    window.setFramerateLimit(60);
-//
-//    // Завантаження ресурсів (текстур для анімацій)
-//    BitmapHandler& bmp = bitmapHandler;
-//    if (!bmp.loadFromFile("../images/asd.png", 1)
-//        || !bmp.loadFromFile("../images/asd2.png", 2)
-//        || !bmp.loadFromFile("../images/asd3.png", 3)
-//        || !bmp.loadFromFile("../images/asd4.png", 4)
-//        || !bmp.loadFromFile("../images/asd11.png", 5)
-//        || !bmp.loadFromFile("../images/asd12.png", 6)
-//        || !bmp.loadFromFile("../images/asd13.png", 7)
-//        || !bmp.loadFromFile("../images/lewy2.png", 8)
-//        || !bmp.loadFromFile("../images/lewy3.png", 9)
-//        || !bmp.loadFromFile("../images/lewy4.png", 10)
-//        || !bmp.loadFromFile("../images/gora2.png", 11)
-//        || !bmp.loadFromFile("../images/gora3.png", 12)
-//        || !bmp.loadFromFile("../images/gora4.png", 13)
-//        || !bmp.loadFromFile("../images/dol2.png", 14)
-//        || !bmp.loadFromFile("../images/dol3.png", 15)
-//        || !bmp.loadFromFile("../images/dol4.png", 16)) {
-//        std::cerr << "Error loading images." << std::endl;
-//        return;
-//    }
-//    sf::Texture backgroundTexture;
-//    if (!backgroundTexture.loadFromFile("../images/tlo.jpg")) {
-//        //return -1; // Jeśli nie udało się załadować obrazu, kończymy program
-//    }
-//    sf::Sprite backgroundSprite(backgroundTexture);
-//
-//    // Створення і додавання гравця
-//    auto player = std::make_unique<Player>();
-//    gameObjects.push_back(std::move(player));
-//}
-
-
-
-#include "Engine.h"
-#include "Player.h"
+﻿#include "Engine.h"
 #include "Rectangle.h"
-#include <vector>
-#include "Point2D.h"
-#include "Position.h"
-#include <iostream>
-#include "BitmapHandler.h"
-
 
 Engine::Engine(int width, int height, const std::string& title, std::array<std::string, 16> PlayerSprite)
     : window(sf::VideoMode(width, height), title),
     triangleVertices{ Point2D(400, 300), Point2D(430, 350), Point2D(370, 350) },
     triangleCenter(400, 334),  // Centrum trójkąta
     player(PlayerSprite), // Tworzenie obiektu Player, przekazując bmp
-    polyline{Point2D(200, 200), Point2D(250, 200), Point2D(250, 350), Point2D(200, 350)}
+    polyline{Point2D(200, 200), Point2D(250, 190), Point2D(350, 200), Point2D(250, 350), Point2D(200, 350)}
 {   
     std::cout << "Engine constructor\n";
     window.setFramerateLimit(60);
@@ -151,21 +56,69 @@ void Engine::processEvents() {
             // Управління рухом
             switch (event.key.code) {
             case sf::Keyboard::W: // Вверх
-                for (Point2D& point : triangleVertices) { point.translate(0, -10); }
-                triangleCenter.translate(0, -10);
+                // Якщо переміщення можливе, застосовуємо його
+                if (Tools::CheckMove(triangleVertices, 0, -10, window.getSize().x, window.getSize().y)) {
+                    for (Point2D& point : triangleVertices) {
+                        point.translate(0, -10);
+                    }
+                    triangleCenter.translate(0, -10);
+                }
 
+                // Якщо переміщення можливе, застосовуємо його
+                if (Tools::CheckMove(polyline, 0, -10, window.getSize().x, window.getSize().y)) {
+                    for (Point2D& point : polyline) {
+                        point.translate(0, -10);
+                    }
+                }
                 break;
             case sf::Keyboard::S: // Вниз
-                for (Point2D& point : triangleVertices) { point.translate(0, 10); }
-                triangleCenter.translate(0, 10);
+                 // Якщо переміщення можливе, застосовуємо його
+                if (Tools::CheckMove(triangleVertices, 0, 10, window.getSize().x, window.getSize().y)) {
+                    for (Point2D& point : triangleVertices) {
+                        point.translate(0, 10);
+                    }
+                    triangleCenter.translate(0, 10);
+                }
+
+                // Якщо переміщення можливе, застосовуємо його
+                if (Tools::CheckMove(polyline, 0, 10, window.getSize().x, window.getSize().y)) {
+                    for (Point2D& point : polyline) {
+                        point.translate(0, 10);
+                    }
+                }
+                
                 break;
             case sf::Keyboard::A: // Вліво
-                for (Point2D& point : triangleVertices) { point.translate(-10, 0); }
-                triangleCenter.translate(-10, 0);
+                // Якщо переміщення можливе, застосовуємо його
+                if (Tools::CheckMove(triangleVertices, -10, 0, window.getSize().x, window.getSize().y)) {
+                    for (Point2D& point : triangleVertices) {
+                        point.translate(-10, 0);
+                    }
+                    triangleCenter.translate(-10, 0);
+                }
+
+                // Якщо переміщення можливе, застосовуємо його
+                if (Tools::CheckMove(polyline, -20, 0, window.getSize().x, window.getSize().y)) {
+                    for (Point2D& point : polyline) {
+                        point.translate(-20, 0);
+                    }
+                }
                 break;
             case sf::Keyboard::D: // Вправо
-                for (Point2D& point : triangleVertices) { point.translate(10, 0); }
-                triangleCenter.translate(10, 0);
+                // Якщо переміщення можливе, застосовуємо його
+                if (Tools::CheckMove(triangleVertices, 10, 0, window.getSize().x, window.getSize().y)) {
+                    for (Point2D& point : triangleVertices) {
+                        point.translate(10, 0);
+                    }
+                    triangleCenter.translate(10, 0);
+                }
+
+                // Якщо переміщення можливе, застосовуємо його
+                if (Tools::CheckMove(polyline, 20, 0, window.getSize().x, window.getSize().y)) {
+                    for (Point2D& point : polyline) {
+                        point.translate(20, 0);
+                    }
+                }
                 break;
                 // Обертання
             case sf::Keyboard::I: // Обертання проти годинникової
@@ -182,6 +135,15 @@ void Engine::processEvents() {
             case sf::Keyboard::Delete:
                 clickPoints.clear();
                 break;// видяляє всі елементи в векторі 
+            case sf::Keyboard::Add: 
+                PrimitiveRenderer::scalePolygon(polyline, 1.2f, 1.2f);
+                break;
+            case sf::Keyboard::Subtract:
+                PrimitiveRenderer::scalePolygon(polyline, 0.6f, 0.6f);
+                break;// видяляє всі елементи в векторі 
+            case sf::Keyboard::R:
+                isRandomMove = !isRandomMove;
+                break;// видяляє всі елементи в векторі 
             case sf::Keyboard::C:
                 if (clearWindow)
                 {
@@ -197,6 +159,17 @@ void Engine::processEvents() {
 }
 
 void Engine::update() {
+    if (isRandomMove) {
+        float dx = Tools::getRandomOffset();
+        float dy = Tools::getRandomOffset();
+        if (Tools::CheckMove(triangleVertices, dx, dy, window.getSize().x, window.getSize().y)) {
+            for (Point2D& point : triangleVertices) {
+                point.translate(dx, dy);
+            }
+            triangleCenter.translate(dx, dy);
+        }
+    }
+
     // Обчислення обертання трикутника навколо центру
     float angleRad = triangleRotation * 3.14159f / 180.0f;
     float cosAngle = cos(angleRad);
@@ -223,7 +196,7 @@ void Engine::render() {
         player.draw(window, renderer);
 
         renderer.drawFilledPolygon(window, polyline, sf::Color::Yellow);//замальований чотирикутник 
-        renderer.drawPolyline(window, polyline, sf::Color::Black, 1);//чорний чотирикутник
+        //renderer.drawPolyline(window, polyline, sf::Color::Black, 1);//чорний чотирикутник
         renderer.drawFilledPolygon(window, triangleVertices, sf::Color::Black);//Малювання замкненого трикутника
         renderer.drawCircle(window, { 500, 500 }, 50, sf::Color::Green);
         renderer.drawFilledCircle(window, { 500, 500 }, 30, sf::Color::Red);

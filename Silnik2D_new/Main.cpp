@@ -293,9 +293,11 @@ int main() {
 #include <array>
 #include <string>
 
+//using namespace std;
+
 
 int main() {
-    std::array<std::string, 16> imagePaths = {
+    std::array<std::string, 16> PlayerSpriteimagePaths = {
     "../images/prawy1.png",
     "../images/prawy2.png",
     "../images/prawy3.png",
@@ -313,9 +315,10 @@ int main() {
     "../images/dol3.png",
     "../images/dol4.png"
     };
+    std::string backgroundFilePath = "../images/tlo.png";
 
 
-    Engine engine(800, 600, "Demo with Background and Primitives", imagePaths);
+    Engine engine(800, 600, "Demo with Background and Primitives", PlayerSpriteimagePaths);
         
     // Завантаження фону
     sf::Texture backgroundTexture;

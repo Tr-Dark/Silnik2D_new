@@ -27,6 +27,7 @@
         void update();
 
         void draw(sf::RenderWindow& window, PrimitiveRenderer& renderer, sf::Color color = sf::Color::White);
+        bool isWithinBounds(float dx, float dy, float windowWidth, float windowHeight) const;
     };
 
 #endif //POINT2D_H
