@@ -8,6 +8,7 @@ protected:
     sf::Sprite sprite;
 
 public:
+    BitmapObject();
     virtual void setTexture(const sf::Texture& texture); // Оновлено для прийому текстури
     virtual void setTextureRect(const sf::IntRect& rect);
 };

@@ -61,6 +61,7 @@
 #include "BitmapHandler.h"
 #include "PrimitiveRenderer.h"
 #include "Point2D.h"
+#include "Position.h"
 #include <vector>
 #include "Player.h"
 #include <fstream>
@@ -69,26 +70,31 @@ class Engine {
 public:
     Engine(int width, int height, const std::string& title);
     void run();
+    void logError(const std::string& message);
     void setBackground(const sf::Texture& texture);
     void loadTextures();
     void processEvents();
     void update();
     void render();
     Player& getPlayer();
+    ~Engine();
 private:
-    //sf::Event event;
     sf::RenderWindow window;
     sf::Sprite backgroundSprite;
     PrimitiveRenderer renderer;
     BitmapHandler bmp;
     Player player;
+    //Position mousePosition;
     bool backgroundLoaded = false;
 
     // Трикутник
     std::vector<Point2D> triangleVertices;
     Point2D triangleCenter;
-    std::vector<Point2D> polyline; //prostokat/чотирикутник
-
+    //prostokat/чотирикутник
+    std::vector<Point2D> polyline;
+    //vector для переховування ліній при натисненні миші
+    std::vector<Point2D> clickPoints;
+    bool clearWindow = false;
     float triangleRotation = 0.0f; // Кут обертання трикутника
 };
 

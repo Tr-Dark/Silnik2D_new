@@ -2,10 +2,11 @@
 #include "Rectangle.h"
 #include <cmath>
 #include <fstream>
-
+#include <iostream>
 
 Rectangle::Rectangle() : position(0, 0), width(1), height(1), color(sf::Color::White) {
     updateVertices();
+    //std::cout << "Rectangle constructor\n";
 }
 
 Rectangle::Rectangle(const Point2D& position, float width, float height, sf::Color color)

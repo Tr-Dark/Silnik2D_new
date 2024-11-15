@@ -11,6 +11,7 @@ class Point2D;
 
 class PrimitiveRenderer {
 public:
+    PrimitiveRenderer();
     void drawLineIncremental(sf::RenderWindow& window, const Point2D& p1, const Point2D& p2, sf::Color color);
     void drawPolyline(sf::RenderWindow& window, const std::vector<Point2D>& points, sf::Color color, bool closed = false);
     void drawLineBasic(sf::RenderWindow& window, const Point2D& p1, const Point2D& p2, sf::Color color);

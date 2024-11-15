@@ -3,7 +3,9 @@
 #include "Rectangle.h"
 #include "Engine.h"
 
-BitmapHandler::BitmapHandler() = default;
+BitmapHandler::BitmapHandler(){
+    //std::cout << "BitmapHandler constructor\n";
+};
 
 bool BitmapHandler::loadFromFile(const std::string& filename, int bitmapIndex) {
     // Sprawdzanie i ładowanie tekstury w zależności od indeksu
@@ -151,4 +153,39 @@ const sf::Texture& BitmapHandler::getTexture(int bitmapIndex) {
         std::cerr << "Invalid bitmap index: " << bitmapIndex << std::endl;
         throw std::invalid_argument("Invalid bitmap index");
     }
+}
+BitmapHandler::~BitmapHandler(){
+    /*bitmap1.~Image();
+    bitmap2.~Image();
+    bitmap3.~Image();
+    bitmap4.~Image();
+    bitmap5.~Image();
+    bitmap6.~Image();
+    bitmap7.~Image();
+    bitmap8.~Image();
+    bitmap9.~Image();
+    bitmap10.~Image();
+    bitmap11.~Image();
+    bitmap12.~Image();
+    bitmap13.~Image();
+    bitmap14.~Image();
+    bitmap15.~Image();
+    bitmap16.~Image();
+    texture1.~Texture();
+    texture2.~Texture();
+    texture3.~Texture();
+    texture4.~Texture();
+    texture5.~Texture();
+    texture6.~Texture();
+    texture7.~Texture();
+    texture8.~Texture();
+    texture9.~Texture();
+    texture10.~Texture();
+    texture11.~Texture();
+    texture12.~Texture();
+    texture13.~Texture();
+    texture14.~Texture();
+    texture15.~Texture();
+    texture16.~Texture();*/
+    std::cout << "BitmapHandler: textures & images deleted...\n";
 }

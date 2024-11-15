@@ -8,6 +8,7 @@ Position::Position(const std::string& fontPath) {
     infoText.setFont(font);
     infoText.setCharacterSize(20);
     infoText.setFillColor(sf::Color::Black);
+    std::cout << "Position constructor\n";
 }
 
 void Position::updateCursorPosition(int x, int y) {

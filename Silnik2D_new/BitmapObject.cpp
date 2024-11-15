@@ -1,5 +1,8 @@
 ﻿#include "BitmapObject.h"
-
+#include <iostream>
+BitmapObject::BitmapObject() {
+    //std::cout << "BitmapObject constructor\n";
+}
 void BitmapObject::setTexture(const sf::Texture& texture) {
     sprite.setTexture(texture); // Присвоює текстуру спрайту
 }

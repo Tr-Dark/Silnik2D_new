@@ -26,9 +26,12 @@
 
 #include "Point2D.h"
 #include <cmath>
+#include <iostream>
 #define M_PI 3.14159265358979323846
 
-Point2D::Point2D(float x, float y) : x(x), y(y) {}
+Point2D::Point2D(float x, float y) : x(x), y(y) {
+    //std::cout << "Point2D constructor\n";
+}
 
 float Point2D::getX() const {
     return x;

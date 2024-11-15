@@ -284,15 +284,6 @@ int main() {
 //}
 
 
-//#include "Engine.h"
-//
-//int main() {
-//    Engine engine(800, 600, "Game Engine Demo");
-//    engine.run();
-//    return 0;
-//}
-
-
 #include <SFML/Graphics.hpp>
 #include "Engine.h"
 #include "BitmapHandler.h"
@@ -307,9 +298,7 @@ int main() {
     BitmapHandler bmp;
     Player player(bmp);
     PrimitiveRenderer renderer;
-    
-   // sf::Sprite sprite;
-    
+        
         if (!bmp.loadFromFile("../images/asd.png", 1)
                     || !bmp.loadFromFile("../images/asd2.png", 2)
                     || !bmp.loadFromFile("../images/asd3.png", 3)

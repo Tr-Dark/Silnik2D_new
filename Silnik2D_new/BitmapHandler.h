@@ -12,7 +12,8 @@ private:
 public:
     BitmapHandler();
     bool loadFromFile(const std::string& filename, int bitmapIndex);
-    const sf::Texture& getTexture(int bitmapIndex); 
+    const sf::Texture& getTexture(int bitmapIndex);
+    ~BitmapHandler();
 };
 
 #endif // BITMAPHANDLER_H

@@ -28,15 +28,8 @@
 //
 //
 //
-//void Engine::logError(const std::string& message) {
-//    std::ofstream errorLog("error_log.txt", std::ios::app);
-//    if (errorLog.is_open()) {
-//        errorLog << "Error: " << message << std::endl;
-//        errorLog.close();
-//    }
-//    std::cerr << "Error: " << message << std::endl;
-//}
-//
+
+
 //void Engine::run() {
 //    while (window.isOpen()) {
 //        processEvents();
@@ -54,17 +47,7 @@
 //    }
 //}
 //
-//void Engine::update() {}
-//
-//void Engine::render() {
-//    window.clear(backgroundColor);
-//    window.display();
-//}
 
-// Engine.cpp
-//#include "Engine.h"
-//#include <iostream>
-//
 //Engine::Engine(int width, int height, const std::string& title)
 //    : window(sf::VideoMode(width, height), title) {
 //    window.setFramerateLimit(60);
@@ -100,44 +83,7 @@
 //    auto player = std::make_unique<Player>();
 //    gameObjects.push_back(std::move(player));
 //}
-//
-//void Engine::run() {
-//    while (window.isOpen()) {
-//        processEvents();
-//        update();
-//        render();
-//    }
-//}
-//
-//void Engine::processEvents() {
-//    sf::Event event;
-//    while (window.pollEvent(event)) {
-//        if (event.type == sf::Event::Closed)
-//            window.close();
-//
-//        for (auto& obj : gameObjects) {
-//            if (auto player = dynamic_cast<Player*>(obj.get())) {
-//                player->handleInput(event, bitmapHandler);
-//            }
-//        }
-//    }
-//}
-//
-//void Engine::update() {
-//    for (auto& obj : gameObjects) {
-//        obj->update();
-//    }
-//}
-//
-//void Engine::render() {
-//    window.clear(sf::Color::Black);
-//    renderer.drawCircle(window, Point2D(500, 500), 50, sf::Color::Green);
-//    for (auto& obj : gameObjects) {
-//        obj->draw(window, renderer);
-//    }
-//    
-//    window.display();
-//}
+
 
 
 #include "Engine.h"
@@ -145,28 +91,19 @@
 #include "Rectangle.h"
 #include <vector>
 #include "Point2D.h"
+#include "Position.h"
 #include <iostream>
 
-/*
-Engine::Engine(int width, int height, const std::string& title)
-    : window(sf::VideoMode(width, height), title),
-    triangleVertices{ Point2D(400, 300), Point2D(450, 350), Point2D(350, 350) },
-    triangleCenter(400, 325) // Центр трикутника для обертання
-{
-    window.setFramerateLimit(60);
-    BitmapHandler bmp;  // Tworzymy obiekt BitmapHandler
-    Player player(bmp); // Przekazujemy bmp do Playera
 
-}
-*/
 Engine::Engine(int width, int height, const std::string& title)
     : window(sf::VideoMode(width, height), title),
     triangleVertices{ Point2D(400, 300), Point2D(430, 350), Point2D(370, 350) },
     triangleCenter(400, 334),  // Centrum trójkąta
     bmp(), // Tworzenie obiektu BitmapHandler
     player(bmp), // Tworzenie obiektu Player, przekazując bmp
-    polyline{Point2D(200, 200), Point2D(250, 200), Point2D(250, 350), Point2D(200, 350) }
-{
+    polyline{Point2D(200, 200), Point2D(250, 200), Point2D(250, 350), Point2D(200, 350)}
+{   
+    std::cout << "Engine constructor\n";
     window.setFramerateLimit(60);
 }
 
@@ -203,8 +140,7 @@ void Engine::setBackground(const sf::Texture& texture) {
 
 }
 
-void Engine::run() {
-    BitmapHandler bmp;  // Tworzymy obiekt BitmapHandler
+void Engine::run() {  // Tworzymy obiekt BitmapHandler
     Player player(bmp); // Przekazujemy bmp do Playera
     
     while (window.isOpen()) {        
@@ -220,8 +156,15 @@ void Engine::processEvents() {
     int currentBitmap = 0;
     while (window.pollEvent(event)) {
         if (event.type == sf::Event::Closed) {window.close();}
-            
             player.handleInput(event, bmp, currentBitmap);
+        if (sf::Mouse::isButtonPressed(sf::Mouse::Left)){
+            int x = event.mouseButton.x;
+            int y = event.mouseButton.y;
+            std::cout << "click on x: " << x << ", y: " << y << '\n';
+            if (x > 0 && y > 0 && x < window.getSize().x && y < window.getSize().y) {
+                clickPoints.push_back({ (float)x, (float)y });
+            }
+        }
 
         if (event.type == sf::Event::KeyPressed) {
             // Управління рухом
@@ -250,6 +193,21 @@ void Engine::processEvents() {
             case sf::Keyboard::O: // Обертання за годинниковою
                 triangleRotation += 10.0f;
                 break;
+            case sf::Keyboard::BackSpace:
+                if (!clickPoints.empty()) {
+                    clickPoints.pop_back();
+                } // видаляє остатній елемент в векторі
+                break;
+            case sf::Keyboard::Delete:
+                clickPoints.clear();
+                break;// видяляє всі елементи в векторі 
+            case sf::Keyboard::C:
+                if (clearWindow)
+                {
+                    clearWindow = false;
+                }
+                else { clearWindow = true; }
+                break;
             default:
                 break;
             }
@@ -276,15 +234,36 @@ void Engine::update() {
 }
 
 void Engine::render() {
-    if (backgroundLoaded) {
-        window.draw(backgroundSprite);
+    
+    if (!clearWindow) {
+        if (backgroundLoaded) {
+            window.draw(backgroundSprite);
+        }
+        player.draw(window, renderer);
+
+        renderer.drawFilledPolygon(window, polyline, sf::Color::Yellow);//замальований чотирикутник 
+        renderer.drawPolyline(window, polyline, sf::Color::Black, 1);//чорний чотирикутник
+        renderer.drawFilledPolygon(window, triangleVertices, sf::Color::Black);//Малювання замкненого трикутника
+        renderer.drawCircle(window, { 500, 500 }, 50, sf::Color::Green);
+        renderer.drawFilledCircle(window, { 500, 500 }, 30, sf::Color::Red);
+        renderer.drawEllipse(window, { 650, 550 }, 100, 50, sf::Color::Red);
+        renderer.drawPolyline(window, clickPoints, sf::Color::Red);
+        
     }
-    player.draw(window, renderer);
-    // Малювання трикутника
-  
-    renderer.drawFilledPolygon(window, polyline, sf::Color::Yellow);//замальований чотирикутник 
-    renderer.drawPolyline(window, polyline, sf::Color::Black, 1);//чорний чотирикутник
-    renderer.drawFilledPolygon(window, triangleVertices, sf::Color::Black);//Замкнений трикутник
+    else window.clear();
     window.display();
 }
 
+void Engine::logError(const std::string& message) {
+    std::ofstream errorLog("error_log.txt", std::ios::app);
+    if (errorLog.is_open()) {
+        errorLog << "Error: " << message << std::endl;
+        errorLog.close();
+    }
+    std::cerr << "Error: " << message << std::endl;
+}
+
+Engine::~Engine(){
+    triangleVertices.~vector();
+    clickPoints.~vector();
+}

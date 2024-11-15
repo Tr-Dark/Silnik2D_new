@@ -9,7 +9,7 @@ setTextureRect(sf::IntRect(0, 0, 200, 200)); // Прямокутник текс�
 
 setTexture(bmp.getTexture(bitmapIndices_prawy[0]));  // Przypisanie tekstury do sprite
 sprite.setPosition(100, 100);
-  
+std::cout << "Player constructor\n";
 }
 
 void Player::setTexture(const sf::Texture& texture) {

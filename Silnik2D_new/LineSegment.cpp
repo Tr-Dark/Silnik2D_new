@@ -1,6 +1,8 @@
 #include "LineSegment.h"
-
-LineSegment::LineSegment(const Point2D& start, const Point2D& end) : start(start), end(end) {}
+#include <iostream>
+LineSegment::LineSegment(const Point2D& start, const Point2D& end) : start(start), end(end) {
+    //std::cout << "LineSegment constructor\n";
+}
 
 Point2D LineSegment::getStart() const {
     return start;

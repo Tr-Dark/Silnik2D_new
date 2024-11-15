@@ -1,6 +1,8 @@
 ﻿#include "SpriteObject.h"
-
-SpriteObject::SpriteObject() : currentFrame(0) {}
+#include <iostream>
+SpriteObject::SpriteObject() : currentFrame(0) {
+    std::cout << "SpriteObject constructor\n";
+}
 
 void SpriteObject::animate() {
     if (!frames.empty()) {
