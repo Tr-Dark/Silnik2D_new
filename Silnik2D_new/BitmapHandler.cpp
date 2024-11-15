@@ -131,22 +131,22 @@ bool BitmapHandler::loadFromFile(const std::string& filename, int bitmapIndex) {
 const sf::Texture& BitmapHandler::getTexture(int bitmapIndex) {
     // Sprawdzenie, który index i zwrócenie odpowiedniej tekstury
     switch (bitmapIndex) {
-    case 1: std::cout << "bmp.getTexture" << bitmapIndex << '\n'; return texture1;
-    case 2: std::cout << "bmp.getTexture" << bitmapIndex << '\n'; return texture2;
-    case 3: std::cout << "bmp.getTexture" << bitmapIndex << '\n'; return texture3;
-    case 4: std::cout << "bmp.getTexture" << bitmapIndex << '\n'; return texture4;
-    case 5: std::cout << "bmp.getTexture" << bitmapIndex << '\n'; return texture5;
-    case 6: std::cout << "bmp.getTexture" << bitmapIndex << '\n'; return texture6;
-    case 7: std::cout << "bmp.getTexture" << bitmapIndex << '\n'; return texture7;
-    case 8: std::cout << "bmp.getTexture" << bitmapIndex << '\n'; return texture8;
-    case 9: std::cout << "bmp.getTexture" << bitmapIndex << '\n'; return texture9;
-    case 10: std::cout << "bmp.getTexture" << bitmapIndex << '\n'; return texture10;
-    case 11: std::cout << "bmp.getTexture" << bitmapIndex << '\n'; return texture11;
-    case 12: std::cout << "bmp.getTexture" << bitmapIndex << '\n'; return texture12;
-    case 13: std::cout << "bmp.getTexture" << bitmapIndex << '\n'; return texture13;
-    case 14: std::cout << "bmp.getTexture" << bitmapIndex << '\n'; return texture14;
-    case 15: std::cout << "bmp.getTexture" << bitmapIndex << '\n'; return texture15;
-    case 16: std::cout << "bmp.getTexture" << bitmapIndex << '\n'; return texture16;
+    case 1: std::cout << "bmp.getTexture " << bitmapIndex << '\n'; return texture1;
+    case 2: std::cout << "bmp.getTexture " << bitmapIndex << '\n'; return texture2;
+    case 3: std::cout << "bmp.getTexture " << bitmapIndex << '\n'; return texture3;
+    case 4: std::cout << "bmp.getTexture " << bitmapIndex << '\n'; return texture4;
+    case 5: std::cout << "bmp.getTexture " << bitmapIndex << '\n'; return texture5;
+    case 6: std::cout << "bmp.getTexture " << bitmapIndex << '\n'; return texture6;
+    case 7: std::cout << "bmp.getTexture " << bitmapIndex << '\n'; return texture7;
+    case 8: std::cout << "bmp.getTexture " << bitmapIndex << '\n'; return texture8;
+    case 9: std::cout << "bmp.getTexture " << bitmapIndex << '\n'; return texture9;
+    case 10: std::cout << "bmp.getTexture " << bitmapIndex << '\n'; return texture10;
+    case 11: std::cout << "bmp.getTexture " << bitmapIndex << '\n'; return texture11;
+    case 12: std::cout << "bmp.getTexture " << bitmapIndex << '\n'; return texture12;
+    case 13: std::cout << "bmp.getTexture " << bitmapIndex << '\n'; return texture13;
+    case 14: std::cout << "bmp.getTexture " << bitmapIndex << '\n'; return texture14;
+    case 15: std::cout << "bmp.getTexture " << bitmapIndex << '\n'; return texture15;
+    case 16: std::cout << "bmp.getTexture " << bitmapIndex << '\n'; return texture16;
     default:
         std::cerr << "Invalid bitmap index: " << bitmapIndex << std::endl;
         throw std::invalid_argument("Invalid bitmap index");

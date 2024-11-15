@@ -52,15 +52,15 @@ void Point2D::translate(float dx, float dy) {
 }
 
 void Point2D::rotate(float angle) {
-    //float radians = angle * M_PI / 180.0f;
-    //float translatedX = x - origin.x;
-    //float translatedY = y - origin.y;
+    /*float radians = angle * M_PI / 180.0f;
+    float translatedX = x - origin.x;
+    float translatedY = y - origin.y;
 
-    //float rotatedX = translatedX * cos(radians) - translatedY * sin(radians);
-    //float rotatedY = translatedX * sin(radians) + translatedY * cos(radians);
+    float rotatedX = translatedX * cos(radians) - translatedY * sin(radians);
+    float rotatedY = translatedX * sin(radians) + translatedY * cos(radians);
 
-    //x = rotatedX + origin.x;
-    //y = rotatedY + origin.y;
+    x = rotatedX + origin.x;
+    y = rotatedY + origin.y;*/
 }
 
 void Point2D::scale(float factorX, float factorY) {

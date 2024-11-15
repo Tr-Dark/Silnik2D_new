@@ -161,14 +161,15 @@ Engine::Engine(int width, int height, const std::string& title)
 */
 Engine::Engine(int width, int height, const std::string& title)
     : window(sf::VideoMode(width, height), title),
-    triangleVertices{ Point2D(400, 300), Point2D(450, 350), Point2D(350, 350) },
-    triangleCenter(400, 325),  // Centrum trójkąta
+    triangleVertices{ Point2D(400, 300), Point2D(430, 350), Point2D(370, 350) },
+    triangleCenter(400, 334),  // Centrum trójkąta
     bmp(), // Tworzenie obiektu BitmapHandler
-    player(bmp) // Tworzenie obiektu Player, przekazując bmp
+    player(bmp), // Tworzenie obiektu Player, przekazując bmp
+    polyline{Point2D(200, 200), Point2D(250, 200), Point2D(250, 350), Point2D(200, 350) }
 {
     window.setFramerateLimit(60);
-    
 }
+
 void Engine::loadTextures() {
     if (!bmp.loadFromFile("../images/asd.png", 1)
         || !bmp.loadFromFile("../images/asd2.png", 2)
@@ -226,20 +227,20 @@ void Engine::processEvents() {
             // Управління рухом
             switch (event.key.code) {
             case sf::Keyboard::W: // Вверх
-                for (auto& point : triangleVertices) point.translate(0, -10);
+                for (Point2D& point : triangleVertices) { point.translate(0, -10); }
                 triangleCenter.translate(0, -10);
 
                 break;
             case sf::Keyboard::S: // Вниз
-                for (auto& point : triangleVertices) point.translate(0, 10);
+                for (Point2D& point : triangleVertices) { point.translate(0, 10); }
                 triangleCenter.translate(0, 10);
                 break;
             case sf::Keyboard::A: // Вліво
-                for (auto& point : triangleVertices) point.translate(-10, 0);
+                for (Point2D& point : triangleVertices) { point.translate(-10, 0); }
                 triangleCenter.translate(-10, 0);
                 break;
             case sf::Keyboard::D: // Вправо
-                for (auto& point : triangleVertices) point.translate(10, 0);
+                for (Point2D& point : triangleVertices) { point.translate(10, 0); }
                 triangleCenter.translate(10, 0);
                 break;
                 // Обертання
@@ -275,14 +276,15 @@ void Engine::update() {
 }
 
 void Engine::render() {
-    //player.animate();
     if (backgroundLoaded) {
         window.draw(backgroundSprite);
     }
     player.draw(window, renderer);
     // Малювання трикутника
-    renderer.drawPolygon(window, triangleVertices, sf::Color::Yellow, 0); // Замкнений трикутник
-
+  
+    renderer.drawFilledPolygon(window, polyline, sf::Color::Yellow);//замальований чотирикутник 
+    renderer.drawPolyline(window, polyline, sf::Color::Black, 1);//чорний чотирикутник
+    renderer.drawFilledPolygon(window, triangleVertices, sf::Color::Black);//Замкнений трикутник
     window.display();
 }
 

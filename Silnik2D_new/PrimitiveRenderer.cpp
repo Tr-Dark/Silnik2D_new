@@ -4,6 +4,7 @@
 #include <cmath> 
 #include <stack>
 #include <set>
+#include <iostream>
 
 void PrimitiveRenderer::drawLineIncremental(sf::RenderWindow& window, const Point2D& p1, const Point2D& p2, sf::Color color) {
     int x0 = static_cast<int>(p1.getX());

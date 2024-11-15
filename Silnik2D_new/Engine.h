@@ -87,6 +87,8 @@ private:
     // Трикутник
     std::vector<Point2D> triangleVertices;
     Point2D triangleCenter;
+    std::vector<Point2D> polyline; //prostokat/чотирикутник
+
     float triangleRotation = 0.0f; // Кут обертання трикутника
 };
 
