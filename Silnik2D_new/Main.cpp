@@ -299,30 +299,12 @@ int main() {
     Player player(bmp);
     PrimitiveRenderer renderer;
         
-        if (!bmp.loadFromFile("../images/asd.png", 1)
-                    || !bmp.loadFromFile("../images/asd2.png", 2)
-                    || !bmp.loadFromFile("../images/asd3.png", 3)
-                    || !bmp.loadFromFile("../images/asd4.png", 4)
-                    || !bmp.loadFromFile("../images/asd11.png", 5)
-                    || !bmp.loadFromFile("../images/asd12.png", 6)
-                    || !bmp.loadFromFile("../images/asd13.png", 7)
-                    || !bmp.loadFromFile("../images/lewy2.png", 8)
-                    || !bmp.loadFromFile("../images/lewy3.png", 9)
-                    || !bmp.loadFromFile("../images/lewy4.png", 10)
-                    || !bmp.loadFromFile("../images/gora2.png", 11)
-                    || !bmp.loadFromFile("../images/gora3.png", 12)
-                    || !bmp.loadFromFile("../images/gora4.png", 13)
-                    || !bmp.loadFromFile("../images/dol2.png", 14)
-                    || !bmp.loadFromFile("../images/dol3.png", 15)
-                    || !bmp.loadFromFile("../images/dol4.png", 16)) {
-            
-                    return -1;
-        }
+       
         
         
     // Завантаження фону
     sf::Texture backgroundTexture;
-    if (!backgroundTexture.loadFromFile("../images/tlo.jpg")) {
+    if (!backgroundTexture.loadFromFile("../images/tlo.png")) {
         std::cerr << "Failed to load background image\n";
         return -1;
     }
