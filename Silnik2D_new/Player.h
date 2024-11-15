@@ -8,7 +8,7 @@
 
 class Player : public SpriteObject{
 public:
-    Player();
+    Player(std::array<std::string, 16> PlayerSprite);
     void handleInput(const sf::Event& event, int& currentBitmap);
     void update();
     void translate(float dx, float dy);
@@ -18,16 +18,16 @@ public:
     sf::Sprite& getSprite();
     void setTexture(const sf::Texture& texture);
     BitmapHandler bmp;
-    void loadTextures();
+    void loadTextures(std::array<std::string, 16> Sprites);
 
 private:
     bool isMoving;
     int currentBitmapIndex;
     
-    const int bitmapIndices_prawy[4] = { 1,5, 6, 7 };
-    const int bitmapIndices_lewy[4] = { 2,8, 9, 10 };
-    const int bitmapIndices_gora[4] = { 3,11, 12, 13 };
-    const int bitmapIndices_dol[4] = { 4,14, 15, 16 };
+    const int bitmapIndices_prawy[4] = { 1, 2, 3, 4 };
+    const int bitmapIndices_lewy[4] = { 5, 6, 7, 8 };
+    const int bitmapIndices_gora[4] = { 9, 10, 11, 12 };
+    const int bitmapIndices_dol[4] = { 13, 14, 15, 16 };
 };
 
 #endif // PLAYER_H

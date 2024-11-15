@@ -65,10 +65,13 @@
 #include <vector>
 #include "Player.h"
 #include <fstream>
+#include <array>
+#include <string>
+
 
 class Engine {
 public:
-    Engine(int width, int height, const std::string& title);
+    Engine(int width, int height, const std::string& title, std::array<std::string, 16> PlayerSprite);
     void run();
     void logError(const std::string& message);
     void setBackground(const sf::Texture& texture);

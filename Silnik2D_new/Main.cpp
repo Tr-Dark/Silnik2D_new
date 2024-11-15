@@ -290,11 +290,32 @@ int main() {
 #include <iostream>
 #include "AnimatedObject.h"
 #include "Player.h"
+#include <array>
+#include <string>
 
 
 int main() {
-    Engine engine(800, 600, "Demo with Background and Primitives");
-    //engine.loadTextures();   
+    std::array<std::string, 16> imagePaths = {
+    "../images/asd.png",
+    "../images/asd11.png",
+    "../images/asd12.png",
+    "../images/asd13.png",
+    "../images/asd2.png",
+    "../images/lewy2.png",
+    "../images/lewy3.png",
+    "../images/lewy4.png",
+    "../images/asd3.png",
+    "../images/gora2.png",
+    "../images/gora3.png",
+    "../images/gora4.png",
+    "../images/asd4.png",
+    "../images/dol2.png",
+    "../images/dol3.png",
+    "../images/dol4.png"
+    };
+
+
+    Engine engine(800, 600, "Demo with Background and Primitives", imagePaths);
         
     // Завантаження фону
     sf::Texture backgroundTexture;
@@ -302,8 +323,9 @@ int main() {
         std::cerr << "Failed to load background image\n";
         return -1;
     }
-   
+    
     engine.setBackground(backgroundTexture);
+
     engine.getPlayer().getSprite().setPosition(100, 100);
 
     engine.run();

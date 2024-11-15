@@ -96,12 +96,11 @@
 #include "BitmapHandler.h"
 
 
-Engine::Engine(int width, int height, const std::string& title)
+Engine::Engine(int width, int height, const std::string& title, std::array<std::string, 16> PlayerSprite)
     : window(sf::VideoMode(width, height), title),
     triangleVertices{ Point2D(400, 300), Point2D(430, 350), Point2D(370, 350) },
     triangleCenter(400, 334),  // Centrum trójkąta
-    //bmp(), // Tworzenie obiektu BitmapHandler
-    player(), // Tworzenie obiektu Player, przekazując bmp
+    player(PlayerSprite), // Tworzenie obiektu Player, przekazując bmp
     polyline{Point2D(200, 200), Point2D(250, 200), Point2D(250, 350), Point2D(200, 350)}
 {   
     std::cout << "Engine constructor\n";
@@ -116,7 +115,11 @@ Player& Engine::getPlayer()
 void Engine::setBackground(const sf::Texture& texture) {
     backgroundSprite.setTexture(texture);
     backgroundLoaded = true;
-
+    sf::Vector2u textureSize = texture.getSize();
+    sf::Vector2u windowSize = window.getSize();
+    float scaleX = static_cast<float>(windowSize.x) / textureSize.x;
+    float scaleY = static_cast<float>(windowSize.y) / textureSize.y;
+    backgroundSprite.setScale(scaleX, scaleY);
 }
 
 void Engine::run() {  // Tworzymy obiekt BitmapHandler
