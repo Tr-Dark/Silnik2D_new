@@ -93,42 +93,21 @@
 #include "Point2D.h"
 #include "Position.h"
 #include <iostream>
+#include "BitmapHandler.h"
 
 
 Engine::Engine(int width, int height, const std::string& title)
     : window(sf::VideoMode(width, height), title),
     triangleVertices{ Point2D(400, 300), Point2D(430, 350), Point2D(370, 350) },
     triangleCenter(400, 334),  // Centrum trójkąta
-    bmp(), // Tworzenie obiektu BitmapHandler
-    player(bmp), // Tworzenie obiektu Player, przekazując bmp
+    //bmp(), // Tworzenie obiektu BitmapHandler
+    player(), // Tworzenie obiektu Player, przekazując bmp
     polyline{Point2D(200, 200), Point2D(250, 200), Point2D(250, 350), Point2D(200, 350)}
 {   
     std::cout << "Engine constructor\n";
     window.setFramerateLimit(60);
 }
 
-void Engine::loadTextures() {
-    if (!bmp.loadFromFile("../images/asd.png", 1)
-        || !bmp.loadFromFile("../images/asd2.png", 2)
-        || !bmp.loadFromFile("../images/asd3.png", 3)
-        || !bmp.loadFromFile("../images/asd4.png", 4)
-        || !bmp.loadFromFile("../images/asd11.png", 5)
-        || !bmp.loadFromFile("../images/asd12.png", 6)
-        || !bmp.loadFromFile("../images/asd13.png", 7)
-        || !bmp.loadFromFile("../images/lewy2.png", 8)
-        || !bmp.loadFromFile("../images/lewy3.png", 9)
-        || !bmp.loadFromFile("../images/lewy4.png", 10)
-        || !bmp.loadFromFile("../images/gora2.png", 11)
-        || !bmp.loadFromFile("../images/gora3.png", 12)
-        || !bmp.loadFromFile("../images/gora4.png", 13)
-        || !bmp.loadFromFile("../images/dol2.png", 14)
-        || !bmp.loadFromFile("../images/dol3.png", 15)
-        || !bmp.loadFromFile("../images/dol4.png", 16)) {
-        std::cerr << "Failed to load some images\n";
-        return;
-    }
-    else std::cout << "texture loaded\n";
-}
 Player& Engine::getPlayer()
 {
     return player;
@@ -155,7 +134,7 @@ void Engine::processEvents() {
     int currentBitmap = 0;
     while (window.pollEvent(event)) {
         if (event.type == sf::Event::Closed) {window.close();}
-            player.handleInput(event, bmp, currentBitmap);
+            player.handleInput(event, currentBitmap);
         if (sf::Mouse::isButtonPressed(sf::Mouse::Left)){
             int x = event.mouseButton.x;
             int y = event.mouseButton.y;

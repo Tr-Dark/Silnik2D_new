@@ -72,7 +72,6 @@ public:
     void run();
     void logError(const std::string& message);
     void setBackground(const sf::Texture& texture);
-    void loadTextures();
     void processEvents();
     void update();
     void render();

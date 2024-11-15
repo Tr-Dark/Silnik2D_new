@@ -3,12 +3,13 @@
 #include <SFML/Graphics.hpp>
 #include <iostream>
 
-Player::Player(BitmapHandler& bmp) : currentBitmapIndex(0), isMoving(false) {
+Player::Player() : currentBitmapIndex(0), isMoving(false) {
     
 setTextureRect(sf::IntRect(0, 0, 200, 200)); // Прямокутник текстури спрайта, якщо використовується текстура
-
+loadTextures();
 setTexture(bmp.getTexture(bitmapIndices_prawy[0]));  // Przypisanie tekstury do sprite
 sprite.setPosition(100, 100);
+
 std::cout << "Player constructor\n";
 }
 
@@ -16,8 +17,31 @@ void Player::setTexture(const sf::Texture& texture) {
     sprite.setTexture(texture);// Ustawienie tekstury na sprite
 }
 
+void Player::loadTextures() {
+    if (!bmp.loadFromFile("../images/asd.png", 1)
+        || !bmp.loadFromFile("../images/asd2.png", 2)
+        || !bmp.loadFromFile("../images/asd3.png", 3)
+        || !bmp.loadFromFile("../images/asd4.png", 4)
+        || !bmp.loadFromFile("../images/asd11.png", 5)
+        || !bmp.loadFromFile("../images/asd12.png", 6)
+        || !bmp.loadFromFile("../images/asd13.png", 7)
+        || !bmp.loadFromFile("../images/lewy2.png", 8)
+        || !bmp.loadFromFile("../images/lewy3.png", 9)
+        || !bmp.loadFromFile("../images/lewy4.png", 10)
+        || !bmp.loadFromFile("../images/gora2.png", 11)
+        || !bmp.loadFromFile("../images/gora3.png", 12)
+        || !bmp.loadFromFile("../images/gora4.png", 13)
+        || !bmp.loadFromFile("../images/dol2.png", 14)
+        || !bmp.loadFromFile("../images/dol3.png", 15)
+        || !bmp.loadFromFile("../images/dol4.png", 16)) {
+        std::cerr << "Failed to load some images\n";
+        return;
+    }
+    else std::cout << "texture loaded\n";
+}
 
-void Player::handleInput(const sf::Event& event, BitmapHandler& bmp, int& currentBitmap) {
+
+void Player::handleInput(const sf::Event& event, int& currentBitmap) {
     
     if (event.type == sf::Event::KeyPressed) {
         isMoving = true;
