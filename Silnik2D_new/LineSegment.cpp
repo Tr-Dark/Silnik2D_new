@@ -1,6 +1,5 @@
 ﻿#include "LineSegment.h"
 #include <iostream>
-#include "LineSegment.h"
 #include <cmath>
 #include <iostream>
 

@@ -11,6 +11,8 @@ Engine::Engine(int width, int height, const std::string& title, std::array<std::
     triangleCenter(400, 334),  // Centrum trójkąta
     player(PlayerSprite), // Tworzenie obiektu Player, przekazując bmp
     rectangle(Point2D(500, 300), 40, 50, sf::Color::Magenta),
+    first(450, 450), second(350, 400),
+    line(Point2D(450, 450), Point2D(350, 400)),
     polyline{Point2D(200, 200), Point2D(250, 190), Point2D(350, 200), Point2D(250, 350), Point2D(200, 350)}
 {   
     std::cout << "Engine constructor\n";
@@ -102,6 +104,7 @@ void Engine::processEvents() {
                     triangleCenter.translate(-10, 0);
                 }
                 rectangle.translate(-10, 0);
+                line.translate(-20, 0);
 
                 // Якщо переміщення можливе, застосовуємо його
                 if (Tools::CheckMove(polyline, -20, 0, window.getSize().x, window.getSize().y)) {
@@ -119,6 +122,7 @@ void Engine::processEvents() {
                     triangleCenter.translate(10, 0);
                 }
                 rectangle.translate(10, 0);
+                line.translate(20, 0);
                 // Якщо переміщення можливе, застосовуємо його
                 if (Tools::CheckMove(polyline, 20, 0, window.getSize().x, window.getSize().y)) {
                     for (Point2D& point : polyline) {
@@ -141,6 +145,7 @@ void Engine::processEvents() {
             case sf::Keyboard::K: // Обертання за годинниковою
                 rectangle.rotate(-10.0f);
                 player.rotate(-10.0f);
+                line.rotate(-10.0f);
                 break;
             case sf::Keyboard::L: // Обертання за годинниковою
                 rectangle.rotate(10.0f);
@@ -157,10 +162,12 @@ void Engine::processEvents() {
             case sf::Keyboard::Add: 
                 PrimitiveRenderer::scalePolygon(polyline, 1.2f, 1.2f);
                 rectangle.scale(1.2F, 1.2F);
+                line.scale(1.8F, 1.8F);
                 break;
             case sf::Keyboard::Subtract:
                 PrimitiveRenderer::scalePolygon(polyline, 0.6f, 0.6f);
                 rectangle.scale(0.8F, 0.8F);
+                line.scale(0.8F, 0.8F);
                 break;// видяляє всі елементи в векторі 
             case sf::Keyboard::R:
                 isRandomMove = !isRandomMove;
@@ -221,6 +228,7 @@ void Engine::render() {
         renderer.drawFilledPolygon(window, triangleVertices, sf::Color::Green);
         // Інші фігури
         renderer.drawFilledPolygon(window, polyline, sf::Color::Yellow);
+        line.draw(window, renderer, sf::Color::Magenta);
         //renderer.drawFloodFilledPolygon(window, polyline, sf::Color::Yellow);
         rectangle.draw(window, renderer, sf::Color::Blue);
         renderer.drawCircle(window, { 500, 500 }, 50, sf::Color::Green);

@@ -12,6 +12,7 @@
 #include "Tools.h"
 #include <iostream>
 #include "Rectangle.h"
+#include "LineSegment.h"
 
 
 class Engine {
@@ -44,6 +45,8 @@ private:
     bool clearWindow = false;
     float triangleRotation = 0.0f; // Кут обертання трикутника
     bool isRandomMove;
+    LineSegment line;
+    Point2D first, second;
 };
 
 #endif // ENGINE_H
