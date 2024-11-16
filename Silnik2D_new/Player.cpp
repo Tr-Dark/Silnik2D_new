@@ -5,20 +5,37 @@
 #include <array>
 #include <string>
 
+/**
+ * @brief Konstruktor klasy Player.
+ *
+ * Inicjalizuje gracza, ustawia pozycję, teksturę i ładuje animacje.
+ *
+ * @param PlayerSprite Tablica ścieżek do obrazów sprite'ów gracza.
+ */
 Player::Player(std::array<std::string, 16> PlayerSprite) : currentBitmapIndex(0), isMoving(false), currentDirection(Left) {
-    
-setTextureRect(sf::IntRect(0, 0, 130, 130)); // Прямокутник текстури спрайта, якщо використовується текстура
-loadTextures(PlayerSprite);
-setTexture(bmp.getTexture(bitmapIndices_prawy[0]));  // Przypisanie tekstury do sprite
-sprite.setPosition(100, 100);
-std::cout << "Player constructor\n";
+    setTextureRect(sf::IntRect(0, 0, 130, 130));  // Prostokąt tekstury sprite'a, jeśli używana jest tekstura
+    loadTextures(PlayerSprite);  // Ładowanie tekstur
+    setTexture(bmp.getTexture(bitmapIndices_prawy[0]));  // Przypisanie tekstury do sprite
+    sprite.setPosition(100, 100);  // Ustawienie pozycji gracza
+    std::cout << "Player constructor\n";
 }
 
+/**
+ * @brief Ustawia teksturę dla sprite'a gracza.
+ *
+ * @param texture Tekstura, która ma zostać ustawiona.
+ */
 void Player::setTexture(const sf::Texture& texture) {
-    sprite.setTexture(texture);// Ustawienie tekstury na sprite
+    sprite.setTexture(texture);  // Ustawienie tekstury na sprite
     sf::FloatRect bounds = sprite.getLocalBounds();
-    sprite.setOrigin(bounds.width / 2.0f, bounds.height / 2.0f);
+    sprite.setOrigin(bounds.width / 2.0f, bounds.height / 2.0f);  // Ustawienie punktu początkowego w centrum sprite'a
 }
+
+/**
+ * @brief Ładuje tekstury z plików i zapisuje je w obiekcie bitmapy.
+ *
+ * @param Sprites Tablica ścieżek do plików graficznych.
+ */
 void Player::loadTextures(std::array<std::string, 16> Sprites) {
     for (size_t i = 0; i < Sprites.size(); ++i) {
         if (!bmp.loadFromFile(Sprites[i], i + 1)) {
@@ -27,11 +44,17 @@ void Player::loadTextures(std::array<std::string, 16> Sprites) {
     }
 }
 
-
+/**
+ * @brief Obsługuje wejście gracza z klawiatury.
+ *
+ * Zmienia pozycję gracza w zależności od wciśniętego klawisza.
+ *
+ * @param event Zdarzenie klawiatury.
+ */
 void Player::handleInput(const sf::Event& event) {
     if (event.type == sf::Event::KeyPressed) {
-        isMoving = true;          // Гравець почав рухатися
-        idleClock.restart();      // Скидаємо таймер бездіяльності
+        isMoving = true;           // Gracz zaczął się poruszać
+        idleClock.restart();       // Restartowanie zegara bezczynności
 
         switch (event.key.code) {
         case sf::Keyboard::Left:
@@ -68,36 +91,59 @@ void Player::handleInput(const sf::Event& event) {
     }
 }
 
-
-// Переміщення гравця
+/**
+ * @brief Przesuwa gracza o określoną wartość w poziomie i pionie.
+ *
+ * @param dx Przemieszczenie w osi X.
+ * @param dy Przemieszczenie w osi Y.
+ */
 void Player::translate(float dx, float dy) {
-    sprite.move(dx, dy); // Переміщення спрайта
+    sprite.move(dx, dy);  // Przemieszczanie sprite'a
 }
 
-// Масштабування гравця
+/**
+ * @brief Skaluje sprite gracza.
+ *
+ * @param factorX Skala w osi X.
+ * @param factorY Skala w osi Y.
+ */
 void Player::scale(float factorX, float factorY) {
-    sprite.scale(factorX, factorY); // Масштабування спрайта
+    sprite.scale(factorX, factorY);  // Skalowanie sprite'a
 }
 
+/**
+ * @brief Rysuje gracza na oknie.
+ *
+ * @param window Okno renderowania.
+ */
 void Player::draw(sf::RenderWindow& window)
 {
     if (sprite.getTexture() == nullptr) {
         std::cerr << "Sprite texture is null!" << std::endl;
     }
-    // Використовуємо спрайт для малювання гравця на екрані
-    window.draw(sprite);  // sprite - об'єкт класу sf::Sprite, що містить текстуру гравця
+    // Rysowanie sprite'a gracza
+    window.draw(sprite);  // sprite - obiekt klasy sf::Sprite, który zawiera teksturę gracza
 }
 
-
+/**
+ * @brief Rysuje gracza na oknie z użyciem PrimitiveRenderer.
+ *
+ * @param window Okno renderowania.
+ * @param renderer Renderer prymitywów.
+ * @param color Kolor rysowanej postaci.
+ */
 void Player::draw(sf::RenderWindow& window, PrimitiveRenderer& renderer, sf::Color color)
 {
-    Player::draw(window);
+    Player::draw(window);  // Rysowanie za pomocą sprite'a
 }
 
+/**
+ * @brief Animuje gracza w zależności od kierunku.
+ */
 void Player::animate() {
     const int* bitmapIndices = nullptr;
 
-    // Вибір масиву текстур залежно від напрямку
+    // Wybór tablicy tekstur w zależności od kierunku
     switch (currentDirection) {
     case Direction::Left:
         bitmapIndices = bitmapIndices_lewy;
@@ -112,54 +158,71 @@ void Player::animate() {
         bitmapIndices = bitmapIndices_dol;
         break;
     default:
-        return; // Немає анімації, якщо немає напрямку
+        return;  // Brak animacji, gdy brak kierunku
     }
 
-    // Оновлення текстури для анімації
+    // Aktualizacja tekstury w celu animacji
     int textureIndex = bitmapIndices[currentBitmapIndex];
     setTexture(bmp.getTexture(textureIndex));
 }
 
-// Оновлення гравця
+/**
+ * @brief Aktualizuje stan gracza.
+ *
+ * Jeśli gracz się nie porusza, uruchamia animację bezczynności.
+ */
 void Player::update() {
-    // Якщо гравець рухається, скидаємо таймер бездіяльності
+    // Jeśli gracz się porusza, restartujemy zegar bezczynności
     if (isMoving) {
-        idleClock.restart(); // Скидаємо таймер бездіяльності
-        isMoving = false;    // Скидаємо стан руху після оновлення
+        idleClock.restart();  // Restartowanie zegara bezczynności
+        isMoving = false;     // Resetowanie stanu poruszania się po aktualizacji
     }
-    // Якщо минуло більше idleDelay секунд без руху, запускаємо анімацію бездіяльності
+    // Jeśli upłynęło więcej czasu niż idleDelay, uruchamiamy animację bezczynności
     else if (idleClock.getElapsedTime().asSeconds() > idleDelay) {
         animateIdle();
     }
 }
 
+/**
+ * @brief Zwraca referencję do sprite'a gracza.
+ *
+ * @return Referencja do sprite'a.
+ */
 sf::Sprite& Player::getSprite() {
-    return sprite;  // Zwrócenie referencji do sprite
+    return sprite;  // Zwrócenie referencji do sprite'a
 }
 
+/**
+ * @brief Animuje stan bezczynności gracza.
+ */
 void Player::animateIdle() {
     if (animationClock.getElapsedTime().asSeconds() > animationDelay) {
-        // Перехід до наступного кадру
+        // Przejście do następnej klatki animacji
         idleFrameIndex = (idleFrameIndex + 1) % 4;
         setTexture(bmp.getTexture(idleAnimationFrames[idleFrameIndex]));
 
-        // Перезапуск таймера анімації
+        // Restartowanie zegara animacji
         animationClock.restart();
     }
 }
 
+/**
+ * @brief Rotuje gracza o określony kąt.
+ *
+ * @param angle Kąt rotacji.
+ */
 void Player::rotate(float angle)
 {
-    // Отримуємо локальні розміри спрайта
+    // Uzyskanie lokalnych rozmiarów sprite'a
     sf::FloatRect bounds = sprite.getLocalBounds();
 
-    // Обчислюємо центр текстури
+    // Obliczanie środka tekstury
     float centerX = bounds.left + bounds.width / 2.0f;
     float centerY = bounds.top + bounds.height / 2.0f;
 
-    // Встановлюємо точку обертання (центр текстури)
+    // Ustawienie punktu obrotu na środek tekstury
     sprite.setOrigin(centerX, centerY);
 
-    // Виконуємо обертання
+    // Wykonanie rotacji
     sprite.rotate(angle);
 }

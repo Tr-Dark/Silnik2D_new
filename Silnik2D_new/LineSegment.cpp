@@ -3,30 +3,50 @@
 #include <cmath>
 #include <iostream>
 
-// Конструктор з параметрами
+/**
+ * @brief Konstruktor klasy LineSegment, inicjalizuje początkowy i końcowy punkt odcinka.
+ *
+ * @param start Punkt początkowy odcinka.
+ * @param end Punkt końcowy odcinka.
+ */
 LineSegment::LineSegment(const Point2D& start, const Point2D& end)
     : startPoint(start), endPoint(end) {}
 
-// Малювання лінії
+/**
+ * @brief Rysuje linię na oknie.
+ *
+ * @param window Okno renderowania.
+ * @param renderer Obiekt do rysowania prymitywów.
+ * @param color Kolor linii.
+ */
 void LineSegment::draw(sf::RenderWindow& window, PrimitiveRenderer& renderer, sf::Color color) {
     renderer.drawLineIncremental(window, startPoint, endPoint, color);
 }
 
-// Переміщення лінії
+/**
+ * @brief Przemieszcza linię o zadane wartości w osi X i Y.
+ *
+ * @param dx Przemieszczenie w osi X.
+ * @param dy Przemieszczenie w osi Y.
+ */
 void LineSegment::translate(float dx, float dy) {
     startPoint.translate(dx, dy);
     endPoint.translate(dx, dy);
 }
 
-// Обертання лінії
+/**
+ * @brief Obraca linię o zadany kąt.
+ *
+ * @param angle Kąt obrotu w stopniach.
+ */
 void LineSegment::rotate(float angle) {
-    // Знаходимо центр лінії
+    // Obliczanie środka linii
     float centerX = (startPoint.getX() + endPoint.getX()) / 2.0f;
     float centerY = (startPoint.getY() + endPoint.getY()) / 2.0f;
 
     float radians = angle * M_PI / 180.0f;
 
-    // Обчислення нових координат
+    // Obrót punktów wokół środka
     auto rotatePoint = [centerX, centerY, radians](Point2D& point) {
         float x = point.getX() - centerX;
         float y = point.getY() - centerY;
@@ -42,13 +62,18 @@ void LineSegment::rotate(float angle) {
     rotatePoint(endPoint);
 }
 
-// Масштабування лінії
+/**
+ * @brief Skaluje linię względem jej środka.
+ *
+ * @param factorX Skalowanie w osi X.
+ * @param factorY Skalowanie w osi Y.
+ */
 void LineSegment::scale(float factorX, float factorY) {
-    // Знаходимо центр лінії
+    // Obliczanie środka linii
     float centerX = (startPoint.getX() + endPoint.getX()) / 2.0f;
     float centerY = (startPoint.getY() + endPoint.getY()) / 2.0f;
 
-    // Масштабування відносно центру
+    // Skalowanie punktów względem środka
     auto scalePoint = [centerX, centerY, factorX, factorY](Point2D& point) {
         float scaledX = centerX + (point.getX() - centerX) * factorX;
         float scaledY = centerY + (point.getY() - centerY) * factorY;
@@ -60,26 +85,43 @@ void LineSegment::scale(float factorX, float factorY) {
     scalePoint(endPoint);
 }
 
-void LineSegment::update()
-{
-}
+/**
+ * @brief Aktualizuje stan odcinka. (Obecnie nie jest używane).
+ */
+void LineSegment::update() {}
 
-// Отримання початкової точки
+/**
+ * @brief Zwraca punkt początkowy odcinka.
+ *
+ * @return Punkt początkowy.
+ */
 Point2D LineSegment::getStartPoint() const {
     return startPoint;
 }
 
-// Отримання кінцевої точки
+/**
+ * @brief Zwraca punkt końcowy odcinka.
+ *
+ * @return Punkt końcowy.
+ */
 Point2D LineSegment::getEndPoint() const {
     return endPoint;
 }
 
-// Встановлення початкової точки
+/**
+ * @brief Ustawia punkt początkowy odcinka.
+ *
+ * @param point Nowy punkt początkowy.
+ */
 void LineSegment::setStartPoint(const Point2D& point) {
     startPoint = point;
 }
 
-// Встановлення кінцевої точки
+/**
+ * @brief Ustawia punkt końcowy odcinka.
+ *
+ * @param point Nowy punkt końcowy.
+ */
 void LineSegment::setEndPoint(const Point2D& point) {
     endPoint = point;
 }
