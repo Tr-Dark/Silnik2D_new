@@ -1,5 +1,4 @@
 ﻿#include "Engine.h"
-#include "Rectangle.h"
 
 
 /// To jest Silnik kurwa
@@ -11,6 +10,7 @@ Engine::Engine(int width, int height, const std::string& title, std::array<std::
     triangleVertices{ Point2D(400, 300), Point2D(430, 350), Point2D(370, 350) },
     triangleCenter(400, 334),  // Centrum trójkąta
     player(PlayerSprite), // Tworzenie obiektu Player, przekazując bmp
+    rectangle(Point2D(500, 300), 40, 50, sf::Color::Magenta),
     polyline{Point2D(200, 200), Point2D(250, 190), Point2D(350, 200), Point2D(250, 350), Point2D(200, 350)}
 {   
     std::cout << "Engine constructor\n";
@@ -127,10 +127,21 @@ void Engine::processEvents() {
                 break;
                 // Обертання
             case sf::Keyboard::I: // Обертання проти годинникової
-                triangleRotation -= 10.0f;
+                if (triangleRotation > -40.0f) {
+                    triangleRotation -= 5.0f;
+                }
                 break;
+
             case sf::Keyboard::O: // Обертання за годинниковою
-                triangleRotation += 10.0f;
+                if (triangleRotation < 40.0f) {
+                    triangleRotation += 5.0f;
+                }
+                break;
+            case sf::Keyboard::K: // Обертання за годинниковою
+                rectangle.rotate(-10.0f);
+                break;
+            case sf::Keyboard::L: // Обертання за годинниковою
+                rectangle.rotate(10.0f);
                 break;
             case sf::Keyboard::BackSpace:
                 if (!clickPoints.empty()) {
@@ -205,7 +216,8 @@ void Engine::render() {
         renderer.drawFilledPolygon(window, triangleVertices, sf::Color::Green);
         // Інші фігури
         renderer.drawFilledPolygon(window, polyline, sf::Color::Yellow);
-        
+        //renderer.drawFloodFilledPolygon(window, polyline, sf::Color::Yellow);
+        rectangle.draw(window, renderer, sf::Color::Blue);
         renderer.drawCircle(window, { 500, 500 }, 50, sf::Color::Green);
         renderer.drawFilledCircle(window, { 500, 500 }, 30, sf::Color::Red);
         renderer.drawEllipse(window, { 650, 550 }, 100, 50, sf::Color::Red);

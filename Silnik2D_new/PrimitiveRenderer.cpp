@@ -1,5 +1,5 @@
 ﻿#include "PrimitiveRenderer.h"
-#include "Point2D.h"//dodalem to w primitive.
+#include "Point2D.h"
 #include "LineSegment.h"
 #include <cmath> 
 #include <stack>
@@ -279,68 +279,44 @@ void PrimitiveRenderer::borderFill(sf::RenderTexture& renderTexture, int startX,
     }
 }
 
-void PrimitiveRenderer::floodFill(sf::RenderWindow& window, int x, int y, sf::Color fillColor, sf::Color oldColor) {
-    // Перевірка коректності початкових координат
-    if (x < 0 || x >= window.getSize().x || y < 0 || y >= window.getSize().y) {
-        std::cerr << "Starting point is out of bounds!" << std::endl;
-        return;
-    }
-
-    // Використання стеку для імітації рекурсії
-    std::stack<sf::Vector2i> points;
+void PrimitiveRenderer::floodFill(sf::RenderTexture& renderTexture, int startX, int startY, sf::Color fillColor, sf::Color oldColor) {
+    sf::Image image = renderTexture.getTexture().copyToImage(); // Копіюємо текстуру в зображення
+    std::stack<sf::Vector2i> fillStack;
     std::set<std::pair<int, int>> visited;
-    points.push(sf::Vector2i(x, y));
 
-    // Створюємо RenderTexture для зчитування вмісту вікна
-    sf::RenderTexture renderTexture;
-    if (!renderTexture.create(window.getSize().x, window.getSize().y)) {
-        std::cerr << "Failed to create RenderTexture!" << std::endl;
-        return;
-    }
+    // Додаємо початкову точку в стек
+    fillStack.push(sf::Vector2i(startX, startY));
 
-    // Копіюємо вміст вікна у RenderTexture
-    renderTexture.display();
-    sf::Texture texture = renderTexture.getTexture();
-    sf::Image screenshot = texture.copyToImage();
+    while (!fillStack.empty()) {
+        sf::Vector2i p = fillStack.top();
+        fillStack.pop();
 
-    // Перевірка початкового кольору
-    sf::Color startColor = screenshot.getPixel(x, y);
-    if (startColor != oldColor) {
-        std::cerr << "Starting point color does not match the target color!" << std::endl;
-        return;
-    }
-
-    // Основний алгоритм flood fill
-    while (!points.empty()) {
-        sf::Vector2i p = points.top();
-        points.pop();
-
-        // Перевірка меж області
-        if (p.x < 0 || p.x >= window.getSize().x || p.y < 0 || p.y >= window.getSize().y)
+        // Перевірка меж текстури
+        if (p.x < 0 || p.x >= static_cast<int>(image.getSize().x) || p.y < 0 || p.y >= static_cast<int>(image.getSize().y)) {
             continue;
+        }
 
-        // Перевірка на повторне відвідування
-        if (visited.find({ p.x, p.y }) != visited.end())
+        // Перевірка на відвідування
+        if (visited.find({ p.x, p.y }) != visited.end()) {
             continue;
+        }
         visited.insert({ p.x, p.y });
 
-        // Зчитування кольору поточного пікселя
-        sf::Color currentColor = screenshot.getPixel(p.x, p.y);
+        // Зчитуємо поточний колір
+        sf::Color currentColor = image.getPixel(p.x, p.y);
 
         if (currentColor == oldColor) {
+            // Малюємо піксель
             sf::Vertex point(sf::Vector2f(p.x, p.y), fillColor);
-            window.draw(&point, 1, sf::Points);
+            renderTexture.draw(&point, 1, sf::Points);
 
-            // Додавання сусідніх точок до стеку
-            points.push(sf::Vector2i(p.x + 1, p.y)); // Праворуч
-            points.push(sf::Vector2i(p.x - 1, p.y)); // Ліворуч
-            points.push(sf::Vector2i(p.x, p.y + 1)); // Вниз
-            points.push(sf::Vector2i(p.x, p.y - 1)); // Вгору
+            // Додаємо сусідні точки в стек
+            fillStack.push(sf::Vector2i(p.x + 1, p.y)); // Праворуч
+            fillStack.push(sf::Vector2i(p.x - 1, p.y)); // Ліворуч
+            fillStack.push(sf::Vector2i(p.x, p.y + 1)); // Вниз
+            fillStack.push(sf::Vector2i(p.x, p.y - 1)); // Вгору
         }
     }
-
-    // Оновлення вікна після завершення заповнення
-    window.display();
 }
 
 void PrimitiveRenderer::scalePolygon(std::vector<Point2D>& polygon, float scaleX, float scaleY) {
@@ -366,16 +342,16 @@ void PrimitiveRenderer::scalePolygon(std::vector<Point2D>& polygon, float scaleX
     }
 }
 
-void PrimitiveRenderer::drawFilledPolygonWithBorderFill(sf::RenderWindow& window, const std::vector<Point2D>& points, sf::Color fillColor) {
+void PrimitiveRenderer::drawBorderFilledPolygon(sf::RenderWindow& window, const std::vector<Point2D>& points, sf::Color fillColor) {
     if (points.size() < 3) {
-        std::cerr << "drawFilledPolygon: Insufficient vertices to draw a polygon." << std::endl;
+        std::cerr << "drawBorderFilledPolygon: Insufficient vertices to draw a polygon." << std::endl;
         return;
     }
 
     // Створюємо RenderTexture
     sf::RenderTexture renderTexture;
     if (!renderTexture.create(window.getSize().x, window.getSize().y)) {
-        std::cerr << "drawFilledPolygon: Failed to create RenderTexture." << std::endl;
+        std::cerr << "drawBorderFilledPolygon: Failed to create RenderTexture." << std::endl;
         return;
     }
     renderTexture.clear(sf::Color::Transparent);
@@ -460,4 +436,65 @@ void PrimitiveRenderer::drawFilledPolygon(sf::RenderWindow& window, const std::v
             }
         }
     }
+}
+
+
+void PrimitiveRenderer::drawFloodFilledPolygon(sf::RenderWindow& window, const std::vector<Point2D>& points, sf::Color fillColor) {
+    if (points.size() < 3) {
+        std::cerr << "drawFloodFilledPolygon: Insufficient vertices to draw a polygon." << std::endl;
+        return;
+    }
+
+    // Створюємо RenderTexture
+    sf::RenderTexture renderTexture;
+    if (!renderTexture.create(window.getSize().x, window.getSize().y)) {
+        std::cerr << "drawFloodFilledPolygon: Failed to create RenderTexture." << std::endl;
+        return;
+    }
+    renderTexture.clear(sf::Color::Transparent);
+
+    // Малюємо контур багатокутника
+    for (size_t i = 0; i < points.size(); ++i) {
+        Point2D start = points[i];
+        Point2D end = points[(i + 1) % points.size()]; // Наступна точка або перша, якщо кінець
+        drawLineIncremental(renderTexture, start, end, sf::Color::White);
+    }
+
+    renderTexture.display(); // Завершуємо малювання
+
+    // Захоплюємо зображення для аналізу кольорів
+    sf::Image image = renderTexture.getTexture().copyToImage();
+
+    // Знаходимо внутрішню точку багатокутника
+    int minX = static_cast<int>(points[0].getX());
+    int minY = static_cast<int>(points[0].getY());
+    int maxX = static_cast<int>(points[0].getX());
+    int maxY = static_cast<int>(points[0].getY());
+
+    for (const auto& point : points) {
+        minX = std::min(minX, static_cast<int>(point.getX()));
+        minY = std::min(minY, static_cast<int>(point.getY()));
+        maxX = std::max(maxX, static_cast<int>(point.getX()));
+        maxY = std::max(maxY, static_cast<int>(point.getY()));
+    }
+
+    int startX = (minX + maxX) / 2;
+    int startY = (minY + maxY) / 2;
+
+    // Перевіряємо, чи точка всередині багатокутника
+    sf::Color boundaryColor = sf::Color::White; // Колір контуру
+    sf::Color oldColor = image.getPixel(startX, startY);
+
+    if (oldColor == boundaryColor) {
+        std::cerr << "drawFloodFilledPolygon: Start point is on the boundary!" << std::endl;
+        return;
+    }
+
+    // Викликаємо floodFill для заливки
+    floodFill(renderTexture, startX, startY, fillColor, oldColor);
+
+    // Відображаємо результат у RenderWindow
+    renderTexture.display();
+    sf::Sprite filledPolygon(renderTexture.getTexture());
+    window.draw(filledPolygon);
 }

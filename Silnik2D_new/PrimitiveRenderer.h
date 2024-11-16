@@ -2,8 +2,6 @@
 #define PRIMITIVE_RENDERER_H
 
 #include <SFML/Graphics.hpp>
-//#include "Point2D.h"
-//#include "LineSegment.h"
 #include <vector>
 
 class LineSegment;
@@ -20,9 +18,10 @@ public:
     bool drawPolygon(sf::RenderWindow& window, const std::vector<Point2D>& points, sf::Color color, bool closed = true);
     void drawFilledCircle(sf::RenderWindow& window, const Point2D& center, int radius, sf::Color color);
     void borderFill(sf::RenderTexture& renderTexture, int startX, int startY, sf::Color fillColor, sf::Color boundaryColor);
-    void floodFill(sf::RenderWindow& window, int x, int y, sf::Color fillColor, sf::Color oldColor);
+    void floodFill(sf::RenderTexture& renderTexture, int startX, int startY, sf::Color fillColor, sf::Color oldColor);
     void drawFilledPolygon(sf::RenderWindow& window, const std::vector<Point2D>& points, sf::Color fillColor);
-    void drawFilledPolygonWithBorderFill(sf::RenderWindow& window, const std::vector<Point2D>& points, sf::Color fillColor);
+    void drawBorderFilledPolygon(sf::RenderWindow& window, const std::vector<Point2D>& points, sf::Color fillColor);
+    void drawFloodFilledPolygon(sf::RenderWindow& window, const std::vector<Point2D>& points, sf::Color fillColor);
     static void scalePolygon(std::vector<Point2D>& polygon, float scaleX, float scaleY);
 private:
     bool checkForIntersections(const std::vector<LineSegment>& segments);

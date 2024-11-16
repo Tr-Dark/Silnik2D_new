@@ -11,6 +11,7 @@
 #include <string>
 #include "Tools.h"
 #include <iostream>
+#include "Rectangle.h"
 
 
 class Engine {
@@ -39,6 +40,7 @@ private:
     std::vector<Point2D> polyline;
     //vector для переховування ліній при натисненні миші
     std::vector<Point2D> clickPoints;
+    Rectangle rectangle;
     bool clearWindow = false;
     float triangleRotation = 0.0f; // Кут обертання трикутника
     bool isRandomMove;
