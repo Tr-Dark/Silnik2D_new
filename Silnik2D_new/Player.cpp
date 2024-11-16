@@ -7,7 +7,7 @@
 
 Player::Player(std::array<std::string, 16> PlayerSprite) : currentBitmapIndex(0), isMoving(false), currentDirection(Left) {
     
-setTextureRect(sf::IntRect(0, 0, 200, 200)); // Прямокутник текстури спрайта, якщо використовується текстура
+setTextureRect(sf::IntRect(0, 0, 130, 130)); // Прямокутник текстури спрайта, якщо використовується текстура
 loadTextures(PlayerSprite);
 setTexture(bmp.getTexture(bitmapIndices_prawy[0]));  // Przypisanie tekstury do sprite
 sprite.setPosition(100, 100);
@@ -16,6 +16,8 @@ std::cout << "Player constructor\n";
 
 void Player::setTexture(const sf::Texture& texture) {
     sprite.setTexture(texture);// Ustawienie tekstury na sprite
+    sf::FloatRect bounds = sprite.getLocalBounds();
+    sprite.setOrigin(bounds.width / 2.0f, bounds.height / 2.0f);
 }
 void Player::loadTextures(std::array<std::string, 16> Sprites) {
     for (size_t i = 0; i < Sprites.size(); ++i) {
@@ -77,13 +79,19 @@ void Player::scale(float factorX, float factorY) {
     sprite.scale(factorX, factorY); // Масштабування спрайта
 }
 
-void Player::draw(sf::RenderWindow& window, PrimitiveRenderer& renderer)
+void Player::draw(sf::RenderWindow& window)
 {
     if (sprite.getTexture() == nullptr) {
         std::cerr << "Sprite texture is null!" << std::endl;
     }
     // Використовуємо спрайт для малювання гравця на екрані
     window.draw(sprite);  // sprite - об'єкт класу sf::Sprite, що містить текстуру гравця
+}
+
+
+void Player::draw(sf::RenderWindow& window, PrimitiveRenderer& renderer, sf::Color color)
+{
+    Player::draw(window);
 }
 
 void Player::animate() {
@@ -138,4 +146,20 @@ void Player::animateIdle() {
         // Перезапуск таймера анімації
         animationClock.restart();
     }
+}
+
+void Player::rotate(float angle)
+{
+    // Отримуємо локальні розміри спрайта
+    sf::FloatRect bounds = sprite.getLocalBounds();
+
+    // Обчислюємо центр текстури
+    float centerX = bounds.left + bounds.width / 2.0f;
+    float centerY = bounds.top + bounds.height / 2.0f;
+
+    // Встановлюємо точку обертання (центр текстури)
+    sprite.setOrigin(centerX, centerY);
+
+    // Виконуємо обертання
+    sprite.rotate(angle);
 }

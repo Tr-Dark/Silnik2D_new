@@ -10,3 +10,5 @@ void BitmapObject::setTexture(const sf::Texture& texture) {
 void BitmapObject::setTextureRect(const sf::IntRect& rect) {
     sprite.setTextureRect(rect); // Встановлює область текстури
 }
+
+

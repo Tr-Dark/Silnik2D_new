@@ -14,7 +14,8 @@ protected:
 public:
     SpriteObject();
     virtual void animate();
-    virtual void draw(sf::RenderWindow& window, PrimitiveRenderer& renderer);
+
+    virtual void draw(sf::RenderWindow& window);
 };
 
 #endif // SPRITEOBJECT_H

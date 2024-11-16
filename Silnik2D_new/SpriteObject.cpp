@@ -11,6 +11,6 @@ void SpriteObject::animate() {
     }
 }
 
-void SpriteObject::draw(sf::RenderWindow& window, PrimitiveRenderer& renderer) {
+void SpriteObject::draw(sf::RenderWindow& window) {
     window.draw(sprite); // Відображення поточного кадру
 }

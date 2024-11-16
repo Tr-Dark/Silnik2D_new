@@ -139,9 +139,11 @@ void Engine::processEvents() {
                 break;
             case sf::Keyboard::K: // Обертання за годинниковою
                 rectangle.rotate(-10.0f);
+                player.rotate(-10.0f);
                 break;
             case sf::Keyboard::L: // Обертання за годинниковою
                 rectangle.rotate(10.0f);
+                player.rotate(10.0f);
                 break;
             case sf::Keyboard::BackSpace:
                 if (!clickPoints.empty()) {
@@ -222,7 +224,7 @@ void Engine::render() {
         renderer.drawFilledCircle(window, { 500, 500 }, 30, sf::Color::Red);
         renderer.drawEllipse(window, { 650, 550 }, 100, 50, sf::Color::Red);
         renderer.drawPolyline(window, clickPoints, sf::Color::Red);
-        player.draw(window, renderer);
+        player.draw(window);
         // Відображаємо оновлений кадр
         window.display();
     }

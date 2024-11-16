@@ -18,18 +18,22 @@ enum Direction {
 
 class Player : public SpriteObject{
 public:
+    using SpriteObject::draw;
     Player(std::array<std::string, 16> PlayerSprite);
     void handleInput(const sf::Event& event);
     void update();
     void translate(float dx, float dy);
     void scale(float factorX, float factorY);
-    void draw(sf::RenderWindow& window, PrimitiveRenderer& renderer)override;
+    void draw(sf::RenderWindow& window) override;
+    void draw(sf::RenderWindow& window, PrimitiveRenderer& renderer, sf::Color color = sf::Color::White) override;
     void animate() override;
     sf::Sprite& getSprite();
     void setTexture(const sf::Texture& texture);
     BitmapHandler bmp;
     void loadTextures(std::array<std::string, 16> Sprites);
+    void setOriginToCenter();
     void animateIdle();
+    void rotate(float angle);
 
 private:
     bool isMoving;
