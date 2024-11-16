@@ -1,10 +1,5 @@
 ﻿#include "Engine.h"
 
-
-/// To jest Silnik kurwa
-/*!
-    Подробное описание
-*/
 Engine::Engine(int width, int height, const std::string& title, std::array<std::string, 16> PlayerSprite)
     : window(sf::VideoMode(width, height), title),
     triangleVertices{ Point2D(400, 300), Point2D(430, 350), Point2D(370, 350) },
@@ -229,7 +224,6 @@ void Engine::render() {
         // Інші фігури
         renderer.drawFilledPolygon(window, polyline, sf::Color::Yellow);
         line.draw(window, renderer, sf::Color::Magenta);
-        //renderer.drawFloodFilledPolygon(window, polyline, sf::Color::Yellow);
         rectangle.draw(window, renderer, sf::Color::Blue);
         renderer.drawCircle(window, { 500, 500 }, 50, sf::Color::Green);
         renderer.drawFilledCircle(window, { 500, 500 }, 30, sf::Color::Red);
