@@ -4,6 +4,7 @@
 #include <SFML/Graphics.hpp>
 #include "TransformableObject.h"
 #include "PrimitiveRenderer.h"
+#define M_PI 3.14159265358979323846
 
     class Point2D : public TransformableObject {
     private:

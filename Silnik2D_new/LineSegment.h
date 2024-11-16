@@ -1,30 +1,33 @@
-#ifndef LINE_SEGMENT_H
-#define LINE_SEGMENT_H
+#ifndef LINESEGMENT_H
+#define LINESEGMENT_H
+
 
 #include "Point2D.h"
-#include <SFML/Graphics.hpp>
-#include "PrimitiveRenderer.h"
+//#include "DrawableObject.h"
+//#include "TransformableObject.h"
+#include "ShapeObject.h"
+#define M_PI 3.14159265358979323846
 
-class LineSegment {
+class LineSegment : public ShapeObject {
 private:
-   Point2D start; // Pocz¹tkowy punkt odcinka
-   Point2D end;   // Koñcowy punkt odcinka
+    Point2D startPoint;
+    Point2D endPoint;
 
 public:
-    // Konstruktor inicjalizuj¹cy pocz¹tek i koniec odcinka
     LineSegment(const Point2D& start, const Point2D& end);
-   
-    // Metody dostêpu do punktów pocz¹tkowego i koñcowego
-    Point2D getStart() const;
-    Point2D getEnd() const;
 
-    // Metody ustawiaj¹ce nowe wartoœci dla punktów
-    void setStart(const Point2D& point);
-    void setEnd(const Point2D& point);
+    // Override methods
+    void draw(sf::RenderWindow& window, PrimitiveRenderer& renderer, sf::Color color = sf::Color::White) override;
+    void translate(float dx, float dy) override;
+    void rotate(float angle) override;
+    void scale(float factorX, float factorY) override;
+    void update() override;
 
-    // Metoda do rysowania odcinka
-    void draw(sf::RenderWindow& window, PrimitiveRenderer& renderer, sf::Color color = sf::Color::White, bool incremental = true) const;
-
+    // Additional methods
+    Point2D getStartPoint() const;
+    Point2D getEndPoint() const;
+    void setStartPoint(const Point2D& point);
+    void setEndPoint(const Point2D& point);
 };
 
-#endif // LINE_SEGMENT_H
+#endif // LINESEGMENT_H

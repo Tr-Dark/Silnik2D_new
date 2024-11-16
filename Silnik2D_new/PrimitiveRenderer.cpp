@@ -196,8 +196,8 @@ bool PrimitiveRenderer::drawPolygon(sf::RenderWindow& window, const std::vector<
         return false;
     }
 
-    for (const auto& segment : segments) {
-        segment.draw(window, *this, color, true);
+    for (auto segment : segments) {
+        segment.draw(window, *this, color);
         return true;
     }
 }
@@ -205,7 +205,7 @@ bool PrimitiveRenderer::drawPolygon(sf::RenderWindow& window, const std::vector<
 bool PrimitiveRenderer::checkForIntersections(const std::vector<LineSegment>& segments) {
     for (size_t i = 0; i < segments.size(); ++i) {
         for (size_t j = i + 1; j < segments.size(); ++j) {
-            if (doIntersect(segments[i].getStart(), segments[i].getEnd(), segments[j].getStart(), segments[j].getEnd())) {
+            if (doIntersect(segments[i].getStartPoint(), segments[i].getEndPoint(), segments[j].getStartPoint(), segments[j].getEndPoint())) {
                 return true; 
             }
         }

@@ -101,6 +101,7 @@ void Engine::processEvents() {
                     }
                     triangleCenter.translate(-10, 0);
                 }
+                rectangle.translate(-10, 0);
 
                 // Якщо переміщення можливе, застосовуємо його
                 if (Tools::CheckMove(polyline, -20, 0, window.getSize().x, window.getSize().y)) {
@@ -117,7 +118,7 @@ void Engine::processEvents() {
                     }
                     triangleCenter.translate(10, 0);
                 }
-
+                rectangle.translate(10, 0);
                 // Якщо переміщення можливе, застосовуємо його
                 if (Tools::CheckMove(polyline, 20, 0, window.getSize().x, window.getSize().y)) {
                     for (Point2D& point : polyline) {
@@ -155,9 +156,11 @@ void Engine::processEvents() {
                 break;// видяляє всі елементи в векторі 
             case sf::Keyboard::Add: 
                 PrimitiveRenderer::scalePolygon(polyline, 1.2f, 1.2f);
+                rectangle.scale(1.2F, 1.2F);
                 break;
             case sf::Keyboard::Subtract:
                 PrimitiveRenderer::scalePolygon(polyline, 0.6f, 0.6f);
+                rectangle.scale(0.8F, 0.8F);
                 break;// видяляє всі елементи в векторі 
             case sf::Keyboard::R:
                 isRandomMove = !isRandomMove;

@@ -1,7 +1,6 @@
 ﻿#define _USE_MATH_DEFINES // Додаємо для доступу до M_PI, якщо компілятор це підтримує
 #include "Rectangle.h"
 #include <cmath>
-#include <fstream>
 #include <iostream>
 
 Rectangle::Rectangle() : position(0, 0), width(1), height(1), color(sf::Color::White) {
@@ -56,17 +55,25 @@ void Rectangle::rotate(float angle) {
 }
 
 void Rectangle::scale(float factorX, float factorY) {
-    float centerX = position.getX() + width / 2;
-    float centerY = position.getY() + height / 2;
+    // Обчислюємо центр прямокутника
+    float centerX = position.getX() + width / 2.0f;
+    float centerY = position.getY() + height / 2.0f;
 
+    // Масштабуємо кожну вершину відносно центру
     for (auto& vertex : vertices) {
         float scaledX = centerX + (vertex.getX() - centerX) * factorX;
         float scaledY = centerY + (vertex.getY() - centerY) * factorY;
         vertex.setX(scaledX);
         vertex.setY(scaledY);
     }
+
+    // Масштабуємо ширину і висоту
     width *= factorX;
     height *= factorY;
+
+    // Позиція повинна бути оновлена так, щоб новий прямокутник залишався в тому ж центрі
+    position.setX(centerX - width / 2.0f);
+    position.setY(centerY - height / 2.0f);
 }
 
 void Rectangle::setPosition(const Point2D& newPosition) {

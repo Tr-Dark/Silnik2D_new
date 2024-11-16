@@ -31,7 +31,6 @@ public:
     void setTexture(const sf::Texture& texture);
     BitmapHandler bmp;
     void loadTextures(std::array<std::string, 16> Sprites);
-    void setOriginToCenter();
     void animateIdle();
     void rotate(float angle);
 
