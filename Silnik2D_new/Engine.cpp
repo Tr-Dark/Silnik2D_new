@@ -1,6 +1,11 @@
 ﻿#include "Engine.h"
 #include "Rectangle.h"
 
+
+/// To jest Silnik kurwa
+/*!
+    Подробное описание
+*/
 Engine::Engine(int width, int height, const std::string& title, std::array<std::string, 16> PlayerSprite)
     : window(sf::VideoMode(width, height), title),
     triangleVertices{ Point2D(400, 300), Point2D(430, 350), Point2D(370, 350) },
@@ -27,13 +32,13 @@ void Engine::setBackground(const sf::Texture& texture) {
     backgroundSprite.setScale(scaleX, scaleY);
 }
 
-void Engine::run() {  // Tworzymy obiekt BitmapHandler
+void Engine::run() { 
     
     while (window.isOpen()) {        
         processEvents();
         update();
         render();
-        player.update();
+        
     }
 }
 
@@ -42,7 +47,7 @@ void Engine::processEvents() {
     int currentBitmap = 0;
     while (window.pollEvent(event)) {
         if (event.type == sf::Event::Closed) {window.close();}
-            player.handleInput(event, currentBitmap);
+            player.handleInput(event);
         if (sf::Mouse::isButtonPressed(sf::Mouse::Left)){
             int x = event.mouseButton.x;
             int y = event.mouseButton.y;
@@ -169,6 +174,7 @@ void Engine::update() {
             triangleCenter.translate(dx, dy);
         }
     }
+    player.update();
 
     // Обчислення обертання трикутника навколо центру
     float angleRad = triangleRotation * 3.14159f / 180.0f;

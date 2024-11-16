@@ -5,13 +5,12 @@
 #include <array>
 #include <string>
 
-Player::Player(std::array<std::string, 16> PlayerSprite) : currentBitmapIndex(0), isMoving(false) {
+Player::Player(std::array<std::string, 16> PlayerSprite) : currentBitmapIndex(0), isMoving(false), currentDirection(Left) {
     
 setTextureRect(sf::IntRect(0, 0, 200, 200)); // Прямокутник текстури спрайта, якщо використовується текстура
 loadTextures(PlayerSprite);
 setTexture(bmp.getTexture(bitmapIndices_prawy[0]));  // Przypisanie tekstury do sprite
 sprite.setPosition(100, 100);
-
 std::cout << "Player constructor\n";
 }
 
@@ -27,50 +26,46 @@ void Player::loadTextures(std::array<std::string, 16> Sprites) {
 }
 
 
-void Player::handleInput(const sf::Event& event, int& currentBitmap) {
-    
+void Player::handleInput(const sf::Event& event) {
     if (event.type == sf::Event::KeyPressed) {
-        isMoving = true;
-        
+        isMoving = true;          // Гравець почав рухатися
+        idleClock.restart();      // Скидаємо таймер бездіяльності
+
         switch (event.key.code) {
         case sf::Keyboard::Left:
-            std::cout << "Left\n";
             currentBitmapIndex = (currentBitmapIndex + 1) % 4;
-            currentBitmap = bitmapIndices_lewy[currentBitmapIndex];
-            std::cout << currentBitmap << '\n';
-            setTexture(bmp.getTexture(currentBitmap));  // Анімація ліворуч
+            currentDirection = Direction::Left;
+            animate();
             sprite.move(-10, 0);
             break;
+
         case sf::Keyboard::Right:
-            std::cout << "Right\n";
             currentBitmapIndex = (currentBitmapIndex + 1) % 4;
-            currentBitmap = bitmapIndices_prawy[currentBitmapIndex];
-            std::cout << currentBitmap << '\n';
-            setTexture(bmp.getTexture(currentBitmap)); 
+            currentDirection = Direction::Right;
+            animate();
             sprite.move(10, 0);
             break;
+
         case sf::Keyboard::Up:
-            std::cout << "Up\n";
             currentBitmapIndex = (currentBitmapIndex + 1) % 4;
-            currentBitmap = bitmapIndices_gora[currentBitmapIndex];
-            std::cout << currentBitmap << '\n';
-            setTexture(bmp.getTexture(currentBitmap)); // Анімація вгору
+            currentDirection = Direction::Up;
+            animate();
             sprite.move(0, -10);
             break;
+
         case sf::Keyboard::Down:
-            std::cout << "Down\n";
             currentBitmapIndex = (currentBitmapIndex + 1) % 4;
-            currentBitmap = bitmapIndices_dol[currentBitmapIndex];
-            std::cout << currentBitmap << '\n';
-            setTexture(bmp.getTexture(currentBitmap)); // Анімація вниз
+            currentDirection = Direction::Down;
+            animate();
             sprite.move(0, 10);
             break;
+
         default:
-            isMoving = false;
             break;
         }
     }
 }
+
 
 // Переміщення гравця
 void Player::translate(float dx, float dy) {
@@ -91,42 +86,56 @@ void Player::draw(sf::RenderWindow& window, PrimitiveRenderer& renderer)
     window.draw(sprite);  // sprite - об'єкт класу sf::Sprite, що містить текстуру гравця
 }
 
-void Player::animate()
-{
-    //if (isMoving) {
-    //    currentBitmapIndex = (currentBitmapIndex + 1) % 4; // Перехід до наступного кадру анімації
+void Player::animate() {
+    const int* bitmapIndices = nullptr;
 
-    //    // Вибір текстури залежно від напрямку
-    //    if (sprite.getTexture() == nullptr) {
-    //        std::cerr << "Sprite texture is null during animation!" << std::endl;
-    //        return;
-    //    }
+    // Вибір масиву текстур залежно від напрямку
+    switch (currentDirection) {
+    case Direction::Left:
+        bitmapIndices = bitmapIndices_lewy;
+        break;
+    case Direction::Right:
+        bitmapIndices = bitmapIndices_prawy;
+        break;
+    case Direction::Up:
+        bitmapIndices = bitmapIndices_gora;
+        break;
+    case Direction::Down:
+        bitmapIndices = bitmapIndices_dol;
+        break;
+    default:
+        return; // Немає анімації, якщо немає напрямку
+    }
 
-    //    // Напрямок руху визначається поточним положенням спрайта
-    //    const sf::Texture* currentTexture = sprite.getTexture();
-
-    //    if (std::find(std::begin(bitmapIndices_prawy), std::end(bitmapIndices_prawy), currentBitmapIndex) != std::end(bitmapIndices_prawy)) {
-    //        setTexture(bmp.getTexture()); // Текстура для руху вправо
-    //    }
-    //    else if (std::find(std::begin(bitmapIndices_lewy), std::end(bitmapIndices_lewy), currentBitmapIndex) != std::end(bitmapIndices_lewy)) {
-    //        setTexture(currentTexture); // Текстура для руху вліво
-    //    }
-    //    else if (std::find(std::begin(bitmapIndices_gora), std::end(bitmapIndices_gora), currentBitmapIndex) != std::end(bitmapIndices_gora)) {
-    //        setTexture(currentTexture); // Текстура для руху вгору
-    //    }
-    //    else if (std::find(std::begin(bitmapIndices_dol), std::end(bitmapIndices_dol), currentBitmapIndex) != std::end(bitmapIndices_dol)) {
-    //        setTexture(currentTexture); // Текстура для руху вниз
-    //    }
-    //}
+    // Оновлення текстури для анімації
+    int textureIndex = bitmapIndices[currentBitmapIndex];
+    setTexture(bmp.getTexture(textureIndex));
 }
 
 // Оновлення гравця
 void Player::update() {
+    // Якщо гравець рухається, скидаємо таймер бездіяльності
     if (isMoving) {
-        animate(); // Виклик анімації під час руху
+        idleClock.restart(); // Скидаємо таймер бездіяльності
+        isMoving = false;    // Скидаємо стан руху після оновлення
+    }
+    // Якщо минуло більше idleDelay секунд без руху, запускаємо анімацію бездіяльності
+    else if (idleClock.getElapsedTime().asSeconds() > idleDelay) {
+        animateIdle();
     }
 }
 
 sf::Sprite& Player::getSprite() {
     return sprite;  // Zwrócenie referencji do sprite
+}
+
+void Player::animateIdle() {
+    if (animationClock.getElapsedTime().asSeconds() > animationDelay) {
+        // Перехід до наступного кадру
+        idleFrameIndex = (idleFrameIndex + 1) % 4;
+        setTexture(bmp.getTexture(idleAnimationFrames[idleFrameIndex]));
+
+        // Перезапуск таймера анімації
+        animationClock.restart();
+    }
 }
