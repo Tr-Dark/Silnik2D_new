@@ -12,7 +12,7 @@ class Point2D;
 class PrimitiveRenderer {
 public:
     PrimitiveRenderer();
-    void drawLineIncremental(sf::RenderWindow& window, const Point2D& p1, const Point2D& p2, sf::Color color);
+    void drawLineIncremental(sf::RenderTarget& window, const Point2D& p1, const Point2D& p2, sf::Color color);
     void drawPolyline(sf::RenderWindow& window, const std::vector<Point2D>& points, sf::Color color, bool closed = false);
     void drawLineBasic(sf::RenderWindow& window, const Point2D& p1, const Point2D& p2, sf::Color color);
     void drawCircle(sf::RenderWindow& window, const Point2D& center, int radius, sf::Color color);
@@ -23,6 +23,7 @@ public:
     void floodFill(sf::RenderWindow& window, int x, int y, sf::Color fillColor, sf::Color oldColor);
     void drawFilledPolygon(sf::RenderWindow& window, const std::vector<Point2D>& points, sf::Color fillColor);
     static void scalePolygon(std::vector<Point2D>& polygon, float scaleX, float scaleY);
+    void fillPolygon(sf::RenderWindow& window, const std::vector<Point2D>& points, sf::Color fillColor);
 private:
     bool checkForIntersections(const std::vector<LineSegment>& segments);
     bool doIntersect(const Point2D& p1, const Point2D& q1, const Point2D& p2, const Point2D& q2);
