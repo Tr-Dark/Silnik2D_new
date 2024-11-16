@@ -193,29 +193,6 @@ void Engine::update() {
     }
 }
 
-//void Engine::render() {
-//    
-//    if (!clearWindow) {
-//        window.clear(sf::Color::Black);
-//        if (backgroundLoaded) {
-//            window.draw(backgroundSprite);
-//        }
-//        
-//        player.draw(window, renderer);
-//        renderer.drawFilledPolygon(window, polyline, sf::Color::Yellow);//замальований чотирикутник 
-//        //renderer.drawPolyline(window, polyline, sf::Color::Black, 1);//чорний чотирикутник
-//        //renderer.drawFilledPolygon(window, triangleVertices, sf::Color::Black);//Малювання замкненого трикутника
-//        renderer.drawCircle(window, { 500, 500 }, 50, sf::Color::Green);
-//        renderer.drawFilledCircle(window, { 500, 500 }, 30, sf::Color::Red);
-//        renderer.drawEllipse(window, { 650, 550 }, 100, 50, sf::Color::Red);
-//        renderer.drawPolyline(window, clickPoints, sf::Color::Red);
-//        
-//    }
-//    else window.clear();
-//    window.display();
-//}
-
-
 void Engine::render() {
     if (!clearWindow) {
         // Очистка екрану
@@ -225,7 +202,7 @@ void Engine::render() {
         }
 
         // Малюємо багатокутники
-        renderer.fillPolygon(window, triangleVertices, sf::Color::Green);
+        renderer.drawFilledPolygon(window, triangleVertices, sf::Color::Green);
         // Інші фігури
         renderer.drawFilledPolygon(window, polyline, sf::Color::Yellow);
         
