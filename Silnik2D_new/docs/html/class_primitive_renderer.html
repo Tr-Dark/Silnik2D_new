@@ -86,7 +86,6 @@ $(function(){ initResizable(false); });
 <div class="header">
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
-<a href="#pub-static-methods">Static Public Member Functions</a> &#124;
 <a href="#pri-methods">Private Member Functions</a> &#124;
 <a href="class_primitive_renderer-members.html">List of all members</a>  </div>
   <div class="headertitle"><div class="title">PrimitiveRenderer Class Reference</div></div>
@@ -139,12 +138,6 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:afd6365b1815406bf92f0e922c5672f77" id="r_afd6365b1815406bf92f0e922c5672f77"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#afd6365b1815406bf92f0e922c5672f77">drawFloodFilledPolygon</a> (sf::RenderWindow &amp;window, const std::vector&lt; <a class="el" href="class_point2_d.html">Point2D</a> &gt; &amp;points, sf::Color fillColor)</td></tr>
 <tr class="memdesc:afd6365b1815406bf92f0e922c5672f77"><td class="mdescLeft">&#160;</td><td class="mdescRight">Rysuje wielok�t wype�niony metod� zalewania (flood fill).  <br /></td></tr>
 <tr class="separator:afd6365b1815406bf92f0e922c5672f77"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-static-methods" name="pub-static-methods"></a>
-Static Public Member Functions</h2></td></tr>
-<tr class="memitem:a73564998725c3888c044eaac2ff35e6d" id="r_a73564998725c3888c044eaac2ff35e6d"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a73564998725c3888c044eaac2ff35e6d">scalePolygon</a> (std::vector&lt; <a class="el" href="class_point2_d.html">Point2D</a> &gt; &amp;polygon, float scaleX, float scaleY)</td></tr>
-<tr class="memdesc:a73564998725c3888c044eaac2ff35e6d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Skaluje wielok�t.  <br /></td></tr>
-<tr class="separator:a73564998725c3888c044eaac2ff35e6d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pri-methods" name="pri-methods"></a>
 Private Member Functions</h2></td></tr>
@@ -891,63 +884,6 @@ false Jeśli podano mniej niż dwa punkty lub wykryto przecinające się odcinki
   </dd>
 </dl>
 <dl class="section note"><dt>Note</dt><dd>Funkcja zakłada, że punkt początkowy ma kolor równy <code>oldColor</code>. Jeśli <code>fillColor</code> i <code>oldColor</code> są takie same, funkcja nic nie zmieni. </dd></dl>
-
-</div>
-</div>
-<a id="a73564998725c3888c044eaac2ff35e6d" name="a73564998725c3888c044eaac2ff35e6d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a73564998725c3888c044eaac2ff35e6d">&#9670;&#160;</a></span>scalePolygon()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">void PrimitiveRenderer::scalePolygon </td>
-          <td>(</td>
-          <td class="paramtype">std::vector&lt; <a class="el" href="class_point2_d.html">Point2D</a> &gt; &amp;</td>          <td class="paramname"><span class="paramname"><em>polygon</em></span>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">float</td>          <td class="paramname"><span class="paramname"><em>scaleX</em></span>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">float</td>          <td class="paramname"><span class="paramname"><em>scaleY</em></span>&#160;)</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Skaluje wielok�t. </p>
-<p>Skalowanie wielokąta względem jego środka.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">polygon</td><td>Wektor punkt�w definiuj�cych wielok�t. </td></tr>
-    <tr><td class="paramname">scaleX</td><td>Skala w osi X. </td></tr>
-    <tr><td class="paramname">scaleY</td><td>Skala w osi Y.</td></tr>
-  </table>
-  </dd>
-</dl>
-<p>Funkcja przekształca punkty wielokąta, skalując go względem jego geometrycznego środka. Skalowanie odbywa się w kierunkach osi X i Y według współczynników <code>scaleX</code> i <code>scaleY</code>.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">polygon</td><td>Wektor punktów reprezentujących wielokąt do skalowania. </td></tr>
-    <tr><td class="paramname">scaleX</td><td>Współczynnik skalowania w osi X. </td></tr>
-    <tr><td class="paramname">scaleY</td><td>Współczynnik skalowania w osi Y.</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section note"><dt>Note</dt><dd>Punkty wielokąta są modyfikowane bezpośrednio w przekazanym wektorze. </dd>
-<dd>
-Wartości <code>scaleX</code> i <code>scaleY</code> mniejsze od 1 zmniejszają wielokąt, a większe od 1 powiększają go. </dd></dl>
 
 </div>
 </div>
