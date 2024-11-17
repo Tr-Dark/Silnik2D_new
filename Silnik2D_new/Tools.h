@@ -37,6 +37,15 @@ public:
      * @return Losowa wartoœæ typu `float`.
      */
     static float getRandomOffset();
+
+    /**
+     * @brief Skaluje wielok¹t.
+     *
+     * @param polygon Wektor punktów definiuj¹cych wielok¹t.
+     * @param scaleX Skala w osi X.
+     * @param scaleY Skala w osi Y.
+     */
+    static void scalePolygon(std::vector<Point2D>& polygon, float scaleX, float scaleY);
 };
 
 #endif //TOOLS_H

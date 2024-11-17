@@ -168,6 +168,7 @@ void Engine::processEvents() {
             case sf::Keyboard::L: // Obrót kształtów
                 rectangle.rotate(10.0f);
                 player.rotate(10.0f);
+                line.rotate(10.0f);
                 break;
             case sf::Keyboard::BackSpace:
                 if (!clickPoints.empty()) {
@@ -178,12 +179,12 @@ void Engine::processEvents() {
                 clickPoints.clear();
                 break; // Usuwa wszystkie elementy w wektorze 
             case sf::Keyboard::Add:
-                PrimitiveRenderer::scalePolygon(polyline, 1.2f, 1.2f);
+                Tools::scalePolygon(polyline, 1.2f, 1.2f);
                 rectangle.scale(1.2F, 1.2F);
                 line.scale(1.8F, 1.8F);
                 break;
             case sf::Keyboard::Subtract:
-                PrimitiveRenderer::scalePolygon(polyline, 0.6f, 0.6f);
+                Tools::scalePolygon(polyline, 0.6f, 0.6f);
                 rectangle.scale(0.8F, 0.8F);
                 line.scale(0.8F, 0.8F);
                 break; // Usuwa wszystkie elementy w wektorze 

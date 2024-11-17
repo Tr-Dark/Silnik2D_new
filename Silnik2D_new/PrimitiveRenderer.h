@@ -142,14 +142,6 @@ public:
      */
     void drawFloodFilledPolygon(sf::RenderWindow& window, const std::vector<Point2D>& points, sf::Color fillColor);
 
-    /**
-     * @brief Skaluje wielok¹t.
-     *
-     * @param polygon Wektor punktów definiuj¹cych wielok¹t.
-     * @param scaleX Skala w osi X.
-     * @param scaleY Skala w osi Y.
-     */
-    static void scalePolygon(std::vector<Point2D>& polygon, float scaleX, float scaleY);
 
 private:
     /**
